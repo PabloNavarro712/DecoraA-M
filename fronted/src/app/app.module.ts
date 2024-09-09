@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { CarouselComponent } from './carousel/carousel.component';
-import { GaleriaComponent } from './galeria/galeria.component';
+import { NavbarComponent } from './modules/navbar/navbar.component';
+import { CarouselComponent } from './modules/carousel/carousel.component';
+import { GaleriaComponent } from './modules/galeria/galeria.component';
 import { ServicesComponent } from './modules/services/services.component';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { ServicesComponent } from './modules/services/services.component';
     NavbarComponent,
     CarouselComponent,
     GaleriaComponent,
-  
     ServicesComponent
   ],
   imports: [
