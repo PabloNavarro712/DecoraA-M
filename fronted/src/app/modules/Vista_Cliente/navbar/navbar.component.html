@@ -1,0 +1,83 @@
+<!-- Banner con las redes sociales y el teléfono -->
+<div class="top-bar text-end">
+  <div class="container d-flex justify-content-between">
+    <div class="social-icons">
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fas fa-phone"></i>
+      <span class="contact-info">(552) 9191982891</span>
+    </div>
+  </div>
+</div>
+
+<!-- Banner con información de ubicación y teléfono -->
+<div class="banner text-center">
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-4 text-start">
+        <span class="contact-info">
+          <i class="fas fa-map-marker-alt"></i>
+          CALI N.C.
+        </span>
+      </div>
+      <div class="col-md-4 text-end">
+        <span class="contact-info">
+          <i class="fas fa-phone"></i>
+          (552) 9191982891
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Barra de navegación fija que se ubica debajo del banner -->
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Nombre del Negocio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Inicio</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Servicios
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/bodas">Bodas</a></li>
+            <li><a class="dropdown-item" routerLink="/xvanos">XV Años</a></li>
+            <li><a class="dropdown-item" routerLink="/cumpleanos">Cumpleaños</a></li>
+            <li><a class="dropdown-item" routerLink="/babyshower">Baby Shower</a></li>
+            <li><a class="dropdown-item" routerLink="/fiestas-tematicas">Fiestas Temáticas</a></li>
+            <li><a class="dropdown-item" routerLink="/otros-servicios">Otros Servicios</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/galeria">Galería</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/testimonios">Testimonios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/sobre-nosotros">Sobre Nosotros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contacto">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary" routerLink="/cotizacion">Solicitar Cotización</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Área donde se cargará el contenido de las diferentes rutas -->
+<div class="container mt-5">
+  <router-outlet></router-outlet>
+</div>
