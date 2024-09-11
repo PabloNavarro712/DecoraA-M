@@ -17,6 +17,7 @@ import { TestimoniosComponent } from './modules/Vista_Cliente/testimonios/testim
 import { SobreNosotrosComponent } from './modules/Vista_Cliente/sobre-nosotros/sobre-nosotros.component';
 import { ContactoComponent } from './modules/Vista_Cliente/contacto/contacto.component';
 import { CotizacionComponent } from './modules/Vista_Cliente/cotizacion/cotizacion.component';
+import { FooterComponent } from './modules/Vista_Cliente/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CotizacionComponent } from './modules/Vista_Cliente/cotizacion/cotizaci
     TestimoniosComponent,
     SobreNosotrosComponent,
     ContactoComponent,
-    CotizacionComponent
+    CotizacionComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

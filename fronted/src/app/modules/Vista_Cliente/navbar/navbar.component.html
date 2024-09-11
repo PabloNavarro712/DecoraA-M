@@ -29,47 +29,50 @@
     </div>
   </div>
 </div>
-
 <!-- Barra de navegación fija que se ubica debajo del banner -->
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Nombre del Negocio</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    
+    <a class="navbar-brand white-text" routerLink="/">Decora A&M</a>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <!-- Botón de hamburguesa -->
+<button class="navbar-toggler" type="button" (click)="toggleNavbar()" [attr.aria-expanded]="!isNavbarCollapsed" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+    <!-- Menú colapsable -->
+    <div class="collapse navbar-collapse" [ngClass]="{'show': !isNavbarCollapsed}" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/">Inicio</a>
+          <a class="nav-link" routerLink="/" (click)="closeNavbar()">Inicio</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Servicios
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="/bodas">Bodas</a></li>
-            <li><a class="dropdown-item" routerLink="/xvanos">XV Años</a></li>
-            <li><a class="dropdown-item" routerLink="/cumpleanos">Cumpleaños</a></li>
-            <li><a class="dropdown-item" routerLink="/babyshower">Baby Shower</a></li>
-            <li><a class="dropdown-item" routerLink="/fiestas-tematicas">Fiestas Temáticas</a></li>
-            <li><a class="dropdown-item" routerLink="/otros-servicios">Otros Servicios</a></li>
+            <li><a class="dropdown-item" routerLink="/bodas" (click)="closeNavbar()">Bodas</a></li>
+            <li><a class="dropdown-item" routerLink="/xvanos" (click)="closeNavbar()">XV Años</a></li>
+            <li><a class="dropdown-item" routerLink="/cumpleanos" (click)="closeNavbar()">Cumpleaños</a></li>
+            <li><a class="dropdown-item" routerLink="/babyshower" (click)="closeNavbar()">Baby Shower</a></li>
+            <li><a class="dropdown-item" routerLink="/fiestas-tematicas" (click)="closeNavbar()">Fiestas Temáticas</a></li>
+            <li><a class="dropdown-item" routerLink="/otros-servicios" (click)="closeNavbar()">Otros Servicios</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/galeria">Galería</a>
+          <a class="nav-link" routerLink="/galeria" (click)="closeNavbar()">Galería</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/testimonios">Testimonios</a>
+          <a class="nav-link" routerLink="/testimonios" (click)="closeNavbar()">Testimonios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/sobre-nosotros">Sobre Nosotros</a>
+          <a class="nav-link" routerLink="/sobre-nosotros" (click)="closeNavbar()">Sobre Nosotros</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/contacto">Contacto</a>
+          <a class="nav-link" routerLink="/contacto" (click)="closeNavbar()">Contacto</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-primary" routerLink="/cotizacion">Solicitar Cotización</a>
+          <a class="btn btn-primary" routerLink="/cotizacion" (click)="closeNavbar()">Solicitar Cotización</a>
         </li>
       </ul>
     </div>
@@ -78,6 +81,6 @@
 
 
 <!-- Área donde se cargará el contenido de las diferentes rutas -->
-<div class="container mt-5">
+<div class="container-fluid mt-5">
   <router-outlet></router-outlet>
 </div>
