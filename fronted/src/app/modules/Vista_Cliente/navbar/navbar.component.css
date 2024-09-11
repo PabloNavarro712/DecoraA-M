@@ -34,9 +34,10 @@
 
 /* Estilos de la barra de navegación */
 .navbar-custom {
-  background-color: #ff1493; /* Fondo rosado oscuro */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ff69b4; /* Fondo rosado oscuro */
+  box-shadow: 0 4px 6px rgba(240, 235, 235, 0.911);
 }
+
 
 .navbar-custom .nav-link {
   color: white;
@@ -45,7 +46,7 @@
 }
 
 .navbar-custom .nav-link:hover {
-  color: #ff69b4; /* Cambio de color al pasar el mouse */
+  color: #6b0237; /* Cambio de color al pasar el mouse */
 }
 
 /* Fijar la barra de navegación después de que el usuario haga scroll */
@@ -55,9 +56,49 @@
   z-index: 1030;
 }
 
+/* Estilos para el dropdown del menú de "Servicios" */
+.navbar-custom .dropdown-menu {
+  background-color: #ff69b4; /* Fondo rosado claro */
+  border: none; /* Sin bordes */
+}
+
+.navbar-custom .dropdown-menu .dropdown-item {
+  color: white;
+  font-style: italic; /* Texto en cursiva */
+}
+
+.navbar-custom .dropdown-menu .dropdown-item:hover {
+  background-color: #ff1493; /* Fondo más oscuro al pasar el mouse */
+  color: white;
+}
+
+/* Estilo para el botón de hamburguesa sin borde */
+.navbar-toggler {
+  border: none; /* Elimina el borde del botón de hamburguesa */
+}
+
+.navbar-toggler:focus {
+  outline: none; /* Elimina el borde al hacer clic */
+}
+
 /* Estilo responsivo para la barra de navegación */
 @media (max-width: 768px) {
   .navbar-collapse {
     justify-content: center;
   }
+}
+/* Estilo para el botón de hamburguesa sin borde */
+.navbar-toggler {
+  border: none; /* Elimina el borde */
+  outline: none; /* Elimina el contorno por defecto */
+  box-shadow: none; /* Asegura que no haya sombra alrededor */
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+  outline: none; /* Elimina el contorno cuando el botón está enfocado o activo */
+  box-shadow: none; /* Elimina cualquier sombra al hacer clic */
+}
+.navbar-brand.white-text {
+  color: white;
 }
