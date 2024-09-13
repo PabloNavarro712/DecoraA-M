@@ -22,7 +22,7 @@
           <a class="nav-link" routerLink="/services" (click)="closeNavbar()">Servicios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/sobre-nosotros" (click)="closeNavbar()">Sobre Nosotros</a>
+          <a class="nav-link" routerLink="/sobre-nosotros" (click)="closeNavbar()">Nuestra historia</a>
         </li>
         
        
@@ -43,21 +43,24 @@
   <i class="fas fa-envelope"></i> <!-- Ícono de sobre -->
 </button>
 
-<!-- Modal para información de contacto -->
+<!-- Modal de contacto personalizado -->
 <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+  <div class="modal-dialog modal-dialog-centered"> <!-- Centrado verticalmente -->
+    <div class="modal-content custom-modal"> <!-- Aplicar clase personalizada -->
+      <div class="modal-header custom-header">
         <h5 class="modal-title" id="contactModalLabel">Información de Contacto</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <!-- Aquí va la información de contacto -->
-        <p>Teléfono: 555-5555</p>
-        <p>Correo: contacto&#64;ejemplo.com</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      <div class="modal-body custom-body">
+        <!-- Información de contacto -->
+        <p><strong>Correo:</strong> contacto&#64;ejemplo.com</p>
+        <p><strong>Dirección:</strong> Calle Falsa 123, Ciudad Ejemplo</p>
+        <p><strong>Horario de atención:</strong> Lunes a Viernes, 9 AM - 6 PM</p>
+        <p><strong>Teléfono:</strong> 555-555-5555</p>
+        <!-- Botón de contacto por WhatsApp -->
+        <a href="https://wa.me/5555555555" class="btn btn-success" target="_blank">
+          Contactar por WhatsApp
+        </a>
       </div>
     </div>
   </div>
