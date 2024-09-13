@@ -1,6 +1,6 @@
 /* Estilos para el top bar con redes sociales y teléfono */
 .top-bar {
-  background-color: #ff69b4; /* Color de fondo rosado */
+  background: linear-gradient(to right, #003366, #00bfff); /* Degradado de azul marino a azul turquesa */
   padding: 10px 0;
 }
 
@@ -14,30 +14,27 @@
   color: white;
   font-size: 1rem;
 }
-
 /* Estilo para el banner con información de ubicación y teléfono */
 .banner {
   background-color: white;
   padding: 15px 0;
-  border-bottom: 2px solid #ff69b4; /* Línea rosada debajo del banner */
+  border-bottom: 2px solid #fffeff; /* Línea rosada debajo del banner */
 }
 
 .banner .contact-info {
   font-size: 1.2rem;
-  color: #ff69b4; /* Texto rosado */
+  color: linear-gradient(to right, #003366, #00bfff); /* Texto rosado */
 }
 
 .banner .contact-info i {
   margin-right: 10px;
   color: #ff69b4; /* Color de los íconos */
 }
-
 /* Estilos de la barra de navegación */
 .navbar-custom {
-  background-color: #ff69b4; /* Fondo rosado oscuro */
+  background: linear-gradient(to right, #003366, #00bfff); /* Degradado de azul marino a azul turquesa */
   box-shadow: 0 4px 6px rgba(240, 235, 235, 0.911);
 }
-
 
 .navbar-custom .nav-link {
   color: white;
@@ -46,7 +43,7 @@
 }
 
 .navbar-custom .nav-link:hover {
-  color: #6b0237; /* Cambio de color al pasar el mouse */
+  color: #4547b6; /* Cambio de color al pasar el mouse */
 }
 
 /* Fijar la barra de navegación después de que el usuario haga scroll */
@@ -58,7 +55,7 @@
 
 /* Estilos para el dropdown del menú de "Servicios" */
 .navbar-custom .dropdown-menu {
-  background-color: #ff69b4; /* Fondo rosado claro */
+  background-color: #2515b1; /* Fondo rosado claro */
   border: none; /* Sin bordes */
 }
 
@@ -68,7 +65,7 @@
 }
 
 .navbar-custom .dropdown-menu .dropdown-item:hover {
-  background-color: #ff1493; /* Fondo más oscuro al pasar el mouse */
+  background-color: #472ed8; /* Fondo más oscuro al pasar el mouse */
   color: white;
 }
 
@@ -87,18 +84,22 @@
     justify-content: center;
   }
 }
-/* Estilo para el botón de hamburguesa sin borde */
-.navbar-toggler {
-  border: none; /* Elimina el borde */
-  outline: none; /* Elimina el contorno por defecto */
-  box-shadow: none; /* Asegura que no haya sombra alrededor */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: transparent; /* Sin fondo */
+  border: none; /* Sin borde */
+  color: #007bff; /* Color del ícono */
+  font-size: 2rem; /* Tamaño del ícono */
+  cursor: pointer;
+  opacity: 0.5; /* Opacidad cuando no está en hover */
+  transition: opacity 0.3s ease; /* Transición suave al cambiar la opacidad */
 }
 
-.navbar-toggler:focus,
-.navbar-toggler:active {
-  outline: none; /* Elimina el contorno cuando el botón está enfocado o activo */
-  box-shadow: none; /* Elimina cualquier sombra al hacer clic */
+.floating-button:hover {
+  opacity: 1; /* Totalmente visible cuando el mouse pasa por encima */
+  color: #0056b3; /* Cambiar color del ícono al pasar el mouse */
 }
-.navbar-brand.white-text {
-  color: white;
-}
+
