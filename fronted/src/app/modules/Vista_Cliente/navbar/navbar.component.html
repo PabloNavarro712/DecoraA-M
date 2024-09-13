@@ -1,34 +1,4 @@
-<!-- Banner con las redes sociales y el teléfono -->
-<div class="top-bar text-end">
-  <div class="container d-flex justify-content-between">
-    <div class="social-icons">
-      <i class="fab fa-facebook"></i>
-      <i class="fab fa-instagram"></i>
-      <i class="fas fa-phone"></i>
-      <span class="contact-info">(552) 9191982891</span>
-    </div>
-  </div>
-</div>
 
-<!-- Banner con información de ubicación y teléfono -->
-<div class="banner text-center">
-  <div class="container">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-4 text-start">
-        <span class="contact-info">
-          <i class="fas fa-map-marker-alt"></i>
-          CALI N.C.
-        </span>
-      </div>
-      <div class="col-md-4 text-end">
-        <span class="contact-info">
-          <i class="fas fa-phone"></i>
-          (552) 9191982891
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
 <!-- Barra de navegación fija que se ubica debajo del banner -->
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
   <div class="container-fluid">
@@ -45,35 +15,17 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/" (click)="closeNavbar()">Inicio</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Servicios
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="/bodas" (click)="closeNavbar()">Bodas</a></li>
-            <li><a class="dropdown-item" routerLink="/xvanos" (click)="closeNavbar()">XV Años</a></li>
-            <li><a class="dropdown-item" routerLink="/cumpleanos" (click)="closeNavbar()">Cumpleaños</a></li>
-            <li><a class="dropdown-item" routerLink="/babyshower" (click)="closeNavbar()">Baby Shower</a></li>
-            <li><a class="dropdown-item" routerLink="/fiestas-tematicas" (click)="closeNavbar()">Fiestas Temáticas</a></li>
-            <li><a class="dropdown-item" routerLink="/otros-servicios" (click)="closeNavbar()">Otros Servicios</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
+                <li class="nav-item">
           <a class="nav-link" routerLink="/galeria" (click)="closeNavbar()">Galería</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/testimonios" (click)="closeNavbar()">Testimonios</a>
+          <a class="nav-link" routerLink="/services" (click)="closeNavbar()">Servicios</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/sobre-nosotros" (click)="closeNavbar()">Sobre Nosotros</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contacto" (click)="closeNavbar()">Contacto</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-primary" routerLink="/cotizacion" (click)="closeNavbar()">Solicitar Cotización</a>
-        </li>
+        
+       
       </ul>
     </div>
   </div>
@@ -83,4 +35,30 @@
 <!-- Área donde se cargará el contenido de las diferentes rutas -->
 <div class="container-fluid mt-5">
   <router-outlet></router-outlet>
+</div>
+
+
+<!-- Botón flotante con ícono -->
+<button type="button" class="floating-button" data-bs-toggle="modal" data-bs-target="#contactModal">
+  <i class="fas fa-envelope"></i> <!-- Ícono de sobre -->
+</button>
+
+<!-- Modal para información de contacto -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel">Información de Contacto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí va la información de contacto -->
+        <p>Teléfono: 555-5555</p>
+        <p>Correo: contacto&#64;ejemplo.com</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>
