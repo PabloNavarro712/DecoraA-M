@@ -19,7 +19,13 @@
   background-color: white;
   padding: 15px 0;
   border-bottom: 2px solid #fffeff; /* Línea rosada debajo del banner */
+  margin-right: 50px; /* Espacio de 50px al margen derecho */
 }
+
+.navbar-custom .container-fluid {
+  margin-right: 50px; /* Espacio de 50px al margen derecho en la barra de navegación */
+}
+
 
 .banner .contact-info {
   font-size: 1.2rem;
@@ -101,5 +107,67 @@
 .floating-button:hover {
   opacity: 1; /* Totalmente visible cuando el mouse pasa por encima */
   color: #0056b3; /* Cambiar color del ícono al pasar el mouse */
+}
+/* Estilos del modal */
+.custom-modal {
+  background-color: white; /* Fondo blanco */
+  border-radius: 15px; /* Bordes redondeados */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra */
+  padding: 20px;
+}
+
+/* Sombra de fondo personalizada (overlay) */
+.modal-backdrop {
+  background: linear-gradient(to bottom, #007bff, white); /* Degradado de azul a blanco */
+  opacity: 0.9; /* Ajusta la opacidad del fondo */
+}
+
+/* Estilo del encabezado */
+.custom-header {
+  border-bottom: none; /* Sin borde */
+  text-align: center;
+  padding: 10px;
+}
+
+/* Estilo del cuerpo del modal */
+.custom-body {
+  padding: 20px;
+  text-align: left; /* Texto alineado a la izquierda */
+  font-size: 1rem;
+}
+
+/* Botón de contacto por WhatsApp */
+.btn-success {
+  background-color: #25d366; /* Color verde de WhatsApp */
+  border: none;
+  display: block;
+  width: 100%; /* Ancho completo */
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+/* Cambiar el estilo del botón de cerrar */
+.btn-close {
+  background-color: #007bff; /* Color azul */
+  border-radius: 50%; /* Botón circular */
+}
+
+/* Sombra azul degradada en pantalla */
+.modal.fade .modal-dialog {
+  transform: translateY(0);
+  transition: transform 0.3s ease-out;
+}
+
+/* Centrar el contenido del modal */
+.modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Asegura que esté centrado verticalmente */
+}
+
+/* Cambiar el estilo del botón cuando se pasa el mouse */
+.btn-success:hover {
+  background-color: #1ebf5b; /* Color verde más oscuro */
 }
 
