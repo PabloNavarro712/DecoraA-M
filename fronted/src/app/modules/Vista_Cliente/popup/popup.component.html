@@ -1,0 +1,15 @@
+<div class="overlay" *ngIf="isVisible">
+    <div class="popup">
+      <button class="close-button" (click)="close()">X</button>
+      <div class="description">
+        <h2>{{ description.title }}</h2>
+        <p>{{ description.package }}</p>
+      </div>
+      <div class="gallery">
+        <div *ngFor="let photo of photos" class="photo">
+          <img [src]="photo.url" [alt]="photo.description">
+        </div>
+      </div>
+    </div>
+  </div>
+  

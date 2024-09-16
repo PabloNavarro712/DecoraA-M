@@ -15,9 +15,7 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/" (click)="closeNavbar()">Inicio</a>
-                <li class="nav-item">
-          <a class="nav-link" routerLink="/galeria" (click)="closeNavbar()">Galería</a>
-        </li>
+                
         <li class="nav-item">
           <a class="nav-link" routerLink="/services" (click)="closeNavbar()">Servicios</a>
         </li>
@@ -34,13 +32,14 @@
 
 <!-- Área donde se cargará el contenido de las diferentes rutas -->
 <div class="container-fluid mt-5">
-  <router-outlet></router-outlet>
+     <router-outlet></router-outlet>
 </div>
-
+<!-- Enlace para la fuente personalizada (Google Fonts) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <!-- Botón flotante con ícono -->
 <button type="button" class="floating-button" data-bs-toggle="modal" data-bs-target="#contactModal">
-  <i class="fas fa-envelope"></i> <!-- Ícono de sobre -->
+  <i class="fas fa-envelope fa-2x"></i> <!-- Ícono de sobre aumentado -->
 </button>
 
 <!-- Modal de contacto personalizado -->
@@ -52,14 +51,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body custom-body">
-        <!-- Información de contacto -->
-        <p><strong>Correo:</strong> contacto&#64;ejemplo.com</p>
-        <p><strong>Dirección:</strong> Calle Falsa 123, Ciudad Ejemplo</p>
-        <p><strong>Horario de atención:</strong> Lunes a Viernes, 9 AM - 6 PM</p>
-        <p><strong>Teléfono:</strong> 555-555-5555</p>
+        <!-- Información de contacto con iconos y textos modificados -->
+        <p><i class="fas fa-envelope fa-2x"></i> contacto&#64;ejemplo.com</p> <!-- Ícono de correo aumentado -->
+        <p><i class="fas fa-map-marker-alt fa-2x"></i> Calle Falsa 123, Ciudad Ejemplo</p> <!-- Ícono de dirección aumentado -->
+        <p><i class="fas fa-clock fa-2x"></i> Lunes a Viernes, 9 AM - 6 PM</p> <!-- Ícono de horario aumentado -->
+        <p><i class="fas fa-phone fa-2x"></i> 555-555-5555</p> <!-- Ícono de teléfono aumentado -->
         <!-- Botón de contacto por WhatsApp -->
         <a href="https://wa.me/5555555555" class="btn btn-success" target="_blank">
-          Contactar por WhatsApp
+          <i class="fab fa-whatsapp fa-2x"></i> Contactar por WhatsApp <!-- Ícono de WhatsApp aumentado -->
         </a>
       </div>
     </div>
