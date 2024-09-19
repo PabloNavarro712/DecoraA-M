@@ -10,7 +10,7 @@ import { InicioComponent } from './modules/Vista_Cliente/inicio/inicio.component
 import { SobreNosotrosComponent } from './modules/Vista_Cliente/sobre-nosotros/sobre-nosotros.component';
 import { FooterComponent } from './modules/Vista_Cliente/footer/footer.component';
 import { BiembenidaComponent } from './modules/Vista_Cliente/biembenida/biembenida.component';
-import { PopupComponent } from './modules/Vista_Cliente/popup/popup.component';
+
 
 @NgModule({
   declarations: [
@@ -21,8 +21,7 @@ import { PopupComponent } from './modules/Vista_Cliente/popup/popup.component';
     InicioComponent,
     SobreNosotrosComponent,
     BiembenidaComponent,
-    FooterComponent,
-    PopupComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,

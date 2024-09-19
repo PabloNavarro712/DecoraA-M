@@ -1,44 +1,23 @@
-<body>
-  
-    <div class="container">
-        <h1>Nuestros Servicios</h1>
-        <div class="services">
-            <div class="service-item">
-                <div class="service-icon">🎉</div>
-                <div class="service-title">Decoración de Bodas</div>
-                <div class="service-description">
-                    Ofrecemos decoración personalizada para bodas, creando el ambiente perfecto para tu día especial.
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">🎈</div>
-                <div class="service-title">Fiestas Infantiles</div>
-                <div class="service-description">
-                    Hacemos que las fiestas de los más pequeños sean inolvidables con decoraciones temáticas y creativas.
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">💐</div>
-                <div class="service-title">Eventos Corporativos</div>
-                <div class="service-description">
-                    Proveemos decoración elegante y profesional para todo tipo de eventos corporativos.
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">👑</div>
-                <div class="service-title">XV Años</div>
-                <div class="service-description">
-                    Creamos decoraciones memorables y elegantes para celebrar tus XV Años con estilo.
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">🍼</div>
-                <div class="service-title">Baby Showers</div>
-                <div class="service-description">
-                    Diseñamos decoraciones tiernas y encantadoras para dar la bienvenida al nuevo miembro de la familia.
-                </div>
+<div class="container">
+    <h1>Nuestros Servicios</h1>
+    <div class="services" *ngIf="services.length > 0">
+        <div class="service-item" *ngFor="let service of services" (click)="openModal(service)">
+            <div class="service-icon">{{ service.icon }}</div>
+            <div class="service-title">{{ service.title }}</div>
+            <div class="service-description">{{ service.description }}</div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" [ngClass]="{'show': activeModal !== null}" (click)="closeModal($event)">
+        <div class="modal-content" (click)="stopPropagation($event)">
+            <span class="close-btn" (click)="closeModal()">&times;</span>
+            <h2>{{ activeService?.title }}</h2>
+            <!-- Aquí agregas la imagen -->
+            <img [src]="activeService?.imageUrl" alt="Image" class="modal-image">
+            <div class="modal-body">
+                <p>{{ activeService?.info }}</p>
             </div>
         </div>
     </div>
-  </body>
-  
+</div>
