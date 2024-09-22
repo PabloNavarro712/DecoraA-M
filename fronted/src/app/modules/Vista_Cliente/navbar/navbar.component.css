@@ -171,3 +171,28 @@
   background-color: #1ebf5b; /* Color verde más oscuro */
 }
 
+
+
+
+  /* Cambiar la fuente para todo el modal */
+  .custom-modal {
+    font-family: 'Poppins', sans-serif; /* Fuente personalizada */
+  }
+
+  /* Aumentar el tamaño de los textos */
+  .custom-body p {
+    font-size: 1.2rem; /* Tamaño de texto */
+    line-height: 1.5;  /* Espaciado entre líneas */
+  }
+
+  /* Estilos específicos para los íconos */
+  .custom-body i {
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
+    color: #007bff; /* Color personalizado para los íconos */
+  }
+
+  /* Tamaño del botón flotante */
+  .floating-button {
+    font-size: 1.5rem; /* Tamaño del ícono del botón flotante */
+  }
+
