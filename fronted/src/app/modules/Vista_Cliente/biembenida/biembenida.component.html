@@ -1,18 +1,27 @@
-
 <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-6">
-        <h1>Bienvenido a DECORAA&M</h1>
-        <p class="text-info">¡Transformamos tus momentos especiales en recuerdos inolvidables!</p>
-        <p>En DECORAA&M, nos especializamos en la creación de decoraciones únicas y personalizadas para todo tipo de eventos sociales. Desde bodas y aniversarios hasta fiestas de cumpleaños y celebraciones corporativas, nuestro equipo de expertos está dedicado a convertir tu visión en una realidad vibrante y elegante.</p>
-      </div>
-      <div class="col-md-6 text-center">
-        <img src="https://scontent.fcjs3-2.fna.fbcdn.net/v/t39.30808-6/436176130_949063000562476_8435144913326478940_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=f727a1&_nc_ohc=HPXEuSzrtY0Q7kNvgG3vLaw&_nc_ht=scontent.fcjs3-2.fna&oh=00_AYCI6mPSU4m0KrZKpELkWCQ8cXfmZWo8T9T91vG1_irNGg&oe=66EA238B" alt="Decoración de evento" class="img-fluid rounded">
-      </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Bienvenido a DECORAA&M</h1>
+      <p class="text-info">¡Transformamos tus momentos especiales en recuerdos inolvidables!</p>
+      <p>En DECORAA&M, nos especializamos en la creación de decoraciones únicas y personalizadas para todo tipo de eventos sociales. Desde bodas y aniversarios hasta fiestas de cumpleaños y celebraciones corporativas, nuestro equipo de expertos está dedicado a convertir tu visión en una realidad vibrante y elegante.</p>
     </div>
-  
-    <div class="mt-5 p-4 text-center text-white" style="background: linear-gradient(to right, navy, turquoise); border-radius: 10px;">
-      <h2>Decoraciones para eventos sociales, <strong>cumpleaños, fiestas temáticas</strong> y mucho más.</h2>
+    <div class="col-md-6 text-center">
+      <img src="https://scontent.fisj3-3.fna.fbcdn.net/v/t39.30808-6/457386655_1062768412525267_2361893357592751224_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_ohc=FbnLFFmNkNwQ7kNvgHsh2q3&_nc_ht=scontent.fisj3-3.fna&_nc_gid=AQdPleGIKoo5ip8CN8iZ_A3&oh=00_AYB1Zju_nEwg4gHqkqxgUppSv5rS_hzF7Y4HdrKLUOPZeA&oe=66F2321A" alt="Decoración de evento" class="img-fluid rounded">
     </div>
   </div>
-  
+
+  <div class="mt-5 p-4 text-center text-white" style="background: linear-gradient(to right, navy, turquoise); border-radius: 10px;">
+    <h2>Decoraciones para eventos sociales, <strong>cumpleaños, fiestas temáticas</strong> y mucho más.</h2>
+  </div>
+
+  <!-- Galería de imágenes en estilo masonry -->
+  <div class="row mt-5 masonry-container">
+    <div class="col-md-4 masonry-item" *ngFor="let item of galleryItems">
+      <div class="masonry-item-content">
+        <img [src]="item.src" class="img-fluid" [alt]="item.alt">
+        <h5>{{item.title}}</h5>
+        <p>{{item.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
