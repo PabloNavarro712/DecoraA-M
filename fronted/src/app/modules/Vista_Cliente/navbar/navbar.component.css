@@ -1,3 +1,6 @@
+/* Fuentes personalizadas */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 /* Estilos para el top bar con redes sociales y teléfono */
 .top-bar {
   background: linear-gradient(to right, #003366, #00bfff); /* Degradado de azul marino a azul turquesa */
@@ -14,28 +17,14 @@
   color: white;
   font-size: 1rem;
 }
-/* Estilo para el banner con información de ubicación y teléfono */
+
+/* Estilo para el banner */
 .banner {
   background-color: white;
   padding: 15px 0;
   border-bottom: 2px solid #fffeff; /* Línea rosada debajo del banner */
-  margin-right: 50px; /* Espacio de 50px al margen derecho */
 }
 
-.navbar-custom .container-fluid {
-  margin-right: 50px; /* Espacio de 50px al margen derecho en la barra de navegación */
-}
-
-
-.banner .contact-info {
-  font-size: 1.2rem;
-  color: linear-gradient(to right, #003366, #00bfff); /* Texto rosado */
-}
-
-.banner .contact-info i {
-  margin-right: 10px;
-  color: #ff69b4; /* Color de los íconos */
-}
 /* Estilos de la barra de navegación */
 .navbar-custom {
   background: linear-gradient(to right, #003366, #00bfff); /* Degradado de azul marino a azul turquesa */
@@ -59,23 +48,7 @@
   z-index: 1030;
 }
 
-/* Estilos para el dropdown del menú de "Servicios" */
-.navbar-custom .dropdown-menu {
-  background-color: #2515b1; /* Fondo rosado claro */
-  border: none; /* Sin bordes */
-}
-
-.navbar-custom .dropdown-menu .dropdown-item {
-  color: white;
-  font-style: italic; /* Texto en cursiva */
-}
-
-.navbar-custom .dropdown-menu .dropdown-item:hover {
-  background-color: #472ed8; /* Fondo más oscuro al pasar el mouse */
-  color: white;
-}
-
-/* Estilo para el botón de hamburguesa sin borde */
+/* Estilo para el botón de hamburguesa */
 .navbar-toggler {
   border: none; /* Elimina el borde del botón de hamburguesa */
 }
@@ -90,6 +63,8 @@
     justify-content: center;
   }
 }
+
+/* Estilos del botón flotante */
 .floating-button {
   position: fixed;
   bottom: 20px;
@@ -97,7 +72,7 @@
   z-index: 1000;
   background-color: transparent; /* Sin fondo */
   border: none; /* Sin borde */
-  color: #007bff; /* Color del ícono */
+  color: #25d366; /* Color del ícono de WhatsApp */
   font-size: 2rem; /* Tamaño del ícono */
   cursor: pointer;
   opacity: 0.5; /* Opacidad cuando no está en hover */
@@ -106,93 +81,44 @@
 
 .floating-button:hover {
   opacity: 1; /* Totalmente visible cuando el mouse pasa por encima */
-  color: #0056b3; /* Cambiar color del ícono al pasar el mouse */
 }
-/* Estilos del modal */
+
+/* Estilos del modal (eliminados ya que no lo estás utilizando) */
+
+/* Cambiar la fuente para todo el modal */
 .custom-modal {
-  background-color: white; /* Fondo blanco */
-  border-radius: 15px; /* Bordes redondeados */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra */
-  padding: 20px;
+  font-family: 'Poppins', sans-serif; /* Fuente personalizada */
 }
 
-/* Sombra de fondo personalizada (overlay) */
-.modal-backdrop {
-  background: linear-gradient(to bottom, #007bff, white); /* Degradado de azul a blanco */
-  opacity: 0.9; /* Ajusta la opacidad del fondo */
+/* Aumentar el tamaño de los textos (eliminados ya que no lo estás utilizando) */
+
+/* Estilos específicos para los íconos (eliminados ya que no lo estás utilizando) */
+/* Estilo para el ícono de usuario */
+.navbar-custom .btn-link i {
+  color: white; /* Cambiar color del ícono a blanco */
+  font-size: 2.5rem; /* Aumentar el tamaño del ícono */
+  transition: transform 0.3s ease; /* Añadir transición suave para efectos */
 }
 
-/* Estilo del encabezado */
-.custom-header {
-  border-bottom: none; /* Sin borde */
-  text-align: center;
-  padding: 10px;
+.navbar-custom .btn-link:hover i {
+  transform: scale(1.2); /* Aumentar tamaño del ícono al pasar el mouse */
+}
+/* Estilo para el texto del botón de inicio de sesión */
+.login-text {
+  margin-left: 5px; /* Espacio entre el ícono y el texto */
+  color: white; /* Color del texto */
 }
 
-/* Estilo del cuerpo del modal */
-.custom-body {
-  padding: 20px;
-  text-align: left; /* Texto alineado a la izquierda */
-  font-size: 1rem;
-}
-
-/* Botón de contacto por WhatsApp */
-.btn-success {
-  background-color: #25d366; /* Color verde de WhatsApp */
-  border: none;
-  display: block;
-  width: 100%; /* Ancho completo */
-  margin-top: 15px;
-  font-size: 1.1rem;
-}
-
-/* Cambiar el estilo del botón de cerrar */
-.btn-close {
-  background-color: #007bff; /* Color azul */
-  border-radius: 50%; /* Botón circular */
-}
-
-/* Sombra azul degradada en pantalla */
-.modal.fade .modal-dialog {
-  transform: translateY(0);
-  transition: transform 0.3s ease-out;
-}
-
-/* Centrar el contenido del modal */
-.modal-dialog-centered {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh; /* Asegura que esté centrado verticalmente */
-}
-
-/* Cambiar el estilo del botón cuando se pasa el mouse */
-.btn-success:hover {
-  background-color: #1ebf5b; /* Color verde más oscuro */
-}
-
-
-
-
-  /* Cambiar la fuente para todo el modal */
-  .custom-modal {
-    font-family: 'Poppins', sans-serif; /* Fuente personalizada */
+/* Mantener el texto oculto en pantallas grandes */
+@media (min-width: 992px) { /* Pantallas grandes */
+  .login-text.d-lg-none {
+    display: none; /* Ocultar en pantallas grandes */
   }
+}
 
-  /* Aumentar el tamaño de los textos */
-  .custom-body p {
-    font-size: 1.2rem; /* Tamaño de texto */
-    line-height: 1.5;  /* Espaciado entre líneas */
+/* Mostrar texto en pantallas pequeñas */
+@media (max-width: 991px) { /* Pantallas pequeñas */
+  .login-text.d-none {
+    display: inline; /* Mostrar solo en pantallas pequeñas */
   }
-
-  /* Estilos específicos para los íconos */
-  .custom-body i {
-    margin-right: 10px; /* Espacio entre el ícono y el texto */
-    color: #007bff; /* Color personalizado para los íconos */
-  }
-
-  /* Tamaño del botón flotante */
-  .floating-button {
-    font-size: 1.5rem; /* Tamaño del ícono del botón flotante */
-  }
-
+}
