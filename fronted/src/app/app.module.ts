@@ -10,6 +10,8 @@ import { InicioComponent } from './modules/Vista_Cliente/inicio/inicio.component
 import { SobreNosotrosComponent } from './modules/Vista_Cliente/sobre-nosotros/sobre-nosotros.component';
 import { FooterComponent } from './modules/Vista_Cliente/footer/footer.component';
 import { BiembenidaComponent } from './modules/Vista_Cliente/biembenida/biembenida.component';
+import { IndexClienteComponent } from './modules/Vista_Cliente/index-cliente/index-cliente.component';
+import { LoginComponent } from './modules/Vista_Cliente/login/login.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { BiembenidaComponent } from './modules/Vista_Cliente/biembenida/biembeni
     InicioComponent,
     SobreNosotrosComponent,
     BiembenidaComponent,
-    FooterComponent
+    FooterComponent,
+    IndexClienteComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
