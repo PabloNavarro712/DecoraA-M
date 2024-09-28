@@ -14,14 +14,4 @@
     <h2>Decoraciones para eventos sociales, <strong>cumpleaños, fiestas temáticas</strong> y mucho más.</h2>
   </div>
 
-  <!-- Galería de imágenes en estilo masonry -->
-  <div class="row mt-5 masonry-container">
-    <div class="col-md-4 masonry-item" *ngFor="let item of galleryItems">
-      <div class="masonry-item-content">
-        <img [src]="item.src" class="img-fluid" [alt]="item.alt">
-        <h5>{{item.title}}</h5>
-        <p>{{item.description}}</p>
-      </div>
-    </div>
-  </div>
-</div>
+  <app-galeria></app-galeria>

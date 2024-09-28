@@ -1,0 +1,38 @@
+/* Estilos para el sidebar en pantallas grandes */
+.sidebar {
+    width: 250px;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    position: fixed; /* Se mantiene fijo al desplazarse */
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+  }
+  
+  .content {
+    margin-left: 250px; /* Deja espacio para el menú lateral */
+  }
+  
+  /* Ajustes para pantallas pequeñas (por debajo de 992px) */
+  @media (max-width: 992px) {
+    .sidebar {
+      display: none; /* Ocultar el sidebar */
+    }
+    
+    .content {
+      margin-left: 0; /* El contenido ocupa todo el ancho */
+    }
+    
+    .navbar {
+      width: 100%; /* Asegurar que la barra de navegación ocupe todo el ancho */
+    }
+  
+    .navbar-nav {
+      width: 100%; /* Asegurar que la lista de navegación ocupe todo el ancho */
+    }
+  }
+  
+  /* Asegurar que el menú colapsable ocupe todo el ancho en pantallas pequeñas */
+  .collapse {
+    width: 100%; /* Ocupar todo el ancho */
+  }
+  

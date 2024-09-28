@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth.service'; // Verifica la ruta correcta
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'proyecto';
+  constructor(private authService: AuthService) {}
+
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
 }

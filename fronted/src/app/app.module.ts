@@ -12,6 +12,11 @@ import { FooterComponent } from './modules/Vista_Cliente/footer/footer.component
 import { BiembenidaComponent } from './modules/Vista_Cliente/biembenida/biembenida.component';
 import { IndexClienteComponent } from './modules/Vista_Cliente/index-cliente/index-cliente.component';
 import { LoginComponent } from './modules/Vista_Cliente/login/login.component';
+import { GalleryComponent } from './modules/Vista_Cliente/galeria/galeria.component';
+import { PlantillaAdminComponent } from './modules/Vista_Admin/plantilla-admin/plantilla-admin.component';
+import { AdminComponent } from './modules/Vista_Admin/admin/admin.component';
+import { FormsModule } from '@angular/forms'; // Asegúrate de importar FormsModule aquí
+
 
 
 @NgModule({
@@ -25,11 +30,16 @@ import { LoginComponent } from './modules/Vista_Cliente/login/login.component';
     BiembenidaComponent,
     FooterComponent,
     IndexClienteComponent,
-    LoginComponent
+    LoginComponent,
+    GalleryComponent,
+    PlantillaAdminComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule // Asegúrate de añadir FormsModule aquí
+
   ],
   providers: [],
   bootstrap: [AppComponent]

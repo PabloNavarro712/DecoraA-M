@@ -1,0 +1,145 @@
+<div class="container mt-5">
+    <!-- Sección de bodas -->
+    <div class="gallery-category">
+        <h3 class="category-title">Bodas</h3>
+        <div class="row">
+            <!-- Imágenes -->
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Boda+1" class="img-fluid image" alt="Boda 1">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://th.bing.com/th/id/R.22334b50d49da6b929decf91f7468e6b?rik=7qG0G1v2APRjVA&pid=ImgRaw&r=0" class="img-fluid image" alt="Boda 2">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Boda+3" class="img-fluid image" alt="Boda 3">
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary" (click)="toggleGallery('bodas')">Ver más</button>
+        </div>
+        <!-- Galería extendida -->
+        <div *ngIf="showBodas" class="row mt-3">
+            <div class="col-sm-4" *ngFor="let imagen of imagenesBodas">
+                <div class="image-container">
+                    <img [src]="imagen.src" class="img-fluid image" [alt]="imagen.alt">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de baby shower -->
+    <div class="gallery-category mt-5">
+        <h3 class="category-title">Baby Shower</h3>
+        <div class="row">
+            <!-- Imágenes -->
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+1" class="img-fluid image" alt="Baby Shower 1">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+2" class="img-fluid image" alt="Baby Shower 2">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+3" class="img-fluid image" alt="Baby Shower 3">
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary" (click)="toggleGallery('babyShower')">Ver más</button>
+        </div>
+        <!-- Galería extendida -->
+        <div *ngIf="showBabyShower" class="row mt-3">
+            <div class="col-sm-4" *ngFor="let imagen of imagenesBabyShower">
+                <div class="image-container">
+                    <img [src]="imagen.src" class="img-fluid image" [alt]="imagen.alt">
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+     
+    <!-- Sección de baby XV Años-->
+    <div class="gallery-category mt-5">
+        <h3 class="category-title">XV Años</h3>
+        <div class="row">
+            <!-- Imágenes -->
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+1" class="img-fluid image" alt="Baby Shower 1">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+2" class="img-fluid image" alt="Baby Shower 2">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+3" class="img-fluid image" alt="Baby Shower 3">
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary" (click)="toggleGallery('babyShower')">Ver más</button>
+        </div>
+        <!-- Galería extendida -->
+        <div *ngIf="showBabyShower" class="row mt-3">
+            <div class="col-sm-4" *ngFor="let imagen of imagenesXVAnos">
+                <div class="image-container">
+                    <img [src]="imagen.src" class="img-fluid image" [alt]="imagen.alt">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     
+    <!-- Sección de baby Fiestas Infantiles-->
+    <div class="gallery-category mt-5">
+        <h3 class="category-title">Fiestas Infantiles </h3>
+        <div class="row">
+            <!-- Imágenes -->
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+1" class="img-fluid image" alt="Baby Shower 1">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+2" class="img-fluid image" alt="Baby Shower 2">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200?text=Baby+Shower+3" class="img-fluid image" alt="Baby Shower 3">
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary" (click)="toggleGallery('babyShower')">Ver más</button>
+        </div>
+        <!-- Galería extendida -->
+        <div *ngIf="showBabyShower" class="row mt-3">
+            <div class="col-sm-4" *ngFor="let imagen of  imagenesfiestasInf">
+                <div class="image-container">
+                    <img [src]="imagen.src" class="img-fluid image" [alt]="imagen.alt">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Puedes repetir el mismo patrón para las demás categorías -->
+
+
+</div>
+
