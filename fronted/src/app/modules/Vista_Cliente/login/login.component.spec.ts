@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms'; // Importar FormsModule
 
 import { LoginComponent } from './login.component';
 
