@@ -35,4 +35,8 @@
   .collapse {
     width: 100%; /* Ocupar todo el ancho */
   }
-  
+  /* Asegúrate de agregar espacio suficiente debajo del navbar fijo */
+.content-wrapper {
+  padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
+}
+

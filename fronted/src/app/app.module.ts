@@ -15,7 +15,12 @@ import { LoginComponent } from './modules/Vista_Cliente/login/login.component';
 import { GalleryComponent } from './modules/Vista_Cliente/galeria/galeria.component';
 import { PlantillaAdminComponent } from './modules/Vista_Admin/plantilla-admin/plantilla-admin.component';
 import { AdminComponent } from './modules/Vista_Admin/admin/admin.component';
-import { FormsModule } from '@angular/forms'; // Asegúrate de importar FormsModule aquí
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './modules/Vista_Admin/home/home.component';
+import { CustomCalendarComponent } from './modules/Vista_Admin/custom-calendar/custom-calendar.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery-editor/admin-gallery-editor.component'; // Asegúrate de importar FormsModule aquí
+
 
 
 
@@ -34,11 +39,18 @@ import { FormsModule } from '@angular/forms'; // Asegúrate de importar FormsMod
     GalleryComponent,
     PlantillaAdminComponent,
     AdminComponent,
+    HomeComponent,
+    CustomCalendarComponent,
+    AdminGalleryEditorComponent,
   ],
   imports: [
+    FormsModule, 
     BrowserModule,
     AppRoutingModule,
-    FormsModule // Asegúrate de añadir FormsModule aquí
+    FormsModule,
+    NgbModule, // Asegúrate de añadir FormsModule aquí
+    NgbModule,
+
 
   ],
   providers: [],
