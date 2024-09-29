@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>Calendario</h2>
+  <div class="calendar-container">
+    <div class="calendar">
+      <div class="header">
+        <h4>{{ currentDate.toLocaleString('default', { month: 'long' }) }} {{ currentDate.getFullYear() }}</h4>
+      </div>
+      <div class="days">
+        <div
+          class="day"
+          *ngFor="let day of getCalendarDays()"
+          (click)="onDateSelect(day)"
+          [class.today]="isToday(day)"
+          [class.selected]="selectedDate?.getDate() === day.getDate() && selectedDate?.getMonth() === day.getMonth() && selectedDate?.getFullYear() === day.getFullYear()"
+          [class.event-day]="hasEvent(day)"
+        >
+          <span>{{ day.getDate() }}</span>
+          <span *ngIf="hasEvent(day)" class="event-marker"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="events">
+      <h5>Agregar Evento</h5>
+      <input [(ngModel)]="newEventTitle" placeholder="Título del evento" />
+      <button (click)="addEvent()" class="btn btn-primary">Agregar</button>
+
+      <h5>Eventos próximos:</h5>
+      <div class="events-list">
+        <ul>
+          <li *ngFor="let event of events">
+            {{ event.date }}: {{ event.title }} 
+            <button (click)="deleteEvent(event)" class="btn btn-danger btn-sm">Eliminar</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="selectedDate">
+    <h5>Fecha seleccionada:</h5>
+    <p>{{ selectedDate | date: 'yyyy-MM-dd' }}</p>
+  </div>
+</div>
