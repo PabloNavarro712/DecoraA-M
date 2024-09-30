@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
 import { GaleryService } from 'src/service/galery.service'; // Ajusta el path según tu estructura
 import { GaleryDocument } from 'src/todos/document/galery.document'; // Ajusta el path según tu estructura
 
-@Controller('galery')
+@Controller('api/galery')
 export class GaleryController {
   constructor(private readonly galeryService: GaleryService) {}
 
