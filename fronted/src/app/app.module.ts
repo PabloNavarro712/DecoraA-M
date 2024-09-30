@@ -4,7 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './modules/Vista_Cliente/navbar/navbar.component';
 import { CarouselComponent } from './modules/Vista_Cliente/carousel/carousel.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { GaleryService } from 'src/services/api/galery.service';
 import { ServicesComponent } from './modules/Vista_Cliente/services/services.component';
 import { InicioComponent } from './modules/Vista_Cliente/inicio/inicio.component';
 import { SobreNosotrosComponent } from './modules/Vista_Cliente/sobre-nosotros/sobre-nosotros.component';
@@ -50,7 +51,7 @@ import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery
     FormsModule,
     NgbModule, // Asegúrate de añadir FormsModule aquí
     NgbModule,
-
+    HttpClientModule 
 
   ],
   providers: [],
