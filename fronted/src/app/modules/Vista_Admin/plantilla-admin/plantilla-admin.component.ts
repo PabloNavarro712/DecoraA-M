@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plantilla-admin',
@@ -7,7 +8,10 @@ import { Component } from '@angular/core';
 })
 export class PlantillaAdminComponent {
 
-
+  constructor(private router: Router) { }
+  ngOnInit(): void {
+    this.router.navigate(['/administrador/home']);  // Redirecciona automáticamente a /administrador/home
+  }
     isNavbarCollapsed = true;
   
     // Alternar el estado del menú

@@ -21,6 +21,8 @@ import { HomeComponent } from './modules/Vista_Admin/home/home.component';
 import { CustomCalendarComponent } from './modules/Vista_Admin/custom-calendar/custom-calendar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery-editor/admin-gallery-editor.component'; // Asegúrate de importar FormsModule aquí
+import { GaleriaService } from './services/galeria.service';
+import { GaleriaComponent } from './modules/Vista_Admin/galeria/galeria.component';
 
 
 
@@ -43,6 +45,7 @@ import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery
     HomeComponent,
     CustomCalendarComponent,
     AdminGalleryEditorComponent,
+    GaleriaComponent,
   ],
   imports: [
     FormsModule, 
