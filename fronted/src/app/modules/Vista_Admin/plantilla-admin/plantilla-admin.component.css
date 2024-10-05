@@ -1,42 +1,83 @@
-/* Estilos para el sidebar en pantallas grandes */
+/* Ajustes de la barra lateral */
 .sidebar {
-    width: 250px;
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
-    position: fixed; /* Se mantiene fijo al desplazarse */
-    top: 0;
-    left: 0;
-    padding-top: 20px;
-  }
-  
-  .content {
-    margin-left: 250px; /* Deja espacio para el menú lateral */
-  }
-  
-  /* Ajustes para pantallas pequeñas (por debajo de 992px) */
-  @media (max-width: 992px) {
-    .sidebar {
-      display: none; /* Ocultar el sidebar */
-    }
-    
-    .content {
-      margin-left: 0; /* El contenido ocupa todo el ancho */
-    }
-    
-    .navbar {
-      width: 100%; /* Asegurar que la barra de navegación ocupe todo el ancho */
-    }
-  
-    .navbar-nav {
-      width: 100%; /* Asegurar que la lista de navegación ocupe todo el ancho */
-    }
-  }
-  
-  /* Asegurar que el menú colapsable ocupe todo el ancho en pantallas pequeñas */
-  .collapse {
-    width: 100%; /* Ocupar todo el ancho */
-  }
-  /* Asegúrate de agregar espacio suficiente debajo del navbar fijo */
-.content-wrapper {
-  padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  padding-top: 20px;
 }
 
+.sidebar .sidebar-heading {
+  color: white;
+  padding-left: 20px;
+  font-size: 1.2rem;
+}
+
+.sidebar .nav-item {
+  padding: 10px 20px;
+}
+
+.sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .nav-link i {
+  margin-right: 10px;
+}
+
+.sidebar .link-text {
+  transition: opacity 0.3s ease;
+}
+
+/* Estilo para la clase active */
+.sidebar .nav-link.active {
+  background-color: #0d6efd; /* Fondo azul */
+  color: white; /* Texto blanco */
+}
+
+/* Ocultar el texto en pantallas pequeñas */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px;
+  }
+
+  .sidebar .link-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+  }
+
+  .sidebar .nav-link i {
+    margin-right: 0;
+  }
+
+  /* Mostrar el texto al pasar el mouse */
+  .sidebar:hover .link-text {
+    opacity: 1;
+    width: auto;
+    margin-left: 10px;
+  }
+
+  /* Aumentar el ancho de la barra lateral al pasar el mouse */
+  .sidebar:hover {
+    width: 250px;
+  }
+}
+
+/* Ajustes del contenido */
+.content-wrapper {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    margin-left: 80px;
+  }
+}
