@@ -42,6 +42,7 @@ export class GaleriaComponent implements OnInit {
       this.resetForm();
     });
   }
+  
 
   deleteItem(id: string | undefined): void {
     if (id) {
@@ -79,13 +80,14 @@ export class GaleriaComponent implements OnInit {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       const file = target.files[0];
-      const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        this.newItem.Imagen = e.target.result; // Guardar la imagen en newItem
-      };
-
-      reader.readAsDataURL(file); // Leer el archivo como una URL de datos
+  
+      // Subir la imagen a Firebase Storage
+      this.galeriaService.uploadImage(file).subscribe(response => {
+        this.newItem.Imagen = response.imageUrl; // Guardar la URL de la imagen en newItem
+      }, error => {
+        console.error('Error al subir la imagen:', error);
+      });
     }
   }
-}
+  
+} 
