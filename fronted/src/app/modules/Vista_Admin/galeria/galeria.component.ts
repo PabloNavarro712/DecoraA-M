@@ -23,6 +23,7 @@ export class GaleriaComponent implements OnInit {
   };
 
   itemToEdit: Item | null = null; // Variable para el item que se está editando
+  imagePreview: string | ArrayBuffer | null = null; // Para mostrar la imagen seleccionada
 
   constructor(private galeriaService: GaleriaService) { }
 
@@ -42,7 +43,6 @@ export class GaleriaComponent implements OnInit {
       this.resetForm();
     });
   }
-  
 
   deleteItem(id: string | undefined): void {
     if (id) {
@@ -57,6 +57,7 @@ export class GaleriaComponent implements OnInit {
   onEdit(item: Item): void {
     this.itemToEdit = item; // Guardar el item que se está editando
     this.newItem = { ...item }; // Cargar datos en el formulario
+    this.imagePreview = item.Imagen; // Cargar la imagen en la vista previa
   }
 
   updateItem(): void {
@@ -74,20 +75,27 @@ export class GaleriaComponent implements OnInit {
   resetForm(): void {
     this.newItem = { Categoria: '', Descripcion: '', Imagen: '' }; // Limpiar el formulario
     this.itemToEdit = null; // Resetear el item a editar
+    this.imagePreview = null; // Limpiar la vista previa de la imagen
   }
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       const file = target.files[0];
-  
+      
       // Subir la imagen a Firebase Storage
       this.galeriaService.uploadImage(file).subscribe(response => {
         this.newItem.Imagen = response.imageUrl; // Guardar la URL de la imagen en newItem
+
+        // Mostrar una vista previa de la imagen cargada
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreview = reader.result; // Asignar la imagen cargada a la vista previa
+        };
+        reader.readAsDataURL(file);
       }, error => {
         console.error('Error al subir la imagen:', error);
       });
     }
   }
-  
-} 
+}

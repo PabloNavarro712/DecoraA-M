@@ -5,7 +5,13 @@
   <div class="upload-container">
     <div class="image-upload">
       <label for="upload" class="image-label">
-        <img src="assets/image-icon.png" alt="Cargar" class="image-placeholder">
+        <img *ngIf="newItem.Imagen" [src]="newItem.Imagen" alt="Vista previa" class="image-placeholder">
+       <!-- Mostrar el ícono si no hay imagen cargada -->
+       <i *ngIf="!newItem.Imagen" class="fas fa-upload fa-5x icon-gray"></i>
+
+
+
+
         <div class="upload-text">Subir archivo</div>
       </label>
       <input id="upload" type="file" class="upload-input" (change)="onFileSelected($event)">
@@ -23,7 +29,7 @@
       <textarea placeholder="Agregue una descripción" class="description-textarea" [(ngModel)]="newItem.Descripcion"></textarea>
 
       <button class="upload-button" (click)="itemToEdit ? updateItem() : addItem()">
-        {{ itemToEdit ? 'Actualizar' : 'Subir' }}
+        <i class="fas fa-upload"></i> {{ itemToEdit ? 'Actualizar' : 'Subir' }}
       </button>
     </div>
   </div>
@@ -45,8 +51,12 @@
           <td><img [src]="item.Imagen" alt="{{ item.Categoria }}" class="table-image"></td>
           <td>{{ item.Descripcion }}</td>
           <td>
-            <button class="edit-button" (click)="onEdit(item)">Editar</button>
-            <button class="delete-button" (click)="deleteItem(item.id)">Eliminar</button>
+            <button class="edit-button" (click)="onEdit(item)">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button class="delete-button" (click)="deleteItem(item.id)">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
           </td>
         </tr>
       </tbody>
