@@ -23,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery-editor/admin-gallery-editor.component'; // Asegúrate de importar FormsModule aquí
 import { GaleriaService } from './services/galeria.service';
 import { GaleriaComponent } from './modules/Vista_Admin/galeria/galeria.component';
+import { CategoriaGaleriaComponent } from './modules/Vista_Cliente/categoria-galeria/categoria-galeria.component';
 
 
 
@@ -46,6 +47,7 @@ import { GaleriaComponent } from './modules/Vista_Admin/galeria/galeria.componen
     CustomCalendarComponent,
     AdminGalleryEditorComponent,
     GaleriaComponent,
+    CategoriaGaleriaComponent,
   ],
   imports: [
     FormsModule, 

@@ -43,4 +43,14 @@ export class GaleriaService {
     formData.append('image', file);
     return this.http.post<{ imageUrl: string }>(this.uploadUrl, formData);
   }
+  // debuelbe imagenes por categoria
+// galeria.service.ts
+// galeria.service.ts
+getItemsByCategoria(categoria: string): Observable<Item[]> {
+  return this.http.get<Item[]>(`${this.apiUrl}/galeria-prueba?categoria=${encodeURIComponent(categoria)}`);
 }
+
+
+
+}
+
