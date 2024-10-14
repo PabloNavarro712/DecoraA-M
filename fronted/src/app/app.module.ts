@@ -4,7 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './modules/Vista_Cliente/navbar/navbar.component';
 import { CarouselComponent } from './modules/Vista_Cliente/carousel/carousel.component';
-import { HttpClientModule } from '@angular/common/http';
 import { GaleryService } from 'src/services/api/galery.service';
 import { ServicesComponent } from './modules/Vista_Cliente/services/services.component';
 import { InicioComponent } from './modules/Vista_Cliente/inicio/inicio.component';
@@ -16,7 +15,6 @@ import { LoginComponent } from './modules/Vista_Cliente/login/login.component';
 import { GalleryComponent } from './modules/Vista_Cliente/galeria/galeria.component';
 import { PlantillaAdminComponent } from './modules/Vista_Admin/plantilla-admin/plantilla-admin.component';
 import { AdminComponent } from './modules/Vista_Admin/admin/admin.component';
-import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './modules/Vista_Admin/home/home.component';
 import { CustomCalendarComponent } from './modules/Vista_Admin/custom-calendar/custom-calendar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,7 +22,10 @@ import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery
 import { GaleriaService } from './services/galeria.service';
 import { GaleriaComponent } from './modules/Vista_Admin/galeria/galeria.component';
 import { CategoriaGaleriaComponent } from './modules/Vista_Cliente/categoria-galeria/categoria-galeria.component';
+import { ToggleViewComponent } from './toggle-view/toggle-view.component';
 
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -48,8 +49,11 @@ import { CategoriaGaleriaComponent } from './modules/Vista_Cliente/categoria-gal
     AdminGalleryEditorComponent,
     GaleriaComponent,
     CategoriaGaleriaComponent,
+    ToggleViewComponent,
   ],
   imports: [
+    FormsModule,
+    HttpClientModule,
     FormsModule, 
     BrowserModule,
     AppRoutingModule,
