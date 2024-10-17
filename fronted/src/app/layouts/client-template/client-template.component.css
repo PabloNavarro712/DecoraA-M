@@ -1,0 +1,10 @@
+.container-fluid {
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    margin: 0%; /* Elimina márgenes */
+    padding: 50px; /* Elimina padding */
+}
+
+.router-outlet {
+    width: 100%; /* Asegura que el router-outlet ocupe el 100% del ancho */
+    height: auto; /* Ajusta la altura según el contenido */
+}

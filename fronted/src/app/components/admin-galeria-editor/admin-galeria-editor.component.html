@@ -1,0 +1,64 @@
+
+<div class="main-container">
+  <!-- Formulario para agregar un nuevo item -->
+  <div class="upload-container">
+    <div class="image-upload">
+      <label for="upload" class="image-label">
+        <img *ngIf="newItem.Imagen" [src]="newItem.Imagen" alt="Vista previa" class="image-placeholder">
+       <!-- Mostrar el ícono si no hay imagen cargada -->
+       <i *ngIf="!newItem.Imagen" class="fas fa-upload fa-5x icon-gray"></i>
+
+
+
+
+        <div class="upload-text">Subir archivo</div>
+      </label>
+      <input id="upload" type="file" class="upload-input" (change)="onFileSelected($event)">
+    </div>
+
+    <div class="description-container">
+      <select class="category-select" [(ngModel)]="newItem.Categoria">
+        <option value="" disabled selected>Seleccione una categoría</option>
+        <option value="Bodas">Bodas</option>
+        <option value="XV años">XV años</option>
+        <option value="Babyshower">Babyshower</option>
+        <option value="Fiestas infantiles">Fiestas infantiles</option>
+      </select>
+
+      <textarea placeholder="Agregue una descripción" class="description-textarea" [(ngModel)]="newItem.Descripcion"></textarea>
+
+      <button class="upload-button" (click)="itemToEdit ? updateItem() : addItem()">
+        <i class="fas fa-upload"></i> {{ itemToEdit ? 'Actualizar' : 'Subir' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla para mostrar los items guardados -->
+  <div class="table-container">
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Categoría</th>
+          <th>Imagen</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>{{ item.Categoria }}</td>
+          <td><img [src]="item.Imagen" alt="{{ item.Categoria }}" class="table-image"></td>
+          <td>{{ item.Descripcion }}</td>
+          <td>
+            <button class="edit-button" (click)="onEdit(item)">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button class="delete-button" (click)="deleteItem(item.id)">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

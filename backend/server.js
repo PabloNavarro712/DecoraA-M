@@ -78,7 +78,7 @@ app.get('/api/galeria-prueba', async (req, res) => {
 });
 
 // Actualizar un elemento en la colección 'galeria prueba'
-app.put('/api/galeria prueba/:id', async (req, res) => {
+app.put('/api/galeria-prueba/:id', async (req, res) => {
     const itemId = req.params.id;
     const { Categoria, Descripcion, Imagen } = req.body;
 
@@ -91,7 +91,7 @@ app.put('/api/galeria prueba/:id', async (req, res) => {
 });
 
 // Eliminar un elemento en la colección 'galeria prueba'
-app.delete('/api/galeria prueba/:id', async (req, res) => {
+app.delete('/api/galeria-prueba/:id', async (req, res) => {
     const itemId = req.params.id;
     try {
         await db.collection('galeria prueba').doc(itemId).delete();

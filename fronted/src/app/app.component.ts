@@ -1,21 +1,20 @@
-// app.component.ts
-import { Component, OnInit } from '@angular/core';
-import { ViewSwitchService } from './view-switch.service';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  isAdminView: boolean = false;
+export class AppComponent {
+  activeModal: string | null = null; // Control del modal activo
 
-  constructor(private viewSwitchService: ViewSwitchService) {}
+  // Abre el modal
+  openModal(modal: string) {
+    this.activeModal = modal;
+  }
 
-  ngOnInit() {
-    // Establecer la vista inicial como la vista de cliente
-    this.isAdminView = this.viewSwitchService.getCurrentView();
+  // Cierra el modal
+  closeModal() {
+    this.activeModal = null;
   }
 }

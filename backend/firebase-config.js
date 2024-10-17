@@ -1,11 +1,12 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('./equipo-4-f104b-firebase-adminsdk-g4wzk-6e262237c2.json'); // Ruta de tu archivo de clave privada
+const serviceAccount = require('./equipo-4-f104b-firebase-adminsdk-g4wzk-6e262237c2.json'); // Ruta al archivo de clave privada
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: 'equipo-4-f104b.appspot.com'  // Reemplaza con el ID de tu proyecto
+  databaseURL: 'https://equipo-4-f104b.firebaseio.com' // Cambia esto por la URL de tu base de datos
 });
 
-const bucket = admin.storage().bucket();
+const db = admin.firestore(); // Usando Firestore
+const bucket = admin.storage().bucket(); // Para Storage
 
-module.exports = { bucket };
+module.exports = { admin, db, bucket };

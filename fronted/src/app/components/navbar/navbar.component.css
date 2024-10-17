@@ -1,0 +1,35 @@
+/* Estilos para la barra de navegación */
+.navbar-custom {
+  background: linear-gradient(to right, #003366, #00bfff); /* Degradado de azul marino a azul turquesa */
+  box-shadow: 0 4px 6px rgba(240, 235, 235, 0.911);
+}
+
+.navbar-custom .nav-link {
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #4547b6; /* Cambio de color al pasar el mouse */
+}
+
+/* Botón de hamburguesa */
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+}
+
+/* Estilo para ícono y texto del botón de inicio de sesión */
+.navbar-custom .btn-link i {
+  color: white;
+  font-size: 2.5rem;
+  transition: transform 0.3s ease;
+}
+
+.navbar-custom .btn-link:hover i {
+  transform: scale(1.2);
+}
