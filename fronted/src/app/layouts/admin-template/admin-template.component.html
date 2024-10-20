@@ -1,0 +1,41 @@
+<!-- Barra lateral -->
+<div class="d-flex">
+    <nav id="sidebar" class="navbar-dark bg-dark sidebar">
+      <div class="offcanvas-body">
+        <h5 class="sidebar-heading">Barra lateral</h5>
+        <ul class="navbar-nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/adminHome" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <i class="bi bi-house-door-fill"></i> <span class="link-text">Hogar</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/salpicadero" routerLinkActive="active">
+              <i class="bi bi-speedometer2"></i> <span class="link-text">Salpicadero</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/ordenes" routerLinkActive="active">
+              <i class="bi bi-file-earmark-text-fill"></i> <span class="link-text">Órdenes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/productos" routerLinkActive="active">
+              <i class="bi bi-grid-fill"></i> <span class="link-text">Productos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/clientela" routerLinkActive="active">
+              <i class="bi bi-person-circle"></i> <span class="link-text">Clientela</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  
+    <!-- Contenido principal -->
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  

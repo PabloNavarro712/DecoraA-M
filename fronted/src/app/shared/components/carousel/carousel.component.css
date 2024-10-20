@@ -1,0 +1,23 @@
+#carouselExampleAutoplaying {
+    width: 90%; /* El carrusel ocupa el 70% del ancho de la pantalla */
+    max-width: 100%; /* Asegura que no se expanda más allá del 100% del ancho disponible */
+    height: 400px; /* Ajusta la altura del carrusel a 400 píxeles */
+    overflow: hidden; /* Oculta cualquier contenido que se desborde fuera del carrusel */
+    margin: 0 auto; /* Centra el carrusel horizontalmente */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido del carrusel */
+}
+
+.carousel-inner {
+    height: 100%; /* Asegura que el contenedor interno tenga la misma altura que el carrusel */
+    display: flex;
+    align-items: center; /* Centra verticalmente las imágenes dentro del carrusel */
+}
+
+.carousel-inner img {
+    width: 100%; /* La imagen ocupa todo el ancho del contenedor */
+    height: 100%; /* Ajusta la altura de la imagen al alto del carrusel */
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio, recortando lo que sobre */
+    display: block; /* Evita espacios en blanco alrededor de la imagen */
+    margin: auto; /* Centra la imagen horizontalmente si es necesario */
+}

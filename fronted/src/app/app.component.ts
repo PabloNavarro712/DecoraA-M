@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service'; // Verifica la ruta correcta
-
 
 @Component({
   selector: 'app-root',
@@ -8,9 +6,15 @@ import { AuthService } from './auth.service'; // Verifica la ruta correcta
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private authService: AuthService) {}
+  activeModal: string | null = null; // Control del modal activo
 
-  isAdmin() {
-    return this.authService.isAdmin();
+  // Abre el modal
+  openModal(modal: string) {
+    this.activeModal = modal;
   }
-    }
+
+  // Cierra el modal
+  closeModal() {
+    this.activeModal = null;
+  }
+}

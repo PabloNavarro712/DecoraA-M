@@ -2,60 +2,77 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './modules/Vista_Cliente/navbar/navbar.component';
-import { CarouselComponent } from './modules/Vista_Cliente/carousel/carousel.component';
-import { HttpClientModule } from '@angular/common/http';
-import { GaleryService } from 'src/services/api/galery.service';
-import { ServicesComponent } from './modules/Vista_Cliente/services/services.component';
-import { InicioComponent } from './modules/Vista_Cliente/inicio/inicio.component';
-import { SobreNosotrosComponent } from './modules/Vista_Cliente/sobre-nosotros/sobre-nosotros.component';
-import { FooterComponent } from './modules/Vista_Cliente/footer/footer.component';
-import { BiembenidaComponent } from './modules/Vista_Cliente/biembenida/biembenida.component';
-import { IndexClienteComponent } from './modules/Vista_Cliente/index-cliente/index-cliente.component';
-import { LoginComponent } from './modules/Vista_Cliente/login/login.component';
-import { GalleryComponent } from './modules/Vista_Cliente/galeria/galeria.component';
-import { PlantillaAdminComponent } from './modules/Vista_Admin/plantilla-admin/plantilla-admin.component';
-import { AdminComponent } from './modules/Vista_Admin/admin/admin.component';
-import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './modules/Vista_Admin/home/home.component';
-import { CustomCalendarComponent } from './modules/Vista_Admin/custom-calendar/custom-calendar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery-editor/admin-gallery-editor.component'; // Asegúrate de importar FormsModule aquí
+
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ClientTemplateComponent } from './layouts/client-template/client-template.component';
 
 
 
+import { CarouselComponent } from './shared/components/carousel/carousel.component';
+import { CarouselItemComponent } from './shared/components/carousel-item/carousel-item.component';
+import { CarouselControlsComponent } from './shared/components/carousel-controls/carousel-controls.component';
+import { ComponenteCarruselComponent } from './shared/components/componente-carrusel/componente-carrusel.component';
+import { TextoImagenComponent } from './shared/components/texto-imagen/texto-imagen.component';
+import { GradienteComponent } from './shared/components/gradiente/gradiente.component';
 
+import { InicioComponent } from './pages/inicio/inicio.component';
+import { ServiciosComponent } from './pages/servicios/servicios.component';
+import { NuestraHistoriaComponent } from './pages/nuestra-historia/nuestra-historia.component';
+
+
+
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { FloatingButtonComponent } from './components/floating-button/floating-button.component';
+import { LoginComponent } from './components/login/login.component'; 
+import { FooterComponent } from './components/footer/footer.component';
+import { GaleriaCategoriaComponent } from './components/galeria-categoria/galeria-categoria.component';
+import { AdminTemplateComponent } from './layouts/admin-template/admin-template.component';
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
+import { AdminSalpicaderoComponent } from './pages/admin-salpicadero/admin-salpicadero.component';
+import { AdminOrdenesComponent } from './pages/admin-ordenes/admin-ordenes.component';
+import { AdminProductosComponent } from './pages/admin-productos/admin-productos.component';
+import { AdminClientelaComponent } from './pages/admin-clientela/admin-clientela.component';
+import { AdminGaleriaEditorComponent } from './components/admin-galeria-editor/admin-galeria-editor.component';
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent,
     CarouselComponent,
-    ServicesComponent,
+    CarouselControlsComponent,
+    CarouselItemComponent,
+    ComponenteCarruselComponent,
+    TextoImagenComponent,
+    GradienteComponent,
+    AppComponent,
+    ClientTemplateComponent,
     InicioComponent,
-    SobreNosotrosComponent,
-    BiembenidaComponent,
-    FooterComponent,
-    IndexClienteComponent,
+    ServiciosComponent,
+    NuestraHistoriaComponent,
+    NavbarComponent,
+    LoginModalComponent,
+    FloatingButtonComponent,
     LoginComponent,
-    GalleryComponent,
-    PlantillaAdminComponent,
-    AdminComponent,
-    HomeComponent,
-    CustomCalendarComponent,
-    AdminGalleryEditorComponent,
+    FooterComponent,
+    GaleriaCategoriaComponent,
+    AdminTemplateComponent,
+    AdminHomeComponent,
+    AdminSalpicaderoComponent,
+    AdminOrdenesComponent,
+    AdminProductosComponent,
+    AdminClientelaComponent,
+    AdminGaleriaEditorComponent,
+
   ],
   imports: [
-    FormsModule, 
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule, // Asegúrate de añadir FormsModule aquí
+    HttpClientModule,
     NgbModule,
-    HttpClientModule 
-
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
