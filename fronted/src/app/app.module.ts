@@ -2,65 +2,46 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './modules/Vista_Cliente/navbar/navbar.component';
-import { CarouselComponent } from './modules/Vista_Cliente/carousel/carousel.component';
-import { GaleryService } from 'src/services/api/galery.service';
-import { ServicesComponent } from './modules/Vista_Cliente/services/services.component';
-import { InicioComponent } from './modules/Vista_Cliente/inicio/inicio.component';
-import { SobreNosotrosComponent } from './modules/Vista_Cliente/sobre-nosotros/sobre-nosotros.component';
-import { FooterComponent } from './modules/Vista_Cliente/footer/footer.component';
-import { BiembenidaComponent } from './modules/Vista_Cliente/biembenida/biembenida.component';
-import { IndexClienteComponent } from './modules/Vista_Cliente/index-cliente/index-cliente.component';
-import { LoginComponent } from './modules/Vista_Cliente/login/login.component';
-import { GalleryComponent } from './modules/Vista_Cliente/galeria/galeria.component';
-import { PlantillaAdminComponent } from './modules/Vista_Admin/plantilla-admin/plantilla-admin.component';
-import { AdminComponent } from './modules/Vista_Admin/admin/admin.component';
-import { HomeComponent } from './modules/Vista_Admin/home/home.component';
-import { CustomCalendarComponent } from './modules/Vista_Admin/custom-calendar/custom-calendar.component';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AdminGalleryEditorComponent } from './modules/Vista_Admin/admin-gallery-editor/admin-gallery-editor.component'; // Asegúrate de importar FormsModule aquí
-import { GaleriaService } from './services/galeria.service';
-import { GaleriaComponent } from './modules/Vista_Admin/galeria/galeria.component';
-import { CategoriaGaleriaComponent } from './modules/Vista_Cliente/categoria-galeria/categoria-galeria.component';
-import { ToggleViewComponent } from './toggle-view/toggle-view.component';
+
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { VistaClienteModule } from './vista-cliente/vista-cliente.module';
+import { VistaAdminModule } from './vista-admin/vista-admin.module';
 
-
+import { ClientTemplateComponent } from './template_cliente/client-template/client-template.component';
+import { NavbarComponent } from './template_cliente/navbar/navbar.component';
+import { FooterComponent } from './template_cliente/footer/footer.component';
+import { FloatingButtonComponent } from './template_cliente/floating-button/floating-button.component';
+import { LoginComponent } from './template_cliente/login/login.component';
+import { LoginModalComponent } from './template_cliente/login-modal/login-modal.component';
+import { AdminTemplateComponent } from './admin-template/admin-template.component';
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent,
-    CarouselComponent,
-    ServicesComponent,
-    InicioComponent,
-    SobreNosotrosComponent,
-    BiembenidaComponent,
+
+    AdminTemplateComponent,
     FooterComponent,
-    IndexClienteComponent,
+    FloatingButtonComponent,
     LoginComponent,
-    GalleryComponent,
-    PlantillaAdminComponent,
-    AdminComponent,
-    HomeComponent,
-    CustomCalendarComponent,
-    AdminGalleryEditorComponent,
-    GaleriaComponent,
-    CategoriaGaleriaComponent,
-    ToggleViewComponent,
+    LoginModalComponent,
+    AppComponent,
+    ClientTemplateComponent,
+    NavbarComponent 
+    
+
   ],
   imports: [
-    FormsModule,
-    HttpClientModule,
-    FormsModule, 
+    VistaAdminModule,
+    VistaClienteModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule, // Asegúrate de añadir FormsModule aquí
+    HttpClientModule,
     NgbModule,
-    HttpClientModule 
+    
 
   ],
   providers: [],

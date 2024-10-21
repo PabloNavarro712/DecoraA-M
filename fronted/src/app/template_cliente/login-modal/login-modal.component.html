@@ -1,0 +1,14 @@
+<!-- Modal de inicio de sesión -->
+<div class="modal" [ngClass]="{'show': activeModal === 'login'}" (click)="close($event)">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" (click)="stopPropagation($event)">
+      <div class="modal-header">
+        
+       
+      </div>
+      <div class="modal-body">
+        <app-login></app-login> <!-- Aquí se incluye el componente de formulario de inicio de sesión -->
+      </div>
+    </div>
+  </div>
+</div>

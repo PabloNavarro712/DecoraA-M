@@ -1,0 +1,96 @@
+/* Fuentes personalizadas */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Estilos generales para el formulario de login */
+.contenedor__todo {
+  width: 100%;
+  margin: auto;
+  padding: 20px; /* Espaciado interno */
+}
+
+.caja__trasera {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 128, 255, 0.1); /* Fondo sutil para la caja trasera */
+  border-radius: 8px; /* Bordes redondeados */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.caja__trasera h3 {
+  color: #003366; /* Color del texto */
+  text-align: center;
+  margin: 0; /* Sin márgenes */
+}
+
+.contenedor__login-register {
+  width: 100%;
+}
+
+.contenedor__login-register form {
+  width: 100%;
+  background: #f9f9f9; /* Fondo del formulario */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el formulario */
+}
+
+.contenedor__login-register form h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #003366; /* Color del título */
+}
+
+.contenedor__login-register form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd; /* Borde ligero */
+  border-radius: 5px; /* Bordes redondeados */
+  background: #fff; /* Fondo blanco */
+  font-size: 16px;
+}
+
+.contenedor__login-register form button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  background: #003366; /* Color del botón */
+  color: white;
+  font-weight: bold;
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%; /* Botón ocupará todo el ancho */
+}
+
+.contenedor__login-register form button:hover {
+  background: #00bfff; /* Color al pasar el mouse */
+}
+
+/* Enlace para el registro */
+.enlace-registro {
+  text-align: center;
+  margin-top: 15px; /* Espaciado superior */
+}
+
+.enlace-registro p {
+  font-size: 14px; /* Tamaño de fuente */
+}
+
+.enlace-registro a {
+  color: #003366; /* Color del enlace */
+  text-decoration: none; /* Sin subrayado */
+}
+
+.enlace-registro a:hover {
+  text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Mejoras para pantallas pequeñas */
+@media (max-width: 600px) {
+  .contenedor__login-register form {
+    padding: 15px; /* Ajustar el padding en pantallas pequeñas */
+  }
+}

@@ -1,33 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-// Importar componentes que serán las secciones
-import { InicioComponent } from './modules/Vista_Cliente/inicio/inicio.component';
-import { SobreNosotrosComponent } from './modules/Vista_Cliente/sobre-nosotros/sobre-nosotros.component';
-import { ServicesComponent } from './modules/Vista_Cliente/services/services.component';
-import { AdminComponent } from './modules/Vista_Admin/admin/admin.component';
-import { HomeComponent } from './modules/Vista_Admin/home/home.component';  // Importar HomeComponent
-
-// Rutas para clientes
-const clienteRoutes: Routes = [
-  { path: '', component: InicioComponent },
-  { path: 'sobre-nosotros', component: SobreNosotrosComponent },
-  { path: 'services', component: ServicesComponent },
-];
-
-// Rutas para administradores
-const adminRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },  // Redirigir a Home por defecto
-  { path: 'home', component: HomeComponent },  // Ruta para el Home del administrador
-  // Otras rutas del admin
-];
-
+import { InicioComponent } from './vista-cliente/_inicio/inicio/inicio.component';
+// Importaciones del cliente
+import { NuestraHistoriaComponent } from './vista-cliente/_NuestraHistoria/nuestra-historia/nuestra-historia.component';
+import { ServiciosComponent } from './vista-cliente/_Servicios/servicios/servicios.component';
+// Importaciones del administrador
+import { HomeAdminComponent } from './vista-admin/home/home-admin/home-admin.component';
+import { PanelEdicionComponent } from './vista-admin/salpicadero/panel-edicion/panel-edicion.component';
 
 const routes: Routes = [
-  { path: 'clientes', children: clienteRoutes }, // Rutas para clientes
-  { path: 'administrador', children: adminRoutes }, // Rutas para administradores
-  { path: '', redirectTo: '/clientes', pathMatch: 'full' }, // Redireccionar a clientes por defecto
-  { path: '**', redirectTo: '/clientes', pathMatch: 'full' } // Redireccionar cualquier ruta no válida
+  // Rutas del cliente
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },  // Redirige la raíz a /inicio
+  { path: 'inicio', component: InicioComponent },          // Ruta para el componente InicioComponent
+  { path: 'nuestra-historia', component: NuestraHistoriaComponent }, // Ruta para Nuestra Historia
+  { path: 'servicios', component: ServiciosComponent },    // Ruta para Servicios
+
+  // Rutas del administrador
+  { path: 'home_a', component: HomeAdminComponent},
+  { path: 'salpicadero', component: PanelEdicionComponent},
+   
+
+  // Manejo de rutas no encontradas
+  { path: '**', redirectTo: '/inicio', pathMatch: 'full' } // Redirige rutas no encontradas a /inicio
 ];
 
 @NgModule({

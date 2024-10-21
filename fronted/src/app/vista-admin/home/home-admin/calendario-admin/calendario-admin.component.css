@@ -1,0 +1,94 @@
+/* Contenedor principal */
+.calendar-wrapper {
+  display: flex;
+  justify-content: center; /* Cambia a center para centrar horizontalmente */
+  gap: 20px;
+  max-width: 1200px; /* Ajusta el ancho máximo según sea necesario */
+  margin: 0 auto; /* Centra el contenedor en la página */
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 250px; /* Ajusta el ancho de la columna lateral según sea necesario */
+}
+
+.notes, .upcoming-events {
+  background-color: #e0e0e0;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upcoming-events {
+  background-color: #f9f9f9;
+}
+
+.calendar {
+  flex: 1; /* Ocupa el resto del espacio disponible */
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.days-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 20px;
+}
+
+.day {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.day.occupied {
+  background-color: #ffcccc;
+}
+
+.day.to-confirm {
+  background-color: #ffe6b3;
+}
+
+/* Efecto hover para mostrar información adicional sobre las fechas */
+.day[data-info]:hover::after {
+  content: attr(data-info);
+  position: absolute;
+  bottom: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  transform: translateY(-10px);
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Media Queries para mejor responsividad */
+@media (max-width: 768px) {
+  .calendar-wrapper {
+    flex-direction: column;
+    align-items: center; /* Centra los elementos en columnas */
+  }
+}
