@@ -8,7 +8,8 @@ import { GradienteComponent } from './_inicio/gradiente/gradiente.component';
 import { TextoImagenComponent } from './_inicio/texto-imagen/texto-imagen.component';
 import { ServiciosComponent } from './_Servicios/servicios/servicios.component';
 import { NuestraHistoriaComponent } from './_NuestraHistoria/nuestra-historia/nuestra-historia.component';
-
+import { CalendarioComponent } from './_Servicios/calendario/calendario.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 @NgModule({
@@ -19,11 +20,14 @@ import { NuestraHistoriaComponent } from './_NuestraHistoria/nuestra-historia/nu
     GradienteComponent,
     TextoImagenComponent,
     ServiciosComponent,
-    NuestraHistoriaComponent
+    NuestraHistoriaComponent,
+    CalendarioComponent
   ],
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    FullCalendarModule
+    
   ],
   exports: [
     InicioComponent 

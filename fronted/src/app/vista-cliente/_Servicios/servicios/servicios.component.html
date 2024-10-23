@@ -1,34 +1,83 @@
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Personaliza tu Servicio de Decoración</h2>
-  
-    <div class="row">
-      <div *ngFor="let servicio of servicios" class="col-md-6 col-lg-4 mb-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-img-container">
-            <img [src]="servicio.imagen" class="card-img-top" alt="{{ servicio.nombre }}">
+<div class="container">
+  <div class="row">
+    <!-- Recorriendo los servicios -->
+    <div class="col-md-4" *ngFor="let servicio of servicios">
+      <div class="card mb-4">
+        <img [src]="servicio.imagen" class="card-img-top" alt="{{ servicio.titulo }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ servicio.titulo }}</h5>
+          <p class="card-text">{{ servicio.descripcion }}</p>
+          
+          <h6>Incluye:</h6>
+          <ul>
+            <li *ngFor="let elemento of servicio.elementos">{{ elemento }}</li>
+          </ul>
+          
+          <p class="card-text">Precio base: {{ servicio.precio | currency }}</p>
+          <p class="card-text">Precio total: {{ servicio.precioTotal | currency }}</p>
+          
+          <!-- Botón de Agregar Opciones con icono -->
+          <button class="btn btn-primary" (click)="toggleOpciones(servicio)">
+            <i class="bi bi-list-check"></i> Agregar Opciones
+          </button>
+          
+          <div *ngIf="servicio.mostrarOpciones">
+            <h6>Opciones Adicionales:</h6>
+            <ul>
+              <li *ngFor="let opcion of servicio.opciones">
+                <label>
+                  <input type="checkbox" 
+                         [checked]="opcion.seleccionada" 
+                         (change)="actualizarPrecio(servicio, opcion)">
+                  {{ opcion.nombre }} - {{ opcion.precio | currency }}
+                </label>
+              </li>
+            </ul>
           </div>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-center">{{ servicio.nombre }}</h5>
-            <p class="card-text text-center text-muted">Paquete Básico: <strong>{{ servicio.precioBase | currency }}</strong></p>
-            
-            <h6 class="text-center mt-3">Personaliza tu servicio:</h6>
-            <div *ngFor="let opcion of servicio.opciones" class="form-check">
-              <input 
-                class="form-check-input" 
-                type="checkbox" 
-                [id]="opcion.id" 
-                [(ngModel)]="opcion.seleccionado"
-                (change)="actualizarPrecio(servicio)"
-              >
-              <label class="form-check-label" [for]="opcion.id">
-                {{ opcion.nombre }} (+ {{ opcion.precio | currency }})
-              </label>
-            </div>
-  
-            <h5 class="mt-3 text-center">Precio Total: <strong>{{ servicio.precioTotal | currency }}</strong></h5>
-          </div>
+
+          <!-- Botón de Reservar con icono -->
+          <button class="btn btn-success mt-2" (click)="abrirModalReserva(servicio)" data-bs-toggle="modal" data-bs-target="#reservaModal">
+            <i class="bi bi-calendar-check"></i> Reservar
+          </button>
         </div>
       </div>
     </div>
   </div>
-  
+
+  <!-- Mensaje adicional para contacto -->
+  <div class="row mt-4">
+    <div class="col-12 text-center">
+      <p class="text-muted">
+        ¿No encuentras lo que buscas? <br>
+        ¡Contáctanos directamente para un servicio personalizado! 
+        <a href="https://wa.me/1234567890" target="_blank" class="text-primary">
+          <i class="bi bi-whatsapp"></i> Haz clic aquí
+        </a> para enviarnos un mensaje por WhatsApp.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Reservas -->
+<div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reservaModalLabel">Reservar {{ servicioSeleccionado?.titulo }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí va el contenido que planeas agregar -->
+        <p>Por favor, complete la información para reservar el servicio.</p>
+        <app-calendario></app-calendario>
+        <!-- Agrega aquí los campos de formulario si es necesario -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">
+          <i class="bi bi-check-circle"></i> Confirmar Reserva
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

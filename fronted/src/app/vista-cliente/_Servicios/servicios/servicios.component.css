@@ -1,39 +1,60 @@
 .card-img-container {
-    width: 100%;
-    height: 200px; /* Fija la altura de las imágenes */
-    overflow: hidden; /* Oculta las partes que se salen del contenedor */
-  }
-  
-  .card-img-top {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Mantiene el recorte centrado */
-  }
-  
-  .card {
-    border: none; /* Quita el borde estándar */
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .card:hover {
-    transform: scale(1.05); /* Hace zoom al pasar el mouse */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
-  }
-  
-  .card-title {
-    color: #007bff; /* Color azul para destacar el título */
-  }
-  
-  h5, h6 {
-    color: #28a745; /* Verde para resaltar el precio */
-  }
-  
-  .form-check-label {
-    margin-left: 8px;
-  }
-  
-  h2 {
-    color: #343a40; /* Título principal en color oscuro */
-    font-weight: bold;
-  }
-  
+  width: 100%;
+  height: 200px; /* Fija la altura de las imágenes */
+  overflow: hidden; /* Oculta las partes que se salen del contenedor */
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Mantiene el recorte centrado */
+}
+
+.card {
+  border: none; /* Quita el borde estándar */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Hace zoom al pasar el mouse */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
+}
+
+.card-title {
+  color: #007bff; /* Color azul para destacar el título */
+}
+
+h5, h6 {
+  color: #28a745; /* Verde para resaltar el precio */
+}
+
+.form-check-label {
+  margin-left: 8px;
+}
+
+h2 {
+  color: #343a40; /* Título principal en color oscuro */
+  font-weight: bold;
+}
+.card {
+  margin: 15px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 5px 0;
+}

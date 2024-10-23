@@ -19,6 +19,7 @@ import { FloatingButtonComponent } from './template_cliente/floating-button/floa
 import { LoginComponent } from './template_cliente/login/login.component';
 import { LoginModalComponent } from './template_cliente/login-modal/login-modal.component';
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
 
@@ -41,6 +42,7 @@ import { AdminTemplateComponent } from './admin-template/admin-template.componen
     FormsModule,
     HttpClientModule,
     NgbModule,
+    BrowserAnimationsModule,
     
 
   ],
