@@ -5,13 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { HomeAdminComponent } from './home/home-admin/home-admin.component';
 import { CalendarioAdminComponent } from './home/home-admin/calendario-admin/calendario-admin.component';
 import { PanelEdicionComponent } from './salpicadero/panel-edicion/panel-edicion.component';
+import { AdminServiciosComponent } from './home/home-admin/admin-servicios/admin-servicios.component';
+
 
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
     HomeAdminComponent,
     CalendarioAdminComponent,
-    PanelEdicionComponent
+    PanelEdicionComponent,
+    AdminServiciosComponent
 
   ],
   imports: [

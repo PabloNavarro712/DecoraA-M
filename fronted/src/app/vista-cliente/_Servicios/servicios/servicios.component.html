@@ -1,25 +1,14 @@
 <div class="container">
-  <!-- Título llamativo para "Nuestros Servicios" -->
-  <div class="row">
-    <div class="col-12 text-center mb-4">
-      <h1 class="display-4 font-weight-bold text-primary">Nuestros Servicios</h1>
-      <hr class="my-4" style="border-top: 3px solid #007bff; width: 50%;">
-    </div>
-  </div>
   <div class="row">
     <!-- Recorriendo los servicios -->
     <div class="col-md-4" *ngFor="let servicio of servicios">
       <div class="card mb-4">
-        <div class="card-img-container">
-          <img [src]="servicio.imagen" class="card-img-top" alt="{{ servicio.titulo }}">
-        </div>
-      
+        <img [src]="servicio.imagen" class="card-img-top" alt="{{ servicio.titulo }}">
         <div class="card-body">
           <h5 class="card-title">{{ servicio.titulo }}</h5>
           <p class="card-text">{{ servicio.descripcion }}</p>
-          <b>
-          <h5>Incluye:</h5>
-        </b>
+          
+          <h6>Incluye:</h6>
           <ul>
             <li *ngFor="let elemento of servicio.elementos">{{ elemento }}</li>
           </ul>
@@ -70,18 +59,17 @@
 </div>
 
 <!-- Modal para Reservas -->
-<!-- Modal para Reservas -->
 <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered"> <!-- Clase para centrar el modal verticalmente -->
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="reservaModalLabel">Reservar {{ servicioSeleccionado?.titulo }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body text-center"> <!-- Clase para centrar el texto en el cuerpo del modal -->
-       
+      <div class="modal-body">
+        <!-- Aquí va el contenido que planeas agregar -->
         <p>Por favor, complete la información para reservar el servicio.</p>
-        <app-calendario></app-calendario> <!-- El componente del calendario -->
+        <app-calendario></app-calendario>
         <!-- Agrega aquí los campos de formulario si es necesario -->
       </div>
       <div class="modal-footer">
@@ -93,4 +81,3 @@
     </div>
   </div>
 </div>
-

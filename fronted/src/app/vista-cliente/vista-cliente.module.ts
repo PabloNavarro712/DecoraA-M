@@ -9,13 +9,11 @@ import { TextoImagenComponent } from './_inicio/texto-imagen/texto-imagen.compon
 import { ServiciosComponent } from './_Servicios/servicios/servicios.component';
 import { NuestraHistoriaComponent } from './_NuestraHistoria/nuestra-historia/nuestra-historia.component';
 import { CalendarioComponent } from './_Servicios/calendario/calendario.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'; 
+import { FullCalendarModule } from '@fullcalendar/angular';
+
+
 @NgModule({
   declarations: [
-    
     InicioComponent,
     CarruselComponent,
     GaleriaCategoriaComponent,
@@ -26,13 +24,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     CalendarioComponent
   ],
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule, 
     FormsModule,
     CommonModule,
-    
+    FullCalendarModule
     
   ],
   exports: [

@@ -1,47 +1,9 @@
-.calendario {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  width: 300px;
-  text-align: center;
-}
-
-.cabecera {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.dias-semana {
-  display: flex;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ccc;
-}
-
-.dia-semana {
-  flex: 1;
-  padding: 8px;
-  font-weight: bold;
-}
-
-.dias {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.dias > div {
-  width: 14.28%; /* 7 días en una semana */
-  padding: 10px;
-  cursor: pointer;
-}
-
-.dias > div.hoy {
-  background-color: #007bff;
-  color: white;
-}
-
-.dias > div.seleccionado {
-  background-color: #28a745;
-  color: white;
-}
+.full-calendar {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .fc {
+    height: 100%; /* Ajusta el tamaño del calendario */
+  }
+  
