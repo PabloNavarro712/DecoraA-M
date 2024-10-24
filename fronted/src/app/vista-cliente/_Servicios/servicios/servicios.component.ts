@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService, Servicio } from './../../../servises/servicio.service'; // Asegúrate de que la ruta sea correcta
 import * as bootstrap from 'bootstrap'; 
+
 @Component({
   selector: 'app-servicios',
   templateUrl: './servicios.component.html',
@@ -51,12 +52,21 @@ export class ServiciosComponent implements OnInit {
 
   abrirModalReserva(servicio: Servicio) {
     this.servicioSeleccionado = servicio; // Establece el servicio seleccionado
-    // Aquí puedes agregar la lógica para abrir el modal, por ejemplo:
     const modalElement = document.getElementById('reservaModal');
+    
     if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement); // Si usas Bootstrap 5
+      const modal = new bootstrap.Modal(modalElement);
+      
+      // Limpia cualquier fondo que pudiera quedar antes de mostrar el modal
+      document.querySelector('.modal-backdrop')?.remove();
+      
       modal.show();
+      
+      // Escucha el evento de cierre del modal para eliminar el fondo
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        document.body.classList.remove('modal-open');
+        document.querySelector('.modal-backdrop')?.remove(); // Elimina el fondo restante
+      });
     }
   }
 }
-
