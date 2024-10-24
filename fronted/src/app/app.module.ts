@@ -26,7 +26,7 @@ import { NuestraHistoriaComponent } from './pages/nuestra-historia/nuestra-histo
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { FloatingButtonComponent } from './components/floating-button/floating-button.component';
-import { LoginComponent } from './components/login/login.component'; 
+import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { GaleriaCategoriaComponent } from './components/galeria-categoria/galeria-categoria.component';
 import { AdminTemplateComponent } from './layouts/admin-template/admin-template.component';
@@ -36,6 +36,7 @@ import { AdminOrdenesComponent } from './pages/admin-ordenes/admin-ordenes.compo
 import { AdminProductosComponent } from './pages/admin-productos/admin-productos.component';
 import { AdminClientelaComponent } from './pages/admin-clientela/admin-clientela.component';
 import { AdminGaleriaEditorComponent } from './components/admin-galeria-editor/admin-galeria-editor.component';
+import { FaqComponent } from './components/faq/faq.component';
 @NgModule({
   declarations: [
     CarouselComponent,
@@ -62,6 +63,7 @@ import { AdminGaleriaEditorComponent } from './components/admin-galeria-editor/a
     AdminProductosComponent,
     AdminClientelaComponent,
     AdminGaleriaEditorComponent,
+    FaqComponent,
 
   ],
   imports: [
@@ -70,7 +72,7 @@ import { AdminGaleriaEditorComponent } from './components/admin-galeria-editor/a
     FormsModule,
     HttpClientModule,
     NgbModule,
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
