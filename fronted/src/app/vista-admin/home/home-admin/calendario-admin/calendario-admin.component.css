@@ -1,94 +1,63 @@
-/* Contenedor principal */
-.calendar-wrapper {
-  display: flex;
-  justify-content: center; /* Cambia a center para centrar horizontalmente */
-  gap: 20px;
-  max-width: 1200px; /* Ajusta el ancho máximo según sea necesario */
-  margin: 0 auto; /* Centra el contenedor en la página */
-}
-
-.sidebar {
+.calendar-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 250px; /* Ajusta el ancho de la columna lateral según sea necesario */
+  gap: 16px; /* Espacio entre los recuadros */
+  padding: 16px; /* Espaciado interno para toda la container */
 }
 
-.notes, .upcoming-events {
-  background-color: #e0e0e0;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.mat-card {
+  background-color: #f5f5f5; /* Fondo claro */
+  color: #333333; /* Texto oscuro para mejor legibilidad */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil para los recuadros */
 }
 
-.upcoming-events {
-  background-color: #f9f9f9;
-}
-
-.calendar {
-  flex: 1; /* Ocupa el resto del espacio disponible */
-  background-color: #f5f5f5;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.days-header {
+.calendar-content {
   display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  margin-bottom: 10px;
+  flex-direction: row;
+  gap: 16px; /* Espacio entre el calendario y la lista de eventos */
+  flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
 }
 
-.days-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 20px;
+.event-list {
+  flex: 1; /* Toma el espacio disponible */
+  max-width: 300px; /* Ancho máximo para la lista de eventos */
 }
 
-.day {
-  position: relative;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
+h3 {
+  margin-top: 0; /* Elimina el margen superior del título */
 }
 
-.day.occupied {
-  background-color: #ffcccc;
+ul {
+  list-style-type: none; /* Elimina viñetas */
+  padding: 0; /* Elimina padding */
 }
 
-.day.to-confirm {
-  background-color: #ffe6b3;
+li {
+  background-color: rgba(0, 0, 0, 0.05); /* Fondo semitransparente para las entradas */
+  padding: 8px; /* Espaciado interno */
+  margin: 4px 0; /* Margen entre entradas */
+  border-radius: 4px; /* Bordes redondeados */
 }
 
-/* Efecto hover para mostrar información adicional sobre las fechas */
-.day[data-info]:hover::after {
-  content: attr(data-info);
-  position: absolute;
-  bottom: 100%;
-  background-color: #333;
-  color: #fff;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  transform: translateY(-10px);
-  opacity: 0;
-  animation: fadeIn 0.3s forwards;
+button {
+  background-color: #6200ea; /* Color del botón */
+  color: white; /* Color del texto del botón */
 }
 
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
+button:hover {
+  background-color: #3700b3; /* Color del botón al pasar el mouse */
 }
 
-/* Media Queries para mejor responsividad */
-@media (max-width: 768px) {
-  .calendar-wrapper {
-    flex-direction: column;
-    align-items: center; /* Centra los elementos en columnas */
-  }
+.mat-form-field {
+  width: 100%; /* Hace que los campos de formulario ocupen todo el ancho */
+  color: #333333; /* Color del texto del campo de formulario */
+}
+
+.mat-form-field .mat-label {
+  color: #333333; /* Color de la etiqueta del campo de formulario */
+}
+
+.mat-form-field .mat-input-element {
+  color: #333333; /* Color del texto del campo de entrada */
 }
