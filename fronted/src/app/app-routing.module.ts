@@ -11,7 +11,7 @@ import { PanelEdicionComponent } from './vista-admin/salpicadero/panel-edicion/p
 // Ruteo de vistas
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
 import { ClientTemplateComponent } from './template_cliente/client-template/client-template.component';
-
+import { EditarServicioComponent } from './vista-admin/editar-servicio/editar-servicio.component';
 const routes: Routes = [
   // Rutas del cliente
   {
@@ -30,7 +30,8 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeAdminComponent },
       { path: 'home_a', component: HomeAdminComponent }, // Vista home para admin
-      { path: 'salpicadero', component: PanelEdicionComponent } // Vista de panel de edición
+      { path: 'salpicadero', component: PanelEdicionComponent }, // Vista de panel de edición
+      { path: 'editar_servicio', component: EditarServicioComponent}
     ]
   },
 

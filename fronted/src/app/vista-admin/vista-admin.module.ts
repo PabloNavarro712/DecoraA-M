@@ -16,15 +16,22 @@ import { MatNativeDateModule } from '@angular/material/core'; // AÃ‘ADIR ESTE MÃ
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-
+import { EditarServicioComponent } from './editar-servicio/editar-servicio.component';
+import { ServiceDialogComponent } from './service-dialog/service-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
     HomeAdminComponent,
     CalendarioAdminComponent,
-    PanelEdicionComponent
+    PanelEdicionComponent,
+    EditarServicioComponent,
+    ServiceDialogComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    MatDialogModule,
     CommonModule,
     FormsModule,
     MatCardModule,
