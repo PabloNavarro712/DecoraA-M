@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="form-list-container">
+    <!-- Formulario -->
+    <div class="formulario">
+      <h2 *ngIf="editandoServicio">Editar Servicio</h2>
+      <h2 *ngIf="!editandoServicio">Crear Servicio</h2>
+
+      <form [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input id="titulo" formControlName="titulo" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" formControlName="descripcion" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="imagen">Imagen</label>
+          <input type="file" (change)="onImageSelected($event)" class="form-control" />
+          <div *ngIf="imagenPreview" class="image-preview">
+            <img [src]="imagenPreview" alt="Vista previa de imagen" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="precio">Precio</label>
+          <input id="precio" type="number" formControlName="precio" class="form-control" />
+        </div>
+
+        <!-- Contenedor de Elementos -->
+        <div class="elementos-container">
+          <h4 (click)="toggleElementos()" class="toggle-header">
+            Elementos <i [ngClass]="{'fas fa-chevron-down': !elementosExpandido, 'fas fa-chevron-up': elementosExpandido}"></i>
+          </h4>
+          <div *ngIf="elementosExpandido" formArrayName="elementos">
+            <div *ngFor="let elemento of elementos.controls; let i = index" class="elemento-item">
+              <input [formControlName]="i" class="form-control" placeholder="Elemento" />
+              <button type="button" (click)="eliminarElemento(i)" class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+            <button type="button" (click)="agregarElemento()" class="btn btn-secondary mt-2">Agregar Elemento</button>
+          </div>
+        </div>
+
+        <!-- Contenedor de Opciones -->
+        <div class="opciones-container">
+          <h4 (click)="toggleOpciones()" class="toggle-header">
+            Opciones <i [ngClass]="{'fas fa-chevron-down': !opcionesExpandido, 'fas fa-chevron-up': opcionesExpandido}"></i>
+          </h4>
+          <div *ngIf="opcionesExpandido" formArrayName="opciones">
+            <div *ngFor="let opcion of opciones.controls; let i = index" [formGroupName]="i" class="opcion-item">
+              <input formControlName="nombre" class="form-control" placeholder="Nombre de Opción" />
+              <input formControlName="precio" type="number" class="form-control" placeholder="Precio" />
+              <button type="button" (click)="eliminarOpcion(i)" class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+            <button type="button" (click)="agregarOpcion()" class="btn btn-secondary mt-2">Agregar Opción</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">{{ editandoServicio ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" (click)="toggleCrearForm()" class="btn btn-light mt-3">Cancelar</button>
+      </form>
+    </div>
+
+    <!-- Lista de Servicios -->
+    <div class="servicios-list">
+      <h3>Servicios</h3>
+      <ul>
+        <li *ngFor="let servicio of servicios" class="servicio-item">
+          <div class="servicio-info">
+            <img [src]="servicio.imagen || 'placeholder.jpg'" alt="{{ servicio.titulo }}" class="servicio-img" />
+            <div class="servicio-text">
+              <strong>{{ servicio.titulo }}</strong>
+              <div class="servicio-buttons">
+                <button (click)="editarServicio(servicio)" class="btn btn-warning btn-icon">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button (click)="eliminarServicio(servicio.id!)" class="btn btn-danger btn-icon">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

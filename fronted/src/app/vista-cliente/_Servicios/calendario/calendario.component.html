@@ -1,0 +1,45 @@
+<div class="calendario text-center">
+  <div class="cabecera">
+    <button (click)="navegarMes(-1)">&#10094;</button>
+    <h5>{{ mes + 1 }} / {{ anio }}</h5>
+    <button (click)="navegarMes(1)">&#10095;</button>
+  </div>
+
+  <div class="dias-semana">
+    <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
+  </div>
+
+  <div class="dias">
+    <div *ngFor="let dia of dias" (click)="seleccionarFecha(dia)" 
+         [ngClass]="{'hoy': isToday(dia), 'seleccionado': fechaSeleccionada?.getDate() === dia}">
+      {{ dia > 0 ? dia : '' }}
+    </div>
+  </div>
+
+  <div *ngIf="fechaSeleccionada">
+    <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
+  </div>
+
+  <!-- Formulario de contacto -->
+  <div class="formulario-contacto mt-4">
+    <h4>Información de Contacto</h4>
+    <form #contactForm="ngForm" (ngSubmit)="enviarFormulario(contactForm)">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required ngModel>
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" id="correo" name="correo" class="form-control" required ngModel>
+      </div>
+
+      <div class="form-group">
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" class="form-control" rows="3" required ngModel></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!contactForm.valid">Enviar</button>
+    </form>
+  </div>
+</div>
