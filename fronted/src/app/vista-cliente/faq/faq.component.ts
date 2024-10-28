@@ -13,7 +13,7 @@ export class FaqComponent {
     { question: '¿Ofrece servicios fuera de la ciudad?', answer: 'Sí, ofrecemos el servicio a otras entidades cercanas a la ciudad de hecelchakan. Contactanos para poder cotizar .' },
     { question: '¿Cómo puedo contactar con atención al cliente?', answer: 'Puedes contactarnos a través de nuestra informacion de contacto en la pagina web' },
     { question: '¿Que tipo de eventos pueden beneficiarse de servicio de M&AS?', answer:'Ofrecemos distintos paquetes de decoracion para bodas, XV años, Fiestas infantiles y cumpleaños.'},
-    { question: '¿Solamente existen los 3 tipos de paquetes que ofrecen para cada evente?', answer:'No, puedes escoger un paquete que sea mas adecuado e incluso lo puedes personalizarlo para adecuarlo mas a tus necesidades. '}
+    { question: '¿Solamente existen los 3 tipos de paquetes que ofrecen para cada evente?', answer:'No, puedes escoger un paquete que sea mas adecuado e incluso lo puedes personalizarlo para adecuarlo mas a tus necesidades. ' }
   ];
 
   activeAnswer: number | null = null;
