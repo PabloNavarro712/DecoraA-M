@@ -12,10 +12,12 @@ import { CalendarioComponent } from './_Servicios/calendario/calendario.componen
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'; 
+import { MatNativeDateModule } from '@angular/material/core';
+import { FaqComponent } from './faq/faq.component';
+
 @NgModule({
   declarations: [
-    
+
     InicioComponent,
     CarruselComponent,
     GaleriaCategoriaComponent,
@@ -23,23 +25,24 @@ import { MatNativeDateModule } from '@angular/material/core';
     TextoImagenComponent,
     ServiciosComponent,
     NuestraHistoriaComponent,
-    CalendarioComponent
+    CalendarioComponent,
+    FaqComponent,
   ],
   imports: [
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule, 
+    MatNativeDateModule,
     FormsModule,
     CommonModule,
-    
-    
+
+
   ],
   exports: [
-    InicioComponent 
+    InicioComponent
   ]
 })
-export class VistaClienteModule { 
-  
+export class VistaClienteModule {
+
 
 }
