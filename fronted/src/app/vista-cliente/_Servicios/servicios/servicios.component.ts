@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiciosService, Servicio } from './../../../servises/servicio.service'; // Asegúrate de que la ruta sea correcta
-import * as bootstrap from 'bootstrap'; 
+import { ServiciosService, Servicio } from './../../../servises/servicio.service';
+import { ReservaService } from './../../../servises/reserva.service';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-servicios',
@@ -8,10 +9,14 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./servicios.component.css']
 })
 export class ServiciosComponent implements OnInit {
-  servicios: Servicio[] = []; // Array para almacenar los servicios
-  servicioSeleccionado: Servicio | null = null; // Inicializa la variable para almacenar el servicio seleccionado
+  servicios: Servicio[] = [];
+  servicioSeleccionado: Servicio | undefined;
 
-  constructor(private serviciosService: ServiciosService) {}
+
+  constructor(
+    private serviciosService: ServiciosService,
+    private reservaService: ReservaService
+  ) {}
 
   ngOnInit() {
     this.cargarServicios();
@@ -22,11 +27,11 @@ export class ServiciosComponent implements OnInit {
       (data: Servicio[]) => {
         this.servicios = data.map(servicio => ({
           ...servicio,
-          precioTotal: servicio.precio, // Inicializa precioTotal con el precio base
-          mostrarOpciones: false // Inicializa mostrarOpciones como falso
+          precioTotal: servicio.precio,
+          mostrarOpciones: false
         }));
       },
-      (error) => {
+      error => {
         console.error('Error al cargar los servicios', error);
       }
     );
@@ -38,11 +43,8 @@ export class ServiciosComponent implements OnInit {
 
   actualizarPrecio(servicio: Servicio, opcion: any) {
     opcion.seleccionada = !opcion.seleccionada;
+    servicio.precioTotal = servicio.precio;
 
-    // Actualizar el precio total basado en la selección de la opción
-    servicio.precioTotal = servicio.precio; // Reiniciar el precio total a la base
-
-    // Sumar el precio de las opciones seleccionadas
     for (const opt of servicio.opciones) {
       if (opt.seleccionada) {
         servicio.precioTotal += opt.precio;
@@ -51,21 +53,18 @@ export class ServiciosComponent implements OnInit {
   }
 
   abrirModalReserva(servicio: Servicio) {
-    this.servicioSeleccionado = servicio; // Establece el servicio seleccionado
+    const opcionesSeleccionadas = servicio.opciones.filter(opcion => opcion.seleccionada);
+    this.reservaService.guardarReserva(servicio, servicio.precioTotal, opcionesSeleccionadas);
+    this.servicioSeleccionado = servicio;
+
     const modalElement = document.getElementById('reservaModal');
-    
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
-      
-      // Limpia cualquier fondo que pudiera quedar antes de mostrar el modal
       document.querySelector('.modal-backdrop')?.remove();
-      
       modal.show();
-      
-      // Escucha el evento de cierre del modal para eliminar el fondo
       modalElement.addEventListener('hidden.bs.modal', () => {
         document.body.classList.remove('modal-open');
-        document.querySelector('.modal-backdrop')?.remove(); // Elimina el fondo restante
+        document.querySelector('.modal-backdrop')?.remove();
       });
     }
   }

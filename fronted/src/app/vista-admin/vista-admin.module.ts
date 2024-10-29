@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AdminGaleriaEditorComponent } from './salpicadero/admin-galeria-editor/admin-galeria-editor.component';
 import { FormsModule } from '@angular/forms';
 import { HomeAdminComponent } from './home/home-admin/home-admin.component';
-import { CalendarioAdminComponent } from './home/home-admin/calendario-admin/calendario-admin.component';
 import { PanelEdicionComponent } from './salpicadero/panel-edicion/panel-edicion.component';
 
 // Angular Material modules
@@ -20,16 +19,17 @@ import { EditarServicioComponent } from './editar-servicio/editar-servicio.compo
 import { ServiceDialogComponent } from './service-dialog/service-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
     HomeAdminComponent,
-    CalendarioAdminComponent,
     PanelEdicionComponent,
     EditarServicioComponent,
     ServiceDialogComponent
   ],
   imports: [
+    NgbModule,
     ReactiveFormsModule,
     MatDialogModule,
     CommonModule,

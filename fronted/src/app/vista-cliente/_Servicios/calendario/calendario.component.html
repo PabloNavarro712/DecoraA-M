@@ -1,27 +1,44 @@
-<div class="calendario text-center">
-  <div class="cabecera">
-    <button (click)="navegarMes(-1)">&#10094;</button>
-    <h5>{{ mes + 1 }} / {{ anio }}</h5>
-    <button (click)="navegarMes(1)">&#10095;</button>
-  </div>
+<div class="calendario-contenedor">
+  <div class="calendario text-center">
+    <!-- Navegación del calendario -->
+    <div class="cabecera">
+      <button (click)="navegarMes(-1)">&#10094;</button>
+      <h5>{{ mes + 1 }} / {{ anio }}</h5>
+      <button (click)="navegarMes(1)">&#10095;</button>
+    </div>
 
-  <div class="dias-semana">
-    <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
-  </div>
+    <div class="dias-semana">
+      <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
+    </div>
 
-  <div class="dias">
-    <div *ngFor="let dia of dias" (click)="seleccionarFecha(dia)" 
-         [ngClass]="{'hoy': isToday(dia), 'seleccionado': fechaSeleccionada?.getDate() === dia}">
-      {{ dia > 0 ? dia : '' }}
+    <div class="dias">
+      <div *ngFor="let dia of dias" (click)="seleccionarFecha(dia)" 
+           [ngClass]="{'hoy': isToday(dia), 'seleccionado': fechaSeleccionada?.getDate() === dia}">
+        {{ dia > 0 ? dia : '' }}
+      </div>
+    </div>
+
+    <!-- Muestra la fecha seleccionada -->
+    <div *ngIf="fechaSeleccionada" class="mt-2">
+      <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
+    </div>
+
+    <!-- Mostrar detalles del servicio seleccionado -->
+    <div *ngIf="servicioSeleccionado" class="informacion-servicio">
+      <h4>Resumen de Reserva: {{ servicioSeleccionado.titulo }}</h4>
+      <ul>
+        <li *ngFor="let opcion of servicioSeleccionado.opciones">
+          <span *ngIf="opcion.seleccionada">
+            {{ opcion.nombre }}: {{ opcion.precio | currency }}
+          </span>
+        </li>
+      </ul>
+      <p><strong>Precio Total:</strong> {{ calcularPrecioTotal() | currency }}</p>
     </div>
   </div>
 
-  <div *ngIf="fechaSeleccionada">
-    <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
-  </div>
-
   <!-- Formulario de contacto -->
-  <div class="formulario-contacto mt-4">
+  <div class="formulario-contacto">
     <h4>Información de Contacto</h4>
     <form #contactForm="ngForm" (ngSubmit)="enviarFormulario(contactForm)">
       <div class="form-group">

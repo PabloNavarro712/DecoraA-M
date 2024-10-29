@@ -4,6 +4,7 @@
   padding: 10px;
   width: 300px;
   text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil para mayor profundidad */
 }
 
 .cabecera {
@@ -20,8 +21,9 @@
 
 .dia-semana {
   flex: 1;
-  padding: 8px;
+  padding: 4px; /* Relleno reducido */
   font-weight: bold;
+  font-size: 0.9em; /* Tamaño de fuente más pequeño */
 }
 
 .dias {
@@ -32,8 +34,9 @@
 
 .dias > div {
   width: 14.28%; /* 7 días en una semana */
-  padding: 10px;
+  padding: 5px; /* Relleno reducido */
   cursor: pointer;
+  font-size: 0.9em; /* Tamaño de fuente más pequeño */
 }
 
 .dias > div.hoy {
@@ -44,4 +47,83 @@
 .dias > div.seleccionado {
   background-color: #28a745;
   color: white;
+}
+
+.informacion-servicio {
+  margin-top: 10px; /* Espaciado reducido */
+  padding: 5px; /* Relleno reducido */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9em; /* Tamaño de fuente más pequeño */
+}
+
+.informacion-servicio h4 {
+  font-size: 1em; /* Tamaño de fuente más pequeño */
+  margin-bottom: 5px; /* Espaciado reducido */
+}
+
+.informacion-servicio ul {
+  list-style-type: none; /* Eliminar viñetas */
+  padding: 0; /* Sin relleno */
+  margin: 0; /* Sin margen */
+}
+
+.informacion-servicio li {
+  margin: 3px 0; /* Espaciado reducido entre elementos */
+}
+
+.formulario-contacto {
+  margin-top: 10px; /* Espaciado reducido */
+}
+
+.form-group {
+  margin-bottom: 10px; /* Espaciado entre campos */
+}
+
+.form-control {
+  height: 30px; /* Altura de campo reducida */
+  font-size: 0.9em; /* Tamaño de fuente más pequeño */
+}
+
+.btn {
+  width: 100%; /* Botón de ancho completo */
+}
+.calendario-contenedor {
+  display: flex; /* Para alinear los elementos en línea */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas más pequeñas */
+  justify-content: space-between; /* Espaciado entre elementos */
+}
+
+.calendario {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  width: 300px; /* Mantén el ancho fijo o ajusta según sea necesario */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-right: 20px; /* Espaciado a la derecha del calendario */
+  flex-shrink: 0; /* Evita que se reduzca más allá del tamaño especificado */
+}
+
+.informacion-servicio,
+.formulario-contacto {
+  flex: 1; /* Toma el espacio restante */
+  margin: 10px; /* Espaciado entre elementos */
+  min-width: 250px; /* Ancho mínimo para mantener legibilidad */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.informacion-servicio h4,
+.formulario-contacto h4 {
+  font-size: 1em; /* Tamaño de fuente más pequeño */
+}
+
+@media (max-width: 768px) {
+  .calendario-contenedor {
+    flex-direction: column; /* En pantallas más pequeñas, apila los elementos */
+    align-items: center; /* Centra los elementos */
+  }
 }

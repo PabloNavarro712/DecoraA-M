@@ -1,13 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { Servicio } from './../../../servises/servicio.service'; // Asegúrate de que la ruta sea correcta
-import { NgForm } from '@angular/forms'; 
+import { Servicio } from './../../../servises/servicio.service';
+import { NgForm } from '@angular/forms';
+
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent {
-  @Input() servicioSeleccionado?: Servicio; // Permite que sea opcional
+  @Input() servicioSeleccionado?: Servicio;
   diasDeLaSemana: string[] = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
   dias: number[] = [];
   mes: number = new Date().getMonth();
@@ -15,7 +16,7 @@ export class CalendarioComponent {
   fechaSeleccionada: Date | null = null;
 
   constructor() {
-    this.generarDias();
+    this.generarDias(); 
   }
 
   generarDias() {
@@ -61,9 +62,18 @@ export class CalendarioComponent {
   enviarFormulario(form: NgForm) {
     if (form.valid) {
       console.log('Formulario enviado', form.value);
-      // Aquí puedes agregar lógica para manejar el envío (como enviar a un backend)
       form.reset(); // Resetear el formulario después de enviarlo si es necesario
     }
   }
 
+  calcularPrecioTotal(): number {
+    if (!this.servicioSeleccionado) return 0;
+    let precioTotal = this.servicioSeleccionado.precio;
+    this.servicioSeleccionado.opciones?.forEach(opcion => {
+      if (opcion.seleccionada) {
+        precioTotal += opcion.precio;
+      }
+    });
+    return precioTotal;
+  }
 }
