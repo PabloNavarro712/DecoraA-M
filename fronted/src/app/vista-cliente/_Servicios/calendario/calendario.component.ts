@@ -15,6 +15,12 @@ export class CalendarioComponent {
   anio: number = new Date().getFullYear();
   fechaSeleccionada: Date | null = null;
 
+  // Fechas no seleccionables (deberías llenarlas desde tu futura conexión a la base de datos)
+  fechasNoSeleccionables: Date[] = [
+    new Date(2024, 10, 5), // Ejemplo: 5 de noviembre de 2024
+    new Date(2024, 10, 10) // Agrega más fechas según sea necesario
+  ];
+
   constructor() {
     this.generarDias(); 
   }
@@ -48,7 +54,7 @@ export class CalendarioComponent {
   }
 
   seleccionarFecha(dia: number) {
-    if (dia > 0) {
+    if (this.isSelectable(dia)) {
       this.fechaSeleccionada = new Date(this.anio, this.mes, dia);
       console.log('Fecha seleccionada:', this.fechaSeleccionada);
     }
@@ -57,6 +63,22 @@ export class CalendarioComponent {
   isToday(dia: number): boolean {
     const hoy = new Date();
     return hoy.getFullYear() === this.anio && hoy.getMonth() === this.mes && hoy.getDate() === dia;
+  }
+
+  // Verifica si el día es seleccionable
+  isSelectable(dia: number): boolean {
+    if (dia <= 0) return false;
+
+    const fechaSeleccionada = new Date(this.anio, this.mes, dia);
+    const hoy = new Date();
+    const maniana = new Date(hoy);
+maniana.setDate(hoy.getDate() + 1);
+
+    // No permitir seleccionar días anteriores a hoy ni el día siguiente
+    const esPasado = fechaSeleccionada < maniana|| fechaSeleccionada.toDateString() === hoy.toDateString();
+    const esDiaNoSeleccionable = this.fechasNoSeleccionables.some(fecha => fecha.toDateString() === fechaSeleccionada.toDateString());
+    
+    return !esPasado && !esDiaNoSeleccionable;
   }
 
   enviarFormulario(form: NgForm) {

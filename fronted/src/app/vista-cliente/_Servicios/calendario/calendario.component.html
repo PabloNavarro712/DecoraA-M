@@ -12,11 +12,14 @@
     </div>
 
     <div class="dias">
-      <div *ngFor="let dia of dias" (click)="seleccionarFecha(dia)" 
-           [ngClass]="{'hoy': isToday(dia), 'seleccionado': fechaSeleccionada?.getDate() === dia}">
+      <div *ngFor="let dia of dias" 
+           (click)="seleccionarFecha(dia)" 
+           [ngClass]="{'hoy': isToday(dia), 'seleccionado': fechaSeleccionada?.getDate() === dia, 'no-seleccionable': !isSelectable(dia)}"
+           [class.disabled]="!isSelectable(dia)">
         {{ dia > 0 ? dia : '' }}
       </div>
     </div>
+    
 
     <!-- Muestra la fecha seleccionada -->
     <div *ngIf="fechaSeleccionada" class="mt-2">

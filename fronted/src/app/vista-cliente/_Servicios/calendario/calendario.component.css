@@ -127,3 +127,8 @@
     align-items: center; /* Centra los elementos */
   }
 }
+.dias > div.no-seleccionable {
+  color: #ac8d8df5; /* Cambia el color para indicar que no se puede seleccionar */
+  cursor: not-allowed; /* Cambia el cursor para indicar que no se puede hacer clic */
+}
+
