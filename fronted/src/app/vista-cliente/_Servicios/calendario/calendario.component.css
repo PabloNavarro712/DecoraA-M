@@ -45,7 +45,7 @@
 /* Contenedor de los días del calendario */
 .dias {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se distribuyan en varias filas */
+  flex-wrap: wrap;
   margin-top: 10px;
 }
 
@@ -67,11 +67,17 @@
 
 .dias > div.seleccionado {
   background-color: #28a745;
-  color: white;
+  color: #fff;
   border-radius: 50%;
 }
 
-.dias > div:hover:not(.hoy):not(.seleccionado) {
+.dias > div.no-seleccionable {
+  color: red;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.dias > div:hover:not(.hoy):not(.seleccionado):not(.no-seleccionable) {
   background-color: #e0e0e0;
 }
 
@@ -131,6 +137,7 @@
   border-bottom: 1px solid #007bff;
 }
 
+/* Botones */
 .minimal-btn {
   background-color: #007bff;
   color: white;
@@ -141,15 +148,28 @@
   transition: background-color 0.3s ease;
   display: inline-block;
   margin-top: 10px;
+  border-radius: 5px;
 }
 
 .minimal-btn:hover {
   background-color: #0056b3;
 }
 
+.btn-active {
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
 .text-danger {
   font-size: 0.8em;
-  color: #d9534f;
+  color: #0c0c0c;
 }
 
 /* Adaptación para móviles */
@@ -158,22 +178,4 @@
     flex-direction: column;
     align-items: center;
   }
-}
-.minimal-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.btn-active {
-  background-color: #4CAF50; /* Color verde para activo */
-  color: white; /* Texto en blanco */
-}
-
-.btn-disabled {
-  background-color: #ccc; /* Color gris para deshabilitado */
-  color: #666; /* Texto en gris */
-  cursor: not-allowed; /* Cambia el cursor para indicar que está deshabilitado */
 }

@@ -86,12 +86,39 @@ export class CalendarioComponent implements OnInit {
   }
 
   enviarFormulario(form: NgForm) {
-    if (form.valid) {
-      console.log('Formulario enviado', form.value);
-      form.reset();
+    if (form.valid && this.servicioSeleccionado && this.fechaSeleccionada) {
+      const evento = {
+        Descripcion: `Reserva del servicio: ${this.servicioSeleccionado.titulo}`,
+        InformacionContacto: {
+          Nombre: form.value.nombre,
+          Numero: form.value.numero,
+          Direccion: form.value.direccion
+        },
+        FechaEvento: this.fechaSeleccionada.toISOString(),
+        EstadoEvento: 'Por Confirmar'
+    
+      };
+      
+  
+      this.eventosService.createEvento(evento).subscribe({
+        next: (respuesta) => {
+          console.log('Evento guardado con éxito:', respuesta);
+          form.reset();
+          this.fechaSeleccionada = null; // Reinicia la fecha seleccionada
+          this.generarDias(); // Actualiza el calendario
+        },
+        error: (error) => {
+          console.error('Error al guardar el evento:', error);
+        }
+      });
     }
+    this.limpiarSeleccion(); // Limpia los datos
+    
   }
-
+  limpiarSeleccion() {
+    this.fechaSeleccionada = null; // Limpia la selección de fecha
+  }
+  
   calcularPrecioTotal(): number {
     if (!this.servicioSeleccionado) return 0;
     let precioTotal = this.servicioSeleccionado.precio;
