@@ -1,134 +1,179 @@
-.calendario {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  width: 300px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil para mayor profundidad */
+.calendario-contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 800px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
+.calendario {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Encabezado del calendario */
 .cabecera {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #555;
 }
 
+/* Días de la semana */
 .dias-semana {
   display: flex;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .dia-semana {
   flex: 1;
-  padding: 4px; /* Relleno reducido */
-  font-weight: bold;
-  font-size: 0.9em; /* Tamaño de fuente más pequeño */
+  text-align: center;
+  padding: 8px;
+  font-size: 0.9em;
 }
 
+/* Contenedor de los días del calendario */
 .dias {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Permite que los elementos se distribuyan en varias filas */
   margin-top: 10px;
 }
 
 .dias > div {
-  width: 14.28%; /* 7 días en una semana */
-  padding: 5px; /* Relleno reducido */
+  width: 14.28%; /* 7 días en una fila */
+  text-align: center;
+  padding: 8px;
+  font-size: 0.9em;
   cursor: pointer;
-  font-size: 0.9em; /* Tamaño de fuente más pequeño */
+  color: #666;
+  transition: background-color 0.2s ease;
 }
 
 .dias > div.hoy {
   background-color: #007bff;
-  color: white;
+  color: #fff;
+  border-radius: 50%;
 }
 
 .dias > div.seleccionado {
   background-color: #28a745;
   color: white;
+  border-radius: 50%;
 }
 
+.dias > div:hover:not(.hoy):not(.seleccionado) {
+  background-color: #e0e0e0;
+}
+
+/* Información del servicio */
 .informacion-servicio {
-  margin-top: 10px; /* Espaciado reducido */
-  padding: 5px; /* Relleno reducido */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 0.9em; /* Tamaño de fuente más pequeño */
+  padding: 10px;
+  font-size: 0.9em;
+  background: #fbfbfb;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
 }
 
-.informacion-servicio h4 {
-  font-size: 1em; /* Tamaño de fuente más pequeño */
-  margin-bottom: 5px; /* Espaciado reducido */
-}
-
-.informacion-servicio ul {
-  list-style-type: none; /* Eliminar viñetas */
-  padding: 0; /* Sin relleno */
-  margin: 0; /* Sin margen */
-}
-
-.informacion-servicio li {
-  margin: 3px 0; /* Espaciado reducido entre elementos */
-}
-
+/* Estilos del formulario */
 .formulario-contacto {
-  margin-top: 10px; /* Espaciado reducido */
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+}
+
+.formulario-contacto h4 {
+  font-size: 1.2em;
+  color: #007bff;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .form-group {
-  margin-bottom: 10px; /* Espaciado entre campos */
+  margin-bottom: 15px;
 }
 
-.form-control {
-  height: 30px; /* Altura de campo reducida */
-  font-size: 0.9em; /* Tamaño de fuente más pequeño */
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
 }
 
-.btn {
-  width: 100%; /* Botón de ancho completo */
-}
-.calendario-contenedor {
-  display: flex; /* Para alinear los elementos en línea */
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas más pequeñas */
-  justify-content: space-between; /* Espaciado entre elementos */
+.underline {
+  border-bottom: 1px solid #333;
+  margin-bottom: 15px;
 }
 
-.calendario {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  width: 300px; /* Mantén el ancho fijo o ajusta según sea necesario */
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-right: 20px; /* Espaciado a la derecha del calendario */
-  flex-shrink: 0; /* Evita que se reduzca más allá del tamaño especificado */
+.underline input[type="text"],
+.underline input[type="tel"] {
+  border: none;
+  width: 100%;
+  outline: none;
+  padding: 5px;
+  font-size: 1em;
 }
 
-.informacion-servicio,
-.formulario-contacto {
-  flex: 1; /* Toma el espacio restante */
-  margin: 10px; /* Espaciado entre elementos */
-  min-width: 250px; /* Ancho mínimo para mantener legibilidad */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.underline input[type="text"]:focus,
+.underline input[type="tel"]:focus {
+  border-bottom: 1px solid #007bff;
 }
 
-.informacion-servicio h4,
-.formulario-contacto h4 {
-  font-size: 1em; /* Tamaño de fuente más pequeño */
+.minimal-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  margin-top: 10px;
 }
 
+.minimal-btn:hover {
+  background-color: #0056b3;
+}
+
+.text-danger {
+  font-size: 0.8em;
+  color: #d9534f;
+}
+
+/* Adaptación para móviles */
 @media (max-width: 768px) {
   .calendario-contenedor {
-    flex-direction: column; /* En pantallas más pequeñas, apila los elementos */
-    align-items: center; /* Centra los elementos */
+    flex-direction: column;
+    align-items: center;
   }
 }
-.dias > div.no-seleccionable {
-  color: #ac8d8df5; /* Cambia el color para indicar que no se puede seleccionar */
-  cursor: not-allowed; /* Cambia el cursor para indicar que no se puede hacer clic */
+.minimal-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
+.btn-active {
+  background-color: #4CAF50; /* Color verde para activo */
+  color: white; /* Texto en blanco */
+}
+
+.btn-disabled {
+  background-color: #ccc; /* Color gris para deshabilitado */
+  color: #666; /* Texto en gris */
+  cursor: not-allowed; /* Cambia el cursor para indicar que está deshabilitado */
+}

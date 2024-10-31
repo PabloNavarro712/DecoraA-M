@@ -10,7 +10,7 @@
     <div class="dias-semana">
       <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
     </div>
-
+ 
     <div class="dias">
       <div *ngFor="let dia of dias" 
            (click)="seleccionarFecha(dia)" 
@@ -19,7 +19,6 @@
         {{ dia > 0 ? dia : '' }}
       </div>
     </div>
-    
 
     <!-- Muestra la fecha seleccionada -->
     <div *ngIf="fechaSeleccionada" class="mt-2">
@@ -39,27 +38,53 @@
       <p><strong>Precio Total:</strong> {{ calcularPrecioTotal() | currency }}</p>
     </div>
   </div>
-
-  <!-- Formulario de contacto -->
   <div class="formulario-contacto">
     <h4>Información de Contacto</h4>
     <form #contactForm="ngForm" (ngSubmit)="enviarFormulario(contactForm)">
+      
       <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" required ngModel>
+        <div class="underline">
+          <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="50" pattern="[a-zA-Z\s]+" ngModel #nombre="ngModel">
+        </div>
+        <!-- Mensaje de error para el campo nombre -->
+        <span class="text-danger" *ngIf="nombre.invalid && nombre.touched">
+          El nombre debe contener entre 3 y 50 caracteres y solo letras.
+        </span>
       </div>
-
+  
       <div class="form-group">
-        <label for="correo">Correo Electrónico:</label>
-        <input type="email" id="correo" name="correo" class="form-control" required ngModel>
+        <label for="numero">Número de Teléfono:</label>
+        <div class="underline">
+          <input type="tel" id="numero" name="numero" required pattern="^\d{10}$" ngModel #numero="ngModel">
+        </div>
+        <!-- Mensaje de error para el campo número de teléfono -->
+        <span class="text-danger" *ngIf="numero.invalid && numero.touched">
+          El número debe contener exactamente 10 dígitos.
+        </span>
       </div>
-
+  
       <div class="form-group">
-        <label for="mensaje">Mensaje:</label>
-        <textarea id="mensaje" name="mensaje" class="form-control" rows="3" required ngModel></textarea>
+        <label for="direccion">Dirección:</label>
+        <div class="underline">
+          <input type="text" id="direccion" name="direccion" required minlength="5" maxlength="100" ngModel #direccion="ngModel">
+        </div>
+        <!-- Mensaje de error para el campo dirección -->
+        <span class="text-danger" *ngIf="direccion.invalid && direccion.touched">
+          La dirección debe contener entre 5 y 100 caracteres.
+        </span>
       </div>
-
-      <button type="submit" class="btn btn-primary" [disabled]="!contactForm.valid">Enviar</button>
+  
+      <!-- Botón de envío deshabilitado cuando el formulario es inválido -->
+      
+      <button 
+      type="submit" 
+      class="minimal-btn" 
+      [ngClass]="{ 'btn-active': contactForm.valid, 'btn-disabled': !contactForm.valid }" 
+      [disabled]="!contactForm.valid">
+      Enviar
+    </button>
+    
     </form>
   </div>
-</div>
+  

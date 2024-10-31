@@ -48,4 +48,10 @@ export class EventosService {
   deleteEvento(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+ 
+// Obtener solo las fechas de eventos activos
+getFechasEventos(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.apiUrl}/fechas`);
+}
+
 }

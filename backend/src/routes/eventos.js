@@ -61,5 +61,30 @@ router.delete('/:id', async (req, res) => {
         res.status(500).send({ error: 'Error eliminando el evento' });
     }
 });
+// Obtener solo las fechas de los eventos
+router.get('/fechas-no-seleccionables', async (req, res) => {
+    try {
+        const snapshot = await db.collection('eventos').select('FechaEvento').get();
+        const fechas = snapshot.docs.map(doc => doc.data().FechaEvento);
+        res.send(fechas);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo las fechas no seleccionables' });
+    }
+});
+
+// Obtener todas las fechas de eventos activos
+router.get('/fechas', async (req, res) => {
+    try {
+        const snapshot = await db.collection('eventos').where('EstadoEvento', '!=', 'cancelado').get();
+        const fechas = snapshot.docs.map(doc => doc.data().FechaEvento); // Solo fechas
+        res.send(fechas);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo las fechas de eventos' });
+    }
+});
+
+
+
+
 
 module.exports = router;
