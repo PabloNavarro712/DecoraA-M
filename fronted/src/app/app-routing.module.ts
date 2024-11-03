@@ -13,6 +13,8 @@ import { AdminTemplateComponent } from './admin-template/admin-template.componen
 import { ClientTemplateComponent } from './template_cliente/client-template/client-template.component';
 import { EditarServicioComponent } from './vista-admin/editar-servicio/editar-servicio.component';
 import { FaqComponent } from './vista-cliente/faq/faq.component';
+import { EventosAdminComponent } from './vista-admin/editar_evento/eventos-admin/eventos-admin.component';
+import { AdminServiciosComponent } from './vista-admin/home/home-admin/admin-servicios/admin-servicios.component';
 const routes: Routes = [
   // Rutas del cliente
   {
@@ -33,7 +35,8 @@ const routes: Routes = [
       { path: '', component: HomeAdminComponent },
       { path: 'home_a', component: HomeAdminComponent }, // Vista home para admin
       { path: 'salpicadero', component: PanelEdicionComponent }, // Vista de panel de edición
-      { path: 'editar_servicio', component: EditarServicioComponent}
+      { path: 'editar_servicio', component: EditarServicioComponent}, // Vista para editar servicios
+      { path: 'editar_evento', component: AdminServiciosComponent}
     ]
   },
 

@@ -78,4 +78,10 @@ li {
   flex-direction: column; /* Apila los elementos verticalmente */
   align-items: center; /* Centra los elementos horizontalmente */
   justify-content: center; /* Centra los elementos verticalmente */
+}.modal-lg-custom {
+  max-width: 60%; /* Ajusta el ancho máximo como desees */
+}
+
+.modal-sm-custom {
+  max-width: 30%; /* Para un modal más pequeño */
 }

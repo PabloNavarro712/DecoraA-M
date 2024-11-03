@@ -1,45 +1,90 @@
-<div class="calendario text-center">
-  <div class="cabecera">
-    <button (click)="navegarMes(-1)">&#10094;</button>
-    <h5>{{ mes + 1 }} / {{ anio }}</h5>
-    <button (click)="navegarMes(1)">&#10095;</button>
-  </div>
+<div class="calendario-contenedor">
+  <div class="calendario text-center">
+    <!-- Navegación del calendario -->
+    <div class="cabecera">
+      <button type="button" (click)="navegarMes(-1)" aria-label="Mes anterior">&#10094;</button>
+      <h5>{{ mes + 1 }} / {{ anio }}</h5>
+      <button type="button" (click)="navegarMes(1)" aria-label="Mes siguiente">&#10095;</button>
+    </div>
 
-  <div class="dias-semana">
-    <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
-  </div>
-
-  <div class="dias">
-    <div *ngFor="let dia of dias" (click)="seleccionarFecha(dia)" 
-         [ngClass]="{'hoy': isToday(dia), 'seleccionado': fechaSeleccionada?.getDate() === dia}">
+    <!-- Días de la semana -->
+    <div class="dias-semana">
+      <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
+    </div>
+    <!-- Días del mes -->
+<div class="dias">
+  <div *ngFor="let dia of dias" 
+       (click)="isSelectable(dia) ? seleccionarFecha(dia) : null" 
+       [ngClass]="{
+           'hoy': isToday(dia), 
+           'seleccionado': fechaSeleccionada?.getDate() === dia, 
+           'no-seleccionable': !isSelectable(dia) && dia > 0
+       }">
       {{ dia > 0 ? dia : '' }}
+  </div>
+</div>
+
+
+    <!-- Fecha seleccionada -->
+    <div *ngIf="fechaSeleccionada" class="mt-2">
+      <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
+    </div>
+
+    <!-- Resumen del servicio -->
+    <div *ngIf="servicioSeleccionado" class="informacion-servicio">
+      <h4>Resumen de Reserva: {{ servicioSeleccionado.titulo }}</h4>
+      <ul>
+        <li *ngFor="let opcion of servicioSeleccionado.opciones">
+          <span *ngIf="opcion.seleccionada">
+            {{ opcion.nombre }}: {{ opcion.precio | currency }}
+          </span>
+        </li>
+      </ul>
+      <p><strong>Precio Total:</strong> {{ calcularPrecioTotal() | currency }}</p>
     </div>
   </div>
 
-  <div *ngIf="fechaSeleccionada">
-    <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
-  </div>
-
   <!-- Formulario de contacto -->
-  <div class="formulario-contacto mt-4">
+  <div class="formulario-contacto">
     <h4>Información de Contacto</h4>
     <form #contactForm="ngForm" (ngSubmit)="enviarFormulario(contactForm)">
       <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" required ngModel>
+        <div class="underline">
+          <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="50" pattern="[a-zA-Z\s]+" ngModel #nombre="ngModel" aria-required="true">
+        </div>
+        <span class="text-danger" *ngIf="nombre.invalid && nombre.touched">
+          El nombre debe contener entre 3 y 50 caracteres y solo letras.
+        </span>
       </div>
 
       <div class="form-group">
-        <label for="correo">Correo Electrónico:</label>
-        <input type="email" id="correo" name="correo" class="form-control" required ngModel>
+        <label for="numero">Número de Teléfono:</label>
+        <div class="underline">
+          <input type="tel" id="numero" name="numero" required pattern="^\d{10}$" ngModel #numero="ngModel" aria-required="true">
+        </div>
+        <span class="text-danger" *ngIf="numero.invalid && numero.touched">
+          El número debe contener exactamente 10 dígitos.
+        </span>
       </div>
 
       <div class="form-group">
-        <label for="mensaje">Mensaje:</label>
-        <textarea id="mensaje" name="mensaje" class="form-control" rows="3" required ngModel></textarea>
+        <label for="direccion">Dirección:</label>
+        <div class="underline">
+          <input type="text" id="direccion" name="direccion" required minlength="5" maxlength="100" ngModel #direccion="ngModel" aria-required="true">
+        </div>
+        <span class="text-danger" *ngIf="direccion.invalid && direccion.touched">
+          La dirección debe contener entre 5 y 100 caracteres.
+        </span>
       </div>
 
-      <button type="submit" class="btn btn-primary" [disabled]="!contactForm.valid">Enviar</button>
+      <button 
+        type="submit" 
+        class="minimal-btn" 
+        [ngClass]="{ 'btn-active': contactForm.valid && fechaSeleccionada, 'btn-disabled': !(contactForm.valid && fechaSeleccionada) }" 
+        [disabled]="!(contactForm.valid && fechaSeleccionada)">
+        Enviar
+      </button>
     </form>
   </div>
 </div>
