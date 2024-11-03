@@ -20,13 +20,15 @@ import { ServiceDialogComponent } from './service-dialog/service-dialog.componen
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EventosAdminComponent } from './editar_evento/eventos-admin/eventos-admin.component';
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
     HomeAdminComponent,
     PanelEdicionComponent,
     EditarServicioComponent,
-    ServiceDialogComponent
+    ServiceDialogComponent,
+    EventosAdminComponent
   ],
   imports: [
     NgbModule,

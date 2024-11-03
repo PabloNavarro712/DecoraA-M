@@ -96,25 +96,28 @@ export class CalendarioComponent implements OnInit {
         },
         FechaEvento: this.fechaSeleccionada.toISOString(),
         EstadoEvento: 'Por Confirmar'
-    
       };
       
-  
       this.eventosService.createEvento(evento).subscribe({
         next: (respuesta) => {
           console.log('Evento guardado con éxito:', respuesta);
-          form.reset();
-          this.fechaSeleccionada = null; // Reinicia la fecha seleccionada
-          this.generarDias(); // Actualiza el calendario
+          form.reset(); // Reinicia el formulario de contacto
+          this.fechaSeleccionada = null; // Limpia la fecha seleccionada
+  
+          // Actualiza las fechas no seleccionables desde la base de datos
+          this.obtenerFechasNoSeleccionables();
+  
+          // Vuelve a generar los días del calendario
+          this.generarDias();
         },
         error: (error) => {
           console.error('Error al guardar el evento:', error);
         }
       });
     }
-    this.limpiarSeleccion(); // Limpia los datos
-    
+    this.limpiarSeleccion(); // Limpia la selección de fecha
   }
+  
   limpiarSeleccion() {
     this.fechaSeleccionada = null; // Limpia la selección de fecha
   }
