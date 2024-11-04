@@ -54,4 +54,13 @@ getFechasEventos(): Observable<string[]> {
   return this.http.get<string[]>(`${this.apiUrl}/fechas`);
 }
 
+// Obtener eventos por estado
+getEventosByEstado(estado: string): Observable<Evento[]> {
+  return this.http.get<Evento[]>(`${this.apiUrl}/estado/${estado}`);
+}
+
+  // Método para obtener eventos próximos a la fecha actual
+  getEventosProximos(): Observable<Evento[]> {
+    return this.http.get<Evento[]>(`${this.apiUrl}/proximos`);
+  }
 }
