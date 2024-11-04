@@ -83,6 +83,33 @@ router.get('/fechas', async (req, res) => {
     }
 });
 
+// Obtener eventos por estado
+router.get('/estado/:estado', async (req, res) => {
+    const estado = req.params.estado.toLowerCase(); // Convertimos a minúsculas para asegurar consistencia en los datos
+    try {
+        const snapshot = await db.collection('eventos').where('EstadoEvento', '==', estado).get();
+        const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.send(events);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo eventos por estado' });
+    }
+});
+// Obtener eventos próximos a la fecha actual
+router.get('/proximos', async (req, res) => {
+    try {
+        const fechaActual = new Date().toISOString().split('T')[0]; // Obtener fecha actual en formato YYYY-MM-DD
+        const snapshot = await db.collection('eventos')
+            .where('FechaEvento', '>=', fechaActual)
+            .orderBy('FechaEvento') // Ordena los eventos próximos por fecha ascendente
+            .get();
+
+        const eventosProximos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.send(eventosProximos);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo eventos próximos' });
+    }
+});
+
 
 
 

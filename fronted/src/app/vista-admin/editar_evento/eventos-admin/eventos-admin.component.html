@@ -1,2 +1,122 @@
-<p>eventos-admin works!</p>
- 
+<div class="container-fluid mt-4">
+<!--   
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="calendar-container bg-light p-3 shadow-sm">
+        <h4 class="text-center">Calendario de Eventos</h4>
+        
+        <div id="calendarPlaceholder" class="text-center text-muted">[Aquí va el calendario]</div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Sección de formulario y listas -->
+  <div class="row">
+    <!-- Formulario para agregar/editar eventos -->
+    <div class="col-lg-4 col-md-12 mb-4">
+      <div class="form-container p-4 bg-light shadow-sm">
+        <h4 class="text-center">{{ editMode ? 'Editar Evento' : 'Nuevo Evento' }}</h4>
+        <form [formGroup]="eventoForm" (ngSubmit)="guardarEvento()">
+          <div class="mb-3">
+            <label for="Descripcion" class="form-label">Descripción</label>
+            <input id="Descripcion" type="text" formControlName="Descripcion" class="form-control" placeholder="Descripción del evento">
+          </div>
+
+          <div class="mb-3">
+            <label for="FechaEvento" class="form-label">Fecha del Evento</label>
+            <input id="FechaEvento" type="date" formControlName="FechaEvento" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="EstadoEvento" class="form-label">Estado del Evento</label>
+            <select id="EstadoEvento" formControlName="EstadoEvento" class="form-select">
+              <option value="activo">Activo</option>
+              <option value="cancelado">Cancelado</option>
+              <option value="por confirmar">Por Confirmar</option>
+            </select>
+          </div>
+
+          <fieldset formGroupName="InformacionContacto">
+            <legend class="small text-muted">Información de Contacto</legend>
+            
+            <div class="mb-3">
+              <label for="Nombre" class="form-label">Nombre</label>
+              <input id="Nombre" type="text" formControlName="Nombre" class="form-control" placeholder="Nombre de contacto">
+            </div>
+
+            <div class="mb-3">
+              <label for="Numero" class="form-label">Número de Contacto</label>
+              <input id="Numero" type="tel" formControlName="Numero" class="form-control" placeholder="Número de contacto">
+            </div>
+
+            <div class="mb-3">
+              <label for="Direccion" class="form-label">Dirección</label>
+              <input id="Direccion" type="text" formControlName="Direccion" class="form-control" placeholder="Dirección">
+            </div>
+          </fieldset>
+
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">{{ editMode ? 'Actualizar' : 'Guardar' }}</button>
+            <button type="button" class="btn btn-secondary" (click)="iniciarNuevoEvento()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Listas de eventos -->
+    <div class="col-lg-8 col-md-12">
+      <div class="event-list-container bg-light p-3 shadow-sm">
+        <!-- Eventos Activos -->
+        <div class="card mb-4">
+          <div class="card-header bg-light text-dark d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Eventos Activos</h5>
+          </div>
+          <ul class="list-group list-group-flush list-group-scroll">
+            <li *ngFor="let evento of eventosActivos" class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ evento.Descripcion }}</strong> <br>
+                <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
+              </div>
+              <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar</button>
+            </li>
+            <li *ngIf="!eventosActivos.length" class="list-group-item text-center text-muted">No hay eventos activos.</li>
+          </ul>
+        </div>
+
+        <!-- Eventos Cancelados -->
+        <div class="card mb-4">
+          <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Eventos Cancelados</h5>
+          </div>
+          <ul class="list-group list-group-flush list-group-scroll">
+            <li *ngFor="let evento of eventosCancelados" class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ evento.Descripcion }}</strong> <br>
+                <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
+              </div>
+              <button class="btn btn-outline-light btn-sm" (click)="editarEvento(evento)">Editar</button>
+            </li>
+            <li *ngIf="!eventosCancelados.length" class="list-group-item text-center text-muted">No hay eventos cancelados.</li>
+          </ul>
+        </div>
+
+        <!-- Eventos Por Confirmar -->
+        <div class="card mb-4">
+          <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Eventos por Confirmar</h5>
+          </div>
+          <ul class="list-group list-group-flush list-group-scroll">
+            <li *ngFor="let evento of eventosPorConfirmar" class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ evento.Descripcion }}</strong> <br>
+                <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
+              </div>
+              <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar</button>
+            </li>
+            <li *ngIf="!eventosPorConfirmar.length" class="list-group-item text-center text-muted">No hay eventos por confirmar.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

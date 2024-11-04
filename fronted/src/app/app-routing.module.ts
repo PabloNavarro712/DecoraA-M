@@ -36,7 +36,7 @@ const routes: Routes = [
       { path: 'home_a', component: HomeAdminComponent }, // Vista home para admin
       { path: 'salpicadero', component: PanelEdicionComponent }, // Vista de panel de edición
       { path: 'editar_servicio', component: EditarServicioComponent}, // Vista para editar servicios
-      { path: 'editar_evento', component: AdminServiciosComponent}
+      { path: 'editar_evento', component: EventosAdminComponent}
     ]
   },
 

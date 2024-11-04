@@ -21,6 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventosAdminComponent } from './editar_evento/eventos-admin/eventos-admin.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
@@ -31,6 +32,7 @@ import { EventosAdminComponent } from './editar_evento/eventos-admin/eventos-adm
     EventosAdminComponent
   ],
   imports: [
+    FullCalendarModule,
     NgbModule,
     ReactiveFormsModule,
     MatDialogModule,
