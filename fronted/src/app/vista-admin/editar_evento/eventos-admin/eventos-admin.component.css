@@ -1,22 +1,12 @@
 /* Contenedor principal */
 .container-fluid {
   /* Define un ancho máximo para que no ocupe toda la pantalla en monitores grandes */
-  width:130%;
+  width:150%;
   /* Centra el contenedor en la pantalla */
   margin: auto;
 }
 
-/* Contenedor del calendario */
-.calendar-container {
-  /* Define una altura fija para el calendario */
-  height: 300px; 
-  /* Centra el contenido dentro del contenedor en ambas direcciones */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Bordes redondeados */
-  border-radius: 8px;
-}
+
 
 /* Contenedor del formulario de eventos */
 .form-container {
@@ -26,6 +16,7 @@
   min-height: 100%;
   /* Bordes redondeados */
   border-radius: 8px;
+  
 }
 
 /* Contenedor de las listas de eventos */
@@ -54,3 +45,15 @@
   font-size: 0.9rem;
 }
 
+@media (max-width: 768px) {
+  .form-section, .event-list-container {
+    flex: 1 1 100%; /* Ocupa el 100% en pantallas pequeñas */
+    margin-right: 0; /* Eliminar margen en pantallas pequeñas */
+  }
+  .container-fluid{
+      /* Define un ancho máximo para que no ocupe toda la pantalla en monitores grandes */
+  width:100%;
+  /* Centra el contenedor en la pantalla */
+  margin: auto;
+  }
+}
