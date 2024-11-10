@@ -110,6 +110,71 @@ router.get('/proximos', async (req, res) => {
     }
 });
 
+// Obtener eventos próximos según el estado "activo"
+router.get('/proximos/activo', async (req, res) => {
+    try {
+        const fechaActual = new Date().toISOString().split('T')[0];
+        const snapshot = await db.collection('eventos')
+            .where('FechaEvento', '>=', fechaActual)
+            .where('EstadoEvento', '==', 'activo')
+            .orderBy('FechaEvento')
+            .get();
+
+        const eventosActivos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.send(eventosActivos);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo eventos activos' });
+    }
+});
+
+// Obtener eventos con estado "cancelado" sin filtrar por fecha (para depuración)
+router.get('/proximos/cancelado', async (req, res) => {
+    try {
+        const snapshot = await db.collection('eventos')
+            .where('EstadoEvento', '==', 'cancelado')
+            .orderBy('FechaEvento') // Ordena por fecha
+            .get();
+
+        const eventosCancelados = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.send(eventosCancelados);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo eventos cancelados' });
+    }
+});
+
+
+// Obtener eventos próximos según el estado "por confirmar"
+router.get('/proximos/por-confirmar', async (req, res) => {
+    try {
+        const fechaActual = new Date().toISOString().split('T')[0];
+        const snapshot = await db.collection('eventos')
+            .where('FechaEvento', '>=', fechaActual)
+            .where('EstadoEvento', '==', 'por confirmar')
+            .orderBy('FechaEvento')
+            .get();
+
+        const eventosPorConfirmar = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.send(eventosPorConfirmar);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo eventos por confirmar' });
+    }
+});
+
+// Obtener todos los eventos próximos sin filtrar por estado
+router.get('/proximos/todos', async (req, res) => {
+    try {
+        const fechaActual = new Date().toISOString().split('T')[0];
+        const snapshot = await db.collection('eventos')
+            .where('FechaEvento', '>=', fechaActual)
+            .orderBy('FechaEvento')
+            .get();
+
+        const eventosProximos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.send(eventosProximos);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo todos los eventos próximos' });
+    }
+});
 
 
 

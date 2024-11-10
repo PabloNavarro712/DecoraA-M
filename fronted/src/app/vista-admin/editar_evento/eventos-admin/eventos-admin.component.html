@@ -1,15 +1,4 @@
 <div class="container-fluid mt-4">
-<!--   
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="calendar-container bg-light p-3 shadow-sm">
-        <h4 class="text-center">Calendario de Eventos</h4>
-        
-        <div id="calendarPlaceholder" class="text-center text-muted">[Aquí va el calendario]</div>
-      </div>
-    </div>
-  </div> -->
-
   <!-- Sección de formulario y listas -->
   <div class="row">
     <!-- Formulario para agregar/editar eventos -->
@@ -38,7 +27,6 @@
 
           <fieldset formGroupName="InformacionContacto">
             <legend class="small text-muted">Información de Contacto</legend>
-            
             <div class="mb-3">
               <label for="Nombre" class="form-label">Nombre</label>
               <input id="Nombre" type="text" formControlName="Nombre" class="form-control" placeholder="Nombre de contacto">
@@ -56,8 +44,8 @@
           </fieldset>
 
           <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">{{ editMode ? 'Actualizar' : 'Guardar' }}</button>
-            <button type="button" class="btn btn-secondary" (click)="iniciarNuevoEvento()">Cancelar</button>
+            <button type="submit" class="btn btn-primary animate__animated animate__pulse animate__infinite">{{ editMode ? 'Actualizar' : 'Guardar' }} <i class="fas fa-save"></i></button>
+            <button type="button" class="btn btn-secondary" (click)="iniciarNuevoEvento()">Cancelar <i class="fas fa-times"></i></button>
           </div>
         </form>
       </div>
@@ -66,9 +54,9 @@
     <!-- Listas de eventos -->
     <div class="col-lg-8 col-md-12">
       <div class="event-list-container bg-light p-3 shadow-sm">
-        <!-- Eventos Activos -->
+        <!-- Contenedor de Eventos Activos -->
         <div class="card mb-4">
-          <div class="card-header bg-light text-dark d-flex justify-content-between align-items-center">
+          <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Eventos Activos</h5>
           </div>
           <ul class="list-group list-group-flush list-group-scroll">
@@ -77,13 +65,17 @@
                 <strong>{{ evento.Descripcion }}</strong> <br>
                 <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
               </div>
-              <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar</button>
+              <div>
+                <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar <i class="fas fa-edit"></i></button>
+                <button class="btn btn-outline-warning btn-sm ms-2" (click)="cambiarEstado(evento, 'cancelado')">Cancelar <i class="fas fa-ban"></i></button>
+                <button class="btn btn-outline-info btn-sm ms-2" (click)="cambiarEstado(evento, 'por confirmar')">Por Confirmar <i class="fas fa-question-circle"></i></button>
+              </div>
             </li>
             <li *ngIf="!eventosActivos.length" class="list-group-item text-center text-muted">No hay eventos activos.</li>
           </ul>
         </div>
 
-        <!-- Eventos Cancelados -->
+        <!-- Contenedor de Eventos Cancelados -->
         <div class="card mb-4">
           <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Eventos Cancelados</h5>
@@ -94,16 +86,18 @@
                 <strong>{{ evento.Descripcion }}</strong> <br>
                 <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
               </div>
-              <button class="btn btn-outline-light btn-sm" (click)="editarEvento(evento)">Editar</button>
+              <div>
+                <button class="btn btn-outline-info btn-sm ms-2" (click)="cambiarEstado(evento, 'activo')">Activar <i class="fas fa-check-circle"></i></button>
+              </div>
             </li>
             <li *ngIf="!eventosCancelados.length" class="list-group-item text-center text-muted">No hay eventos cancelados.</li>
           </ul>
         </div>
 
-        <!-- Eventos Por Confirmar -->
+        <!-- Contenedor de Eventos Por Confirmar -->
         <div class="card mb-4">
-          <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Eventos por Confirmar</h5>
+          <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Eventos Por Confirmar</h5>
           </div>
           <ul class="list-group list-group-flush list-group-scroll">
             <li *ngFor="let evento of eventosPorConfirmar" class="list-group-item d-flex justify-content-between align-items-center">
@@ -111,7 +105,11 @@
                 <strong>{{ evento.Descripcion }}</strong> <br>
                 <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
               </div>
-              <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar</button>
+              <div>
+                <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar <i class="fas fa-edit"></i></button>
+                <button class="btn btn-outline-success btn-sm ms-2" (click)="cambiarEstado(evento, 'activo')">Confirmar <i class="fas fa-check"></i></button>
+                <button class="btn btn-outline-danger btn-sm ms-2" (click)="cambiarEstado(evento, 'cancelado')">Cancelar <i class="fas fa-times"></i></button>
+              </div>
             </li>
             <li *ngIf="!eventosPorConfirmar.length" class="list-group-item text-center text-muted">No hay eventos por confirmar.</li>
           </ul>
