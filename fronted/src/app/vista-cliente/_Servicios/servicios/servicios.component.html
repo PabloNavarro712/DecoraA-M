@@ -1,6 +1,7 @@
-<div *ngIf="!isUserAuthenticated()" class="text-center text-danger mt-2">
-  <small>¡Inicia sesión para poder realizar una reserva!</small>
-  </div>
+<div *ngIf="!isUserAuthenticated()" class="text-center text-danger mt-2 alert alert-warning">
+  <strong class="fs-5">¡Inicia sesión para poder realizar una reserva!</strong>
+</div>
+
 <div class="container">
   <!-- Título llamativo para "Nuestros Servicios" -->
   <div class="row">
@@ -8,7 +9,7 @@
       <h1 class="display-4 font-weight-bold text-primary">Nuestros Servicios</h1>
       <hr class="my-4" style="border-top: 3px solid #007bff; width: 50%;">
     </div>
-  </div>
+  </div>n
   <div class="row">
     <!-- Mensaje de error si el usuario no está autenticado -->
     <div *ngIf="mensajeError" class="col-12 text-center mb-4">

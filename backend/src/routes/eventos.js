@@ -5,15 +5,39 @@ const router = express.Router();
 
 // Crear un nuevo evento
 router.post('/', async (req, res) => {
-    const { Descripcion, InformacionContacto, FechaEvento, EstadoEvento } = req.body;
+    const {
+        id_del_cliente,
+        usuario,
+        descripcion,
+        servicio_seleccionado,
+        estado_evento,
+        tipo_evento,
+        nombre_contacto,
+        numero_telefono,
+        direccion_local,
+        fecha_evento,
+        hora
+    } = req.body;
 
     // Validación básica para asegurarse de que los campos importantes no estén vacíos
-    if (!Descripcion || !InformacionContacto || !FechaEvento || !EstadoEvento) {
+    if (!id_del_cliente || !usuario || !descripcion || !servicio_seleccionado || !estado_evento || !tipo_evento || !nombre_contacto || !numero_telefono || !direccion_local || !fecha_evento || !hora) {
         return res.status(400).send({ error: 'Todos los campos son obligatorios' });
     }
 
     try {
-        const newEvent = { Descripcion, InformacionContacto, FechaEvento, EstadoEvento };
+        const newEvent = {
+            id_del_cliente,
+            usuario,
+            descripcion,
+            servicio_seleccionado,
+            estado_evento,
+            tipo_evento,
+            nombre_contacto,
+            numero_telefono,
+            direccion_local,
+            fecha_evento,
+            hora
+        };
         const docRef = await db.collection('eventos').add(newEvent);
         res.status(201).send({ id: docRef.id, ...newEvent });
     } catch (error) {
@@ -35,15 +59,39 @@ router.get('/', async (req, res) => {
 // Actualizar un evento
 router.put('/:id', async (req, res) => {
     const eventId = req.params.id;
-    const { Descripcion, InformacionContacto, FechaEvento, EstadoEvento } = req.body;
+    const {
+        id_del_cliente,
+        usuario,
+        descripcion,
+        servicio_seleccionado,
+        estado_evento,
+        tipo_evento,
+        nombre_contacto,
+        numero_telefono,
+        direccion_local,
+        fecha_evento,
+        hora
+    } = req.body;
 
     // Validación básica
-    if (!Descripcion || !InformacionContacto || !FechaEvento || !EstadoEvento) {
+    if (!id_del_cliente || !usuario || !descripcion || !servicio_seleccionado || !estado_evento || !tipo_evento || !nombre_contacto || !numero_telefono || !direccion_local || !fecha_evento || !hora) {
         return res.status(400).send({ error: 'Todos los campos son obligatorios' });
     }
 
     try {
-        const updatedEvent = { Descripcion, InformacionContacto, FechaEvento, EstadoEvento };
+        const updatedEvent = {
+            id_del_cliente,
+            usuario,
+            descripcion,
+            servicio_seleccionado,
+            estado_evento,
+            tipo_evento,
+            nombre_contacto,
+            numero_telefono,
+            direccion_local,
+            fecha_evento,
+            hora
+        };
         await db.collection('eventos').doc(eventId).update(updatedEvent);
         res.send({ id: eventId, ...updatedEvent });
     } catch (error) {
@@ -61,11 +109,12 @@ router.delete('/:id', async (req, res) => {
         res.status(500).send({ error: 'Error eliminando el evento' });
     }
 });
+
 // Obtener solo las fechas de los eventos
 router.get('/fechas-no-seleccionables', async (req, res) => {
     try {
-        const snapshot = await db.collection('eventos').select('FechaEvento').get();
-        const fechas = snapshot.docs.map(doc => doc.data().FechaEvento);
+        const snapshot = await db.collection('eventos').select('fecha_evento').get();
+        const fechas = snapshot.docs.map(doc => doc.data().fecha_evento);
         res.send(fechas);
     } catch (error) {
         res.status(500).send({ error: 'Error obteniendo las fechas no seleccionables' });
@@ -75,8 +124,8 @@ router.get('/fechas-no-seleccionables', async (req, res) => {
 // Obtener todas las fechas de eventos activos
 router.get('/fechas', async (req, res) => {
     try {
-        const snapshot = await db.collection('eventos').where('EstadoEvento', '!=', 'cancelado').get();
-        const fechas = snapshot.docs.map(doc => doc.data().FechaEvento); // Solo fechas
+        const snapshot = await db.collection('eventos').where('estado_evento', '!=', 'cancelado').get();
+        const fechas = snapshot.docs.map(doc => doc.data().fecha_evento); // Solo fechas
         res.send(fechas);
     } catch (error) {
         res.status(500).send({ error: 'Error obteniendo las fechas de eventos' });
@@ -85,22 +134,23 @@ router.get('/fechas', async (req, res) => {
 
 // Obtener eventos por estado
 router.get('/estado/:estado', async (req, res) => {
-    const estado = req.params.estado.toLowerCase(); // Convertimos a minúsculas para asegurar consistencia en los datos
+    const estado = req.params.estado.toLowerCase();
     try {
-        const snapshot = await db.collection('eventos').where('EstadoEvento', '==', estado).get();
+        const snapshot = await db.collection('eventos').where('estado_evento', '==', estado).get();
         const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         res.send(events);
     } catch (error) {
         res.status(500).send({ error: 'Error obteniendo eventos por estado' });
     }
 });
+
 // Obtener eventos próximos a la fecha actual
 router.get('/proximos', async (req, res) => {
     try {
-        const fechaActual = new Date().toISOString().split('T')[0]; // Obtener fecha actual en formato YYYY-MM-DD
+        const fechaActual = new Date().toISOString().split('T')[0];
         const snapshot = await db.collection('eventos')
-            .where('FechaEvento', '>=', fechaActual)
-            .orderBy('FechaEvento') // Ordena los eventos próximos por fecha ascendente
+            .where('fecha_evento', '>=', fechaActual)
+            .orderBy('fecha_evento')
             .get();
 
         const eventosProximos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -115,9 +165,9 @@ router.get('/proximos/activo', async (req, res) => {
     try {
         const fechaActual = new Date().toISOString().split('T')[0];
         const snapshot = await db.collection('eventos')
-            .where('FechaEvento', '>=', fechaActual)
-            .where('EstadoEvento', '==', 'activo')
-            .orderBy('FechaEvento')
+            .where('fecha_evento', '>=', fechaActual)
+            .where('estado_evento', '==', 'activo')
+            .orderBy('fecha_evento')
             .get();
 
         const eventosActivos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -127,12 +177,12 @@ router.get('/proximos/activo', async (req, res) => {
     }
 });
 
-// Obtener eventos con estado "cancelado" sin filtrar por fecha (para depuración)
+// Obtener eventos con estado "cancelado" sin filtrar por fecha
 router.get('/proximos/cancelado', async (req, res) => {
     try {
         const snapshot = await db.collection('eventos')
-            .where('EstadoEvento', '==', 'cancelado')
-            .orderBy('FechaEvento') // Ordena por fecha
+            .where('estado_evento', '==', 'cancelado')
+            .orderBy('fecha_evento')
             .get();
 
         const eventosCancelados = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -142,15 +192,14 @@ router.get('/proximos/cancelado', async (req, res) => {
     }
 });
 
-
 // Obtener eventos próximos según el estado "por confirmar"
 router.get('/proximos/por-confirmar', async (req, res) => {
     try {
         const fechaActual = new Date().toISOString().split('T')[0];
         const snapshot = await db.collection('eventos')
-            .where('FechaEvento', '>=', fechaActual)
-            .where('EstadoEvento', '==', 'por confirmar')
-            .orderBy('FechaEvento')
+            .where('fecha_evento', '>=', fechaActual)
+            .where('estado_evento', '==', 'por confirmar')
+            .orderBy('fecha_evento')
             .get();
 
         const eventosPorConfirmar = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -165,8 +214,8 @@ router.get('/proximos/todos', async (req, res) => {
     try {
         const fechaActual = new Date().toISOString().split('T')[0];
         const snapshot = await db.collection('eventos')
-            .where('FechaEvento', '>=', fechaActual)
-            .orderBy('FechaEvento')
+            .where('fecha_evento', '>=', fechaActual)
+            .orderBy('fecha_evento')
             .get();
 
         const eventosProximos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -175,8 +224,24 @@ router.get('/proximos/todos', async (req, res) => {
         res.status(500).send({ error: 'Error obteniendo todos los eventos próximos' });
     }
 });
+// Obtener servicios asociados a un cliente específico por id_del_cliente
+router.get('/cliente/:id_del_cliente', async (req, res) => {
+    const id_del_cliente = req.params.id_del_cliente;
 
+    try {
+        // Filtrar los eventos por id_del_cliente
+        const snapshot = await db.collection('eventos').where('id_del_cliente', '==', id_del_cliente).get();
 
+        // Si no hay eventos, responder con un mensaje
+        if (snapshot.empty) {
+            return res.status(404).send({ error: 'No se encontraron eventos para este cliente' });
+        }
 
+        const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.send(events);
+    } catch (error) {
+        res.status(500).send({ error: 'Error obteniendo eventos del cliente' });
+    }
+});
 
 module.exports = router;

@@ -85,3 +85,8 @@ li {
 .modal-sm-custom {
   max-width: 30%; /* Para un modal más pequeño */
 }
+
+.autentificacion{
+  font: bold;
+
+}
