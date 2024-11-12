@@ -1,35 +1,40 @@
 <div class="contenedor__todo">
-    <div class="caja__trasera">
-      <h3>{{ isLoginVisible ? 'Bienvenido de nuevo' : 'Regístrate para comenzar' }}</h3>
-    </div>
-    <div class="contenedor__login-register">
-      <!-- Formulario de Login -->
-      <form *ngIf="isLoginVisible" class="formulario__login" (ngSubmit)="login()">
-        <h2>Iniciar Sesión</h2>
-        <input type="text" placeholder="Usuario" [(ngModel)]="loginData.usuario" name="usuario" required />
-        <input type="password" placeholder="Contraseña" [(ngModel)]="loginData.contrasena" name="contraseña" required />
-        <button type="submit">Entrar</button>
-        <div class="enlace-registro">
-          <p>¿No tienes una cuenta? 
-            <a href="#" (click)="toggleForm($event)">Regístrate aquí</a>
-          </p>
-        </div>
-      </form>
-  
-      <!-- Formulario de Registro -->
-      <form *ngIf="!isLoginVisible" class="formulario__register" (ngSubmit)="register()">
-        <h2>Regístrate</h2>
-        <input type="text" placeholder="Nombre completo" [(ngModel)]="registerData.nombre" name="nombre" required />
-        <input type="text" placeholder="Correo Electrónico" [(ngModel)]="registerData.correo" name="correo" required />
-        <input type="text" placeholder="Usuario" [(ngModel)]="registerData.usuario" name="usuario" required />
-        <input type="password" placeholder="Contraseña" [(ngModel)]="registerData.contrasena" name="contraseña" required />
-        <button type="submit">Registrarse</button>
-        <div class="enlace-registro">
-          <p>¿Ya tienes una cuenta? 
-            <a href="#" (click)="toggleForm($event)">Inicia sesión aquí</a>
-          </p>
-        </div>
-      </form>
-    </div>
+  <div class="caja__trasera">
+    <!-- Mostrar mensaje de error si hay alguno -->
+    <h3 *ngIf="loginErrorMessage || registerErrorMessage" class="error-banner">
+      {{ loginErrorMessage || registerErrorMessage }}
+    </h3>
+    <h3 *ngIf="!loginErrorMessage && !registerErrorMessage">
+      {{ isLoginVisible ? 'Bienvenido de nuevo' : 'Regístrate para comenzar' }}
+    </h3>
   </div>
-  
+  <div class="contenedor__login-register">
+    <!-- Formulario de Login -->
+    <form *ngIf="isLoginVisible" class="formulario__login" (ngSubmit)="login()">
+      <h2>Iniciar Sesión</h2>
+      <input type="text" placeholder="Usuario" [(ngModel)]="loginData.usuario" name="usuario" required />
+      <input type="password" placeholder="Contraseña" [(ngModel)]="loginData.contrasena" name="contraseña" required />
+      <button type="submit">Entrar</button>
+      <div class="enlace-registro">
+        <p>¿No tienes una cuenta? 
+          <a href="#" (click)="toggleForm($event)">Regístrate aquí</a>
+        </p>
+      </div>
+    </form>
+
+    <!-- Formulario de Registro -->
+    <form *ngIf="!isLoginVisible" class="formulario__register" (ngSubmit)="register()">
+      <h2>Regístrate</h2>
+      <input type="text" placeholder="Nombre completo" [(ngModel)]="registerData.nombreCompleto" name="nombre" required />
+      <input type="text" placeholder="Correo Electrónico" [(ngModel)]="registerData.correo" name="correo" required />
+      <input type="text" placeholder="Usuario" [(ngModel)]="registerData.usuario" name="usuario" required />
+      <input type="password" placeholder="Contraseña" [(ngModel)]="registerData.contrasena" name="contraseña" required />
+      <button type="submit">Registrarse</button>
+      <div class="enlace-registro">
+        <p>¿Ya tienes una cuenta? 
+          <a href="#" (click)="toggleForm($event)">Inicia sesión aquí</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

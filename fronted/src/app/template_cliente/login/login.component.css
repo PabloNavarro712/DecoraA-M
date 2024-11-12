@@ -94,3 +94,15 @@
     padding: 15px; /* Ajustar el padding en pantallas pequeñas */
   }
 }
+
+.error-banner {
+  color: #fa0c0c;  /* Cambia el color del texto a un azul oscuro */
+  background-color: #ffe6e6;  /* Fondo rosa claro */
+  border: 1px solid #ff4c4c;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+

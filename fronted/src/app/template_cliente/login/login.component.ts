@@ -1,45 +1,85 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';  // Importa Router para redireccionar
+import { UsuarioService, User } from '../../servises/usuario.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
   isLoginVisible = true;
   loginData = { usuario: '', contrasena: '' };
-  registerData = { nombre: '', correo: '', usuario: '', contrasena: '' };
-
-  constructor(private http: HttpClient) {}
+  registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
+  
+  // Mensajes de error
+  loginErrorMessage: string = '';
+  registerErrorMessage: string = '';
+  
+  constructor(private usuarioService: UsuarioService, private router: Router) {}
 
   toggleForm(event: Event) {
     event.preventDefault();
     this.isLoginVisible = !this.isLoginVisible;
+    this.clearErrorMessages(); // Limpiar mensajes de error al cambiar de formulario
+  }
+
+  clearErrorMessages() {
+    this.loginErrorMessage = '';
+    this.registerErrorMessage = '';
   }
 
   login() {
-    this.http.post('http://localhost:3000/api/login', this.loginData).subscribe(
-      (response: any) => {
-        console.log('Login exitoso:', response);
-        // Aquí puedes manejar la lógica después de un inicio de sesión exitoso
+    this.usuarioService.getUsers().subscribe(
+      (usuarios: User[]) => {
+        const user = usuarios.find(u => u.usuario === this.loginData.usuario && u.contrasena === this.loginData.contrasena);
+        if (user) {
+          console.log('Login exitoso:', user);
+          
+          // Guardar el usuario y la id en sessionStorage (o localStorage)
+          sessionStorage.setItem('user', JSON.stringify(user));
+
+          // Redireccionar según el rol del usuario
+          if (user.esAdministrador) {
+            this.router.navigate(['/admin']); // Ruta de administrador
+          } else {
+            this.router.navigate(['/cliente/inicio']); // Ruta de cliente
+          }
+        } else {
+          this.loginErrorMessage = 'Usuario o contraseña incorrectos';
+        }
       },
       (error) => {
         console.error('Error en el login:', error);
-        // Aquí puedes manejar el error de login
+        this.loginErrorMessage = 'Hubo un error al intentar iniciar sesión. Intenta de nuevo.';
       }
     );
   }
 
   register() {
-    this.http.post('http://localhost:3000/api/usuarios', this.registerData).subscribe(
-      (response: any) => {
+    const newUser: User = {
+      nombreCompleto: this.registerData.nombreCompleto,
+      correo: this.registerData.correo,
+      usuario: this.registerData.usuario,
+      contrasena: this.registerData.contrasena,
+      esAdministrador: false
+    };
+
+    // Validación básica de campos requeridos
+    if (!this.registerData.nombreCompleto || !this.registerData.usuario || !this.registerData.correo || !this.registerData.contrasena) {
+      this.registerErrorMessage = 'Todos los campos son obligatorios';
+      return;
+    }
+
+    this.usuarioService.createUser(newUser).subscribe(
+      (response: User) => {
         console.log('Registro exitoso:', response);
-        // Aquí puedes manejar la lógica después de un registro exitoso
+        // Aquí puedes redirigir o hacer algo después del registro exitoso
       },
       (error) => {
         console.error('Error en el registro:', error);
-        // Aquí puedes manejar el error de registro
+        this.registerErrorMessage = 'Este correo ya está registrado o hubo un error al crear la cuenta.';
       }
     );
   }
