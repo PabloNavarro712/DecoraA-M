@@ -90,7 +90,7 @@ export class CalendarioComponent implements OnInit {
       const evento = {
         Descripcion: `Reserva del servicio: ${this.servicioSeleccionado.titulo}`,
         InformacionContacto: {
-          Nombre: form.value.nombre,
+          Nombre: form.value.nombre, 
           Numero: form.value.numero,
           Direccion: form.value.direccion
         },
