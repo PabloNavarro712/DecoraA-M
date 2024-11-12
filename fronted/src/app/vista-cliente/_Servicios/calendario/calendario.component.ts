@@ -15,16 +15,18 @@ export class CalendarioComponent implements OnInit {
   mes: number = new Date().getMonth();
   anio: number = new Date().getFullYear();
   fechaSeleccionada: Date | null = null;
-  fechasNoSeleccionables: Date[] = []; // Actualizado para recibir del backend
+  fechasNoSeleccionables: Date[] = []; 
+
+  usuario: string = 'usuarioTest';  
+  idCliente: string = 'cliente123';
 
   constructor(private eventosService: EventosService) {}
 
   ngOnInit() {
-    this.generarDias();
+    this.generarDias(); 
     this.obtenerFechasNoSeleccionables();
   }
 
-  // Obtener fechas no seleccionables desde el backend y transformarlas a Date
   obtenerFechasNoSeleccionables() {
     this.eventosService.getFechasEventos().subscribe(fechas => {
       this.fechasNoSeleccionables = fechas.map(fechaString => new Date(fechaString));
@@ -88,48 +90,35 @@ export class CalendarioComponent implements OnInit {
   enviarFormulario(form: NgForm) {
     if (form.valid && this.servicioSeleccionado && this.fechaSeleccionada) {
       const evento = {
-        Descripcion: `Reserva del servicio: ${this.servicioSeleccionado.titulo}`,
-        InformacionContacto: {
-          Nombre: form.value.nombre, 
-          Numero: form.value.numero,
-          Direccion: form.value.direccion
-        },
-        FechaEvento: this.fechaSeleccionada.toISOString(),
-        EstadoEvento: 'Por Confirmar'
+        id_del_cliente: this.idCliente, 
+        usuario: this.usuario,
+        descripcion: `Reserva del servicio: ${this.servicioSeleccionado.titulo}`,
+        servicio_seleccionado: this.servicioSeleccionado.titulo,
+        estado_evento: 'activo',
+        tipo_evento: 'Boda', 
+        nombre_contacto: form.value.nombre, 
+        numero_telefono: form.value.numero,
+        direccion_local: form.value.direccion,
+        fecha_evento: this.fechaSeleccionada.toISOString(),
+        hora: form.value.hora 
       };
       
       this.eventosService.createEvento(evento).subscribe({
         next: (respuesta) => {
           console.log('Evento guardado con éxito:', respuesta);
-          form.reset(); // Reinicia el formulario de contacto
-          this.fechaSeleccionada = null; // Limpia la fecha seleccionada
-  
-          // Actualiza las fechas no seleccionables desde la base de datos
-          this.obtenerFechasNoSeleccionables();
-  
-          // Vuelve a generar los días del calendario
-          this.generarDias();
+          form.resetForm();
         },
-        error: (error) => {
-          console.error('Error al guardar el evento:', error);
-        }
+        error: (error) => console.error('Error al guardar el evento:', error)
       });
     }
-    this.limpiarSeleccion(); // Limpia la selección de fecha
   }
-  
-  limpiarSeleccion() {
-    this.fechaSeleccionada = null; // Limpia la selección de fecha
-  }
-  
+
   calcularPrecioTotal(): number {
-    if (!this.servicioSeleccionado) return 0;
-    let precioTotal = this.servicioSeleccionado.precio;
-    this.servicioSeleccionado.opciones?.forEach(opcion => {
-      if (opcion.seleccionada) {
-        precioTotal += opcion.precio;
-      }
-    });
-    return precioTotal;
+    if (this.servicioSeleccionado) {
+      return this.servicioSeleccionado.opciones.reduce((total, opcion) => {
+        return opcion.seleccionada ? total + opcion.precio : total;
+      }, 0);
+    }
+    return 0;
   }
 }

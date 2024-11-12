@@ -11,19 +11,19 @@
     <div class="dias-semana">
       <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
     </div>
-    <!-- Días del mes -->
-<div class="dias">
-  <div *ngFor="let dia of dias" 
-       (click)="isSelectable(dia) ? seleccionarFecha(dia) : null" 
-       [ngClass]="{
-           'hoy': isToday(dia), 
-           'seleccionado': fechaSeleccionada?.getDate() === dia, 
-           'no-seleccionable': !isSelectable(dia) && dia > 0
-       }">
-      {{ dia > 0 ? dia : '' }}
-  </div> 
-</div>
 
+    <!-- Días del mes -->
+    <div class="dias">
+      <div *ngFor="let dia of dias" 
+           (click)="isSelectable(dia) ? seleccionarFecha(dia) : null" 
+           [ngClass]="{
+             'hoy': isToday(dia), 
+             'seleccionado': fechaSeleccionada?.getDate() === dia, 
+             'no-seleccionable': !isSelectable(dia) && dia > 0
+           }">
+        {{ dia > 0 ? dia : '' }}
+      </div> 
+    </div>
 
     <!-- Fecha seleccionada -->
     <div *ngIf="fechaSeleccionada" class="mt-2">
@@ -33,6 +33,7 @@
     <!-- Resumen del servicio -->
     <div *ngIf="servicioSeleccionado" class="informacion-servicio">
       <h4>Resumen de Reserva: {{ servicioSeleccionado.titulo }}</h4>
+      <h4>{{ servicioSeleccionado.descripcion }}</h4>
       <ul>
         <li *ngFor="let opcion of servicioSeleccionado.opciones">
           <span *ngIf="opcion.seleccionada">
@@ -75,6 +76,16 @@
         </div>
         <span class="text-danger" *ngIf="direccion.invalid && direccion.touched">
           La dirección debe contener entre 5 y 100 caracteres.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="hora">Hora del Evento:</label>
+        <div class="underline">
+          <input type="time" id="hora" name="hora" required ngModel #hora="ngModel" aria-required="true">
+        </div>
+        <span class="text-danger" *ngIf="hora.invalid && hora.touched">
+          La hora es obligatoria.
         </span>
       </div>
 
