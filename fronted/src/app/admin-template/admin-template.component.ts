@@ -25,7 +25,7 @@ export class AdminTemplateComponent implements OnInit{
     closeMenu() {
       // Obtiene el menú colapsable por su ID
       const menu = document.getElementById('editMenu');
-      
+       
       // Si el menú está expandido, lo colapsa
       if (menu && menu.classList.contains('show')) {
         const bsCollapse = new Collapse(menu, {

@@ -9,6 +9,7 @@ import { ModalService } from '../../../services/Servicio_modal/modal.service';
 })
 export class LoginModalComponent implements OnInit {
   activeModal: string | null = null;
+  user: any;
 
   constructor(private modalService: ModalService) {}
 
@@ -17,6 +18,8 @@ export class LoginModalComponent implements OnInit {
     this.modalService.activeModal$.subscribe(modal => {
       this.activeModal = modal;
     });
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(this.user);  
   }
 
   // Cierra el modal al hacer clic fuera del contenido
@@ -35,4 +38,5 @@ export class LoginModalComponent implements OnInit {
   closeModal() {
     this.modalService.closeModal();
   }
+ 
 }
