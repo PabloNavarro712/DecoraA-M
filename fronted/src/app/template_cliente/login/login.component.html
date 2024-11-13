@@ -1,6 +1,6 @@
+<!-- login.component.html -->
 <div class="contenedor__todo">
-  <div class="caja__trasera">
-    <!-- Mostrar mensaje de error si hay alguno -->
+  <div class="caja__trasera"> 
     <h3 *ngIf="loginErrorMessage || registerErrorMessage" class="error-banner">
       {{ loginErrorMessage || registerErrorMessage }}
     </h3>
@@ -13,7 +13,7 @@
     <form *ngIf="isLoginVisible" class="formulario__login" (ngSubmit)="login()">
       <h2>Iniciar Sesión</h2>
       <input type="text" placeholder="Usuario" [(ngModel)]="loginData.usuario" name="usuario" required />
-      <input type="password" placeholder="Contraseña" [(ngModel)]="loginData.contrasena" name="contraseña" required />
+      <input type="password" placeholder="Contraseña" [(ngModel)]="loginData.contrasena" name="contrasena" required />
       <button type="submit">Entrar</button>
       <div class="enlace-registro">
         <p>¿No tienes una cuenta? 
@@ -28,7 +28,7 @@
       <input type="text" placeholder="Nombre completo" [(ngModel)]="registerData.nombreCompleto" name="nombre" required />
       <input type="text" placeholder="Correo Electrónico" [(ngModel)]="registerData.correo" name="correo" required />
       <input type="text" placeholder="Usuario" [(ngModel)]="registerData.usuario" name="usuario" required />
-      <input type="password" placeholder="Contraseña" [(ngModel)]="registerData.contrasena" name="contraseña" required />
+      <input type="password" placeholder="Contraseña" [(ngModel)]="registerData.contrasena" name="contrasena" required />
       <button type="submit">Registrarse</button>
       <div class="enlace-registro">
         <p>¿Ya tienes una cuenta? 
@@ -37,4 +37,4 @@
       </div>
     </form>
   </div>
-</div>
+</div>  

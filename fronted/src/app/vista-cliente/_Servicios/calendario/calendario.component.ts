@@ -9,6 +9,7 @@ import { EventosService } from 'src/app/servises/eventos.service';
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
+  mensajeBanner: { mensaje: string, clase: string } | null = null;
   @Input() servicioSeleccionado?: Servicio;
   diasDeLaSemana: string[] = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
   dias: number[] = [];
@@ -17,12 +18,20 @@ export class CalendarioComponent implements OnInit {
   fechaSeleccionada: Date | null = null;
   fechasNoSeleccionables: Date[] = []; 
 
-  usuario: string = 'usuarioTest';  
-  idCliente: string = 'cliente123';
+  usuario: string = '';  
+  idCliente: string = '';
 
   constructor(private eventosService: EventosService) {}
 
   ngOnInit() {
+    // Cargar los datos de sessionStorage en lugar de los valores estáticos
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      this.usuario = user.usuario; // Asignar el usuario desde sessionStorage
+      this.idCliente = user.id; // Asignar el id del cliente desde sessionStorage, asegúrate de que este campo esté disponible
+    }
+
     this.generarDias(); 
     this.obtenerFechasNoSeleccionables();
   }
@@ -90,34 +99,68 @@ export class CalendarioComponent implements OnInit {
   enviarFormulario(form: NgForm) {
     if (form.valid && this.servicioSeleccionado && this.fechaSeleccionada) {
       const evento = {
-        id_del_cliente: this.idCliente, 
+        id_del_cliente: this.idCliente,
         usuario: this.usuario,
         descripcion: `Reserva del servicio: ${this.servicioSeleccionado.titulo}`,
         servicio_seleccionado: this.servicioSeleccionado.titulo,
-        estado_evento: 'activo',
-        tipo_evento: 'Boda', 
-        nombre_contacto: form.value.nombre, 
+        estado_evento: 'por confirmar',
+        tipo_evento: '------',
+        nombre_contacto: form.value.nombre,
         numero_telefono: form.value.numero,
         direccion_local: form.value.direccion,
         fecha_evento: this.fechaSeleccionada.toISOString(),
-        hora: form.value.hora 
+        hora: form.value.hora
       };
-      
+  
       this.eventosService.createEvento(evento).subscribe({
         next: (respuesta) => {
           console.log('Evento guardado con éxito:', respuesta);
           form.resetForm();
+          this.mensajeBanner = {
+            mensaje: '¡Evento agendado con éxito! Estás en espera, en breve nos pondremos en contacto contigo.',
+            clase: 'exito'
+          };
+  
+          // Actualizar las fechas no seleccionables y regenerar el calendario
+          this.obtenerFechasNoSeleccionables(); // Actualizar las fechas bloqueadas
+          this.generarDias(); // Forzar la actualización del calendario
+  
+          // Ocultar el banner después de 5 segundos
+          setTimeout(() => {
+            this.mensajeBanner = null;
+          }, 5000);
         },
-        error: (error) => console.error('Error al guardar el evento:', error)
+        error: (error) => {
+          console.error('Error al guardar el evento:', error);
+  
+          // Mostrar el banner de error
+          this.mensajeBanner = {
+            mensaje: 'Hubo un problema al agendar el evento. Intenta nuevamente más tarde.',
+            clase: 'error'
+          };
+  
+          // Ocultar el banner de error después de 5 segundos
+          setTimeout(() => {
+            this.mensajeBanner = null;
+          }, 5000);
+        }
       });
     }
   }
+  
+  
 
   calcularPrecioTotal(): number {
     if (this.servicioSeleccionado) {
-      return this.servicioSeleccionado.opciones.reduce((total, opcion) => {
+      // Inicia con el precio base del servicio
+      let precioTotal = this.servicioSeleccionado.precio;
+      
+      // Añadir el precio de las opciones seleccionadas
+      precioTotal += this.servicioSeleccionado.opciones.reduce((total, opcion) => {
         return opcion.seleccionada ? total + opcion.precio : total;
       }, 0);
+      
+      return precioTotal;
     }
     return 0;
   }

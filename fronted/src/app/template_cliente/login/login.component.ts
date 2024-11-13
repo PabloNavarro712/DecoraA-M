@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';  // Importa Router para redireccionar
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsuarioService, User } from '../../servises/usuario.service';
 
 @Component({
@@ -7,22 +7,21 @@ import { UsuarioService, User } from '../../servises/usuario.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent {
+  @Output() loginSuccess = new EventEmitter<void>();
+
   isLoginVisible = true;
   loginData = { usuario: '', contrasena: '' };
   registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
-  
-  // Mensajes de error
   loginErrorMessage: string = '';
   registerErrorMessage: string = '';
-  
+
   constructor(private usuarioService: UsuarioService, private router: Router) {}
 
   toggleForm(event: Event) {
     event.preventDefault();
     this.isLoginVisible = !this.isLoginVisible;
-    this.clearErrorMessages(); // Limpiar mensajes de error al cambiar de formulario
+    this.clearErrorMessages();
   }
 
   clearErrorMessages() {
@@ -36,15 +35,15 @@ export class LoginComponent {
         const user = usuarios.find(u => u.usuario === this.loginData.usuario && u.contrasena === this.loginData.contrasena);
         if (user) {
           console.log('Login exitoso:', user);
-          
-          // Guardar el usuario y la id en sessionStorage (o localStorage)
           sessionStorage.setItem('user', JSON.stringify(user));
 
-          // Redireccionar según el rol del usuario
+          // Emitir el evento de inicio de sesión exitoso
+          this.loginSuccess.emit();
+
           if (user.esAdministrador) {
-            this.router.navigate(['/admin']); // Ruta de administrador
+            this.router.navigate(['/admin']);
           } else {
-            this.router.navigate(['/cliente/inicio']); // Ruta de cliente
+            this.router.navigate(['/cliente/inicio']);
           }
         } else {
           this.loginErrorMessage = 'Usuario o contraseña incorrectos';
@@ -66,7 +65,6 @@ export class LoginComponent {
       esAdministrador: false
     };
 
-    // Validación básica de campos requeridos
     if (!this.registerData.nombreCompleto || !this.registerData.usuario || !this.registerData.correo || !this.registerData.contrasena) {
       this.registerErrorMessage = 'Todos los campos son obligatorios';
       return;
@@ -75,7 +73,14 @@ export class LoginComponent {
     this.usuarioService.createUser(newUser).subscribe(
       (response: User) => {
         console.log('Registro exitoso:', response);
-        // Aquí puedes redirigir o hacer algo después del registro exitoso
+
+        // Limpiar los datos de registro
+        this.registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
+
+        // Mostrar la vista de login tras el registro exitoso
+        this.isLoginVisible = true;
+        this.registerErrorMessage = ''; // Limpiar cualquier mensaje de error
+        alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
       },
       (error) => {
         console.error('Error en el registro:', error);
@@ -83,4 +88,4 @@ export class LoginComponent {
       }
     );
   }
-}
+} 

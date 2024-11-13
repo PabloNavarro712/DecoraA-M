@@ -1,21 +1,24 @@
+/* Contenedor principal */
 .calendario-contenedor {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
-  max-width: 800px;
+  justify-content: center;
+  gap: 24px;
+  max-width: 900px;
   margin: auto;
   font-family: Arial, sans-serif;
   color: #333;
 }
 
+/* Calendario */
 .calendario {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 15px;
-  width: 300px;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fefefe;
 }
 
 /* Encabezado del calendario */
@@ -23,40 +26,56 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.1em;
-  font-weight: 500;
-  color: #555;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+
+.cabecera button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.cabecera button:hover {
+  color: #0056b3;
 }
 
 /* Días de la semana */
 .dias-semana {
   display: flex;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #d0d0d0;
 }
 
 .dia-semana {
   flex: 1;
   text-align: center;
-  padding: 8px;
-  font-size: 0.9em;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  color: #555;
 }
 
-/* Contenedor de los días del calendario */
+/* Días del mes */
 .dias {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .dias > div {
-  width: 14.28%; /* 7 días en una fila */
+  width: 14.28%;
   text-align: center;
-  padding: 8px;
-  font-size: 0.9em;
+  padding: 10px;
+  font-size: 1em;
   cursor: pointer;
   color: #666;
-  transition: background-color 0.2s ease;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .dias > div.hoy {
@@ -72,110 +91,135 @@
 }
 
 .dias > div.no-seleccionable {
-  color: red;
+  color: #d9534f;
   cursor: not-allowed;
-  background-color: transparent;
 }
 
 .dias > div:hover:not(.hoy):not(.seleccionado):not(.no-seleccionable) {
-  background-color: #e0e0e0;
+  background-color: #e8e8e8;
 }
 
 /* Información del servicio */
 .informacion-servicio {
-  padding: 10px;
-  font-size: 0.9em;
-  background: #fbfbfb;
+  padding: 12px;
+  font-size: 1em;
+  background: #f9f9f9;
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ddd;
+  margin-top: 20px;
 }
 
-/* Estilos del formulario */
+/* Formulario de contacto */
 .formulario-contacto {
   width: 100%;
   max-width: 400px;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .formulario-contacto h4 {
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: #007bff;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   font-weight: bold;
   display: block;
-  margin-bottom: 5px;
-  color: #666;
-}
-
-.underline {
-  border-bottom: 1px solid #333;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
+  color: #444;
 }
 
 .underline input[type="text"],
-.underline input[type="tel"] {
-  border: none;
+.underline input[type="tel"],
+.underline input[type="time"] {
+  border: 1px solid #ccc;
+  border-radius: 5px;
   width: 100%;
   outline: none;
-  padding: 5px;
+  padding: 10px;
   font-size: 1em;
+  transition: all 0.3s ease;
 }
 
 .underline input[type="text"]:focus,
-.underline input[type="tel"]:focus {
-  border-bottom: 1px solid #007bff;
+.underline input[type="tel"]:focus,
+.underline input[type="time"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
 }
 
-/* Botones */
+.text-danger {
+  font-size: 0.85em;
+  color: #dc3545;
+  margin-top: 5px;
+}
+
 .minimal-btn {
+  width: 100%;
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 20px;
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s ease;
-  display: inline-block;
+  border-radius: 8px;
   margin-top: 10px;
-  border-radius: 5px;
 }
 
 .minimal-btn:hover {
   background-color: #0056b3;
 }
 
-.btn-active {
-  background-color: #28a745;
-  color: #fff;
-  cursor: pointer;
-}
-
-.btn-disabled {
+.minimal-btn:disabled {
   background-color: #ccc;
-  color: #666;
   cursor: not-allowed;
 }
 
-.text-danger {
-  font-size: 0.8em;
-  color: #0c0c0c;
+/* Mejorar la apariencia del campo de selección de hora */
+.underline input[type="time"] {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  width: 100%;
+  transition: border 0.3s ease;
 }
+
+.underline input[type="time"]:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 8px rgba(40, 167, 69, 0.2);
+  height: 15px;  /* Ajusta la altura del campo */
+  padding: 5px 10px;  /* Ajusta el espacio interno */
+  font-size: 0.9em; 
+}
+
 
 /* Adaptación para móviles */
 @media (max-width: 768px) {
   .calendario-contenedor {
     flex-direction: column;
     align-items: center;
+  }
+
+  .calendario {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .formulario-contacto {
+    max-width: 100%;
+    padding: 15px;
   }
 }
