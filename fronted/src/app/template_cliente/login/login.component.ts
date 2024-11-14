@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService, User } from '../../servises/usuario.service';
 
@@ -7,26 +7,20 @@ import { UsuarioService, User } from '../../servises/usuario.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   @Output() loginSuccess = new EventEmitter<void>();
 
   isLoginVisible = true;
-  isLoggedIn = false; // Nuevo estado para verificar si el usuario está logueado
-  currentUser: User | null = null;
-
   loginData = { usuario: '', contrasena: '' };
   registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
   loginErrorMessage: string = '';
   registerErrorMessage: string = '';
+  currentUser: User | null = null;
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {}
-
-  ngOnInit(): void {
-    // Verificar si hay una sesión de usuario activa
-    const storedUser = sessionStorage.getItem('user');
-    if (storedUser) {
-      this.currentUser = JSON.parse(storedUser);
-      this.isLoggedIn = true;
+  constructor(private usuarioService: UsuarioService, private router: Router) {
+    const userFromSession = sessionStorage.getItem('user');
+    if (userFromSession) {
+      this.currentUser = JSON.parse(userFromSession);  // Recuperar usuario de la sesión si está logueado
     }
   }
 
@@ -49,15 +43,16 @@ export class LoginComponent implements OnInit {
           console.log('Login exitoso:', user);
           sessionStorage.setItem('user', JSON.stringify(user));
 
-          this.currentUser = user;
-          this.isLoggedIn = true;
+          // Emitir el evento de inicio de sesión exitoso
           this.loginSuccess.emit();
+          this.currentUser = user;
 
           if (user.esAdministrador) {
             this.router.navigate(['/admin']);
           } else {
             this.router.navigate(['/cliente/inicio']);
           }
+          window.location.reload();
         } else {
           this.loginErrorMessage = 'Usuario o contraseña incorrectos';
         }
@@ -86,9 +81,13 @@ export class LoginComponent implements OnInit {
     this.usuarioService.createUser(newUser).subscribe(
       (response: User) => {
         console.log('Registro exitoso:', response);
+
+        // Limpiar los datos de registro
         this.registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
+
+        // Mostrar la vista de login tras el registro exitoso
         this.isLoginVisible = true;
-        this.registerErrorMessage = ''; 
+        this.registerErrorMessage = ''; // Limpiar cualquier mensaje de error
         alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
       }, 
       (error) => {
@@ -100,8 +99,8 @@ export class LoginComponent implements OnInit {
 
   logout() {
     sessionStorage.removeItem('user');
-    this.isLoggedIn = false;
     this.currentUser = null;
-    this.router.navigate(['/']); // Redirige a la página de inicio o a otra que prefieras
+    window.location.reload();
+    this.router.navigate(['/']);  // Redirigir a la página de inicio o login
   }
 }
