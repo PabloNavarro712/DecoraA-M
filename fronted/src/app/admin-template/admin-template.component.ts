@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Collapse } from 'bootstrap';
 @Component({
@@ -6,7 +6,8 @@ import { Collapse } from 'bootstrap';
   templateUrl: './admin-template.component.html',
   styleUrls: ['./admin-template.component.css']
 })
-export class AdminTemplateComponent {
+export class AdminTemplateComponent implements OnInit{
+  user: any;
   constructor(private router: Router) { }
 
   isNavbarCollapsed = true;
@@ -24,7 +25,7 @@ export class AdminTemplateComponent {
     closeMenu() {
       // Obtiene el menú colapsable por su ID
       const menu = document.getElementById('editMenu');
-      
+       
       // Si el menú está expandido, lo colapsa
       if (menu && menu.classList.contains('show')) {
         const bsCollapse = new Collapse(menu, {
@@ -32,5 +33,10 @@ export class AdminTemplateComponent {
         });
         bsCollapse.hide(); // Colapsa el menú
       }
+    }
+    ngOnInit(): void {
+      // Obtener el usuario desde sessionStorage
+      this.user = JSON.parse(sessionStorage.getItem('user')!);
+      console.log(this.user);  // Para verificar que los datos se obtienen correctamente
     }
 }

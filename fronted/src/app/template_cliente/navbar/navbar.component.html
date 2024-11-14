@@ -21,6 +21,14 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/cliente/nuestra-historia" (click)="closeNavbar()">Nuestra historia</a>
         </li>
+        
+        <!-- Botón de servicios pedidos solo si hay un usuario registrado -->
+        <li class="nav-item" *ngIf="user">
+          <button class="btn btn-outline-light btn-servicios-pedidos" (click)="mostrarServiciosPedidos()">
+            Servicios Pedidos
+          </button>
+        </li>
+        
         <li class="nav-item">
           <button class="btn btn-link" (click)="openModal('login')">
             <i class="fas fa-user d-none d-lg-inline"></i> 
@@ -30,4 +38,33 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav>  
+<!-- Modal de Servicios Pedidos -->
+<div class="modal fade" id="serviciosPedidosModal" tabindex="-1" aria-labelledby="serviciosPedidosModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="serviciosPedidosModalLabel">Servicios Pedidos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="serviciosPedidos.length > 0; else noServicios">
+          <ul class="list-group">
+            <li *ngFor="let servicio of serviciosPedidos" class="list-group-item d-flex justify-content-between align-items-center">
+              {{ servicio.servicio_seleccionado }} - 
+              <span [ngClass]="{'activo': servicio.estado_evento === 'activo', 'cancelado': servicio.estado_evento === 'cancelado', 'por-confirmar': servicio.estado_evento === 'por confirmar'}">
+                {{ servicio.estado_evento }}
+              </span>
+              <button *ngIf="servicio.estado_evento === 'activo' || servicio.estado_evento === 'por confirmar'" class="btn btn-danger btn-sm" (click)="cancelarServicio(servicio)">
+                Cancelar
+              </button>
+            </li>
+          </ul>
+        </div>
+        <ng-template #noServicios>
+          <p>No hay servicios pedidos.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

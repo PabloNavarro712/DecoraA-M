@@ -1,122 +1,164 @@
-<div class="container-fluid mt-4">
-<!--   
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="calendar-container bg-light p-3 shadow-sm">
-        <h4 class="text-center">Calendario de Eventos</h4>
-        
-        <div id="calendarPlaceholder" class="text-center text-muted">[Aquí va el calendario]</div>
+<div class="estado-eventos-container">
+    <div class="header">
+      <h2>Gestión de Eventos</h2>
+      <div class="calendario-miniatura">
+        <app-calendario></app-calendario>
       </div>
     </div>
-  </div> -->
-
-  <!-- Sección de formulario y listas -->
-  <div class="row">
-    <!-- Formulario para agregar/editar eventos -->
-    <div class="col-lg-4 col-md-12 mb-4">
-      <div class="form-container p-4 bg-light shadow-sm">
-        <h4 class="text-center">{{ editMode ? 'Editar Evento' : 'Nuevo Evento' }}</h4>
-        <form [formGroup]="eventoForm" (ngSubmit)="guardarEvento()">
-          <div class="mb-3">
-            <label for="Descripcion" class="form-label">Descripción</label>
-            <input id="Descripcion" type="text" formControlName="Descripcion" class="form-control" placeholder="Descripción del evento">
+  
+    <div class="filtro">
+      <h3>Filtrado por evento</h3>
+    </div>
+  
+    <div class="panel-estados">
+      <!-- Columna Por Confirmar -->
+      <div class="estado por-confirmar">
+        <h4>Por Confirmar</h4>
+        <div class="contenedor-eventos">
+          <div *ngFor="let evento of eventosPorConfirmar" class="evento">
+            <p>{{ evento.nombre_contacto }}</p>
+            <button (click)="openModal(evento)" class="detalles">Detalles</button>
           </div>
-
-          <div class="mb-3">
-            <label for="FechaEvento" class="form-label">Fecha del Evento</label>
-            <input id="FechaEvento" type="date" formControlName="FechaEvento" class="form-control">
+        </div>
+      </div>
+  
+      <!-- Columna Activos -->
+      <div class="estado activos">
+        <h4>Activos</h4>
+        <div class="contenedor-eventos">
+          <div *ngFor="let evento of eventosActivos" class="evento">
+            <p>{{ evento.nombre_contacto }}</p>
+            <button (click)="openModal(evento)" class="detalles">Detalles</button>
           </div>
-
-          <div class="mb-3">
-            <label for="EstadoEvento" class="form-label">Estado del Evento</label>
-            <select id="EstadoEvento" formControlName="EstadoEvento" class="form-select">
+        </div>
+      </div>
+  
+      <!-- Columna Cancelados -->
+      <div class="estado cancelados">
+        <h4>Cancelados</h4>
+        <div class="contenedor-eventos">
+          <div *ngFor="let evento of eventosCancelados" class="evento">
+            <p>{{ evento.nombre_contacto }}</p>
+            <button (click)="openModal(evento)" class="detalles">Detalles</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h3>Detalles del Evento</h3>
+        <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+          <!-- Descripción como Textarea -->
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" formControlName="descripcion" rows="5" placeholder="Ingrese la descripción del evento"></textarea>
+          </div>
+  
+          <!-- Nombre de Contacto -->
+          <div class="form-group">
+            <label for="nombre_contacto">Nombre de Contacto</label>
+            <input id="nombre_contacto" formControlName="nombre_contacto" />
+          </div>
+  
+          <!-- Número de Teléfono -->
+          <div class="form-group">
+            <label for="numero_telefono">Número de Teléfono</label>
+            <input id="numero_telefono" formControlName="numero_telefono" type="tel" />
+          </div>
+  
+          <!-- Dirección Local -->
+          <div class="form-group">
+            <label for="direccion_local">Dirección del Local</label>
+            <input id="direccion_local" formControlName="direccion_local" />
+          </div>
+  
+          <!-- Fecha del Evento -->
+          <div class="form-group">
+            <label for="fecha_evento">Fecha del Evento</label>
+            <input id="fecha_evento" formControlName="fecha_evento" type="date" />
+          </div>
+  
+          <!-- Hora del Evento -->
+          <div class="form-group">
+            <label for="hora">Hora del Evento</label>
+            <input id="hora" formControlName="hora" type="time" />
+          </div>
+  
+          <!-- Estado del Evento -->
+          <div class="form-group">
+            <label for="estado_evento">Estado del Evento</label>
+            <select id="estado_evento" formControlName="estado_evento">
+              <option value="por confirmar">Por Confirmar</option>
               <option value="activo">Activo</option>
               <option value="cancelado">Cancelado</option>
-              <option value="por confirmar">Por Confirmar</option>
             </select>
           </div>
-
-          <fieldset formGroupName="InformacionContacto">
-            <legend class="small text-muted">Información de Contacto</legend>
-            
-            <div class="mb-3">
-              <label for="Nombre" class="form-label">Nombre</label>
-              <input id="Nombre" type="text" formControlName="Nombre" class="form-control" placeholder="Nombre de contacto">
-            </div>
-
-            <div class="mb-3">
-              <label for="Numero" class="form-label">Número de Contacto</label>
-              <input id="Numero" type="tel" formControlName="Numero" class="form-control" placeholder="Número de contacto">
-            </div>
-
-            <div class="mb-3">
-              <label for="Direccion" class="form-label">Dirección</label>
-              <input id="Direccion" type="text" formControlName="Direccion" class="form-control" placeholder="Dirección">
-            </div>
-          </fieldset>
-
-          <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">{{ editMode ? 'Actualizar' : 'Guardar' }}</button>
-            <button type="button" class="btn btn-secondary" (click)="iniciarNuevoEvento()">Cancelar</button>
-          </div>
+  
+          <!-- Botón de Confirmar Cambios -->
+          <button type="submit" [disabled]="!eventoForm.valid">Confirmar Cambios</button>
         </form>
       </div>
     </div>
+  </div>
+   
 
-    <!-- Listas de eventos -->
-    <div class="col-lg-8 col-md-12">
-      <div class="event-list-container bg-light p-3 shadow-sm">
-        <!-- Eventos Activos -->
-        <div class="card mb-4">
-          <div class="card-header bg-light text-dark d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Eventos Activos</h5>
-          </div>
-          <ul class="list-group list-group-flush list-group-scroll">
-            <li *ngFor="let evento of eventosActivos" class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{{ evento.Descripcion }}</strong> <br>
-                <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
-              </div>
-              <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar</button>
-            </li>
-            <li *ngIf="!eventosActivos.length" class="list-group-item text-center text-muted">No hay eventos activos.</li>
-          </ul>
+  <!-- Botón Flotante con ícono y texto "Nuevo" -->
+  <button class="btn-float" (click)="openForm()">
+    <span>+</span> Nuevo
+  </button>
+
+  <!-- Formulario para Crear Nuevo Evento -->
+  <div class="form-container" *ngIf="showForm">
+    <div class="form-content">
+      <span class="close" (click)="closeForm()">&times;</span>
+      <h3>Crear Nuevo Evento</h3>
+      <form [formGroup]="eventoForm" (ngSubmit)="onCreateEvento()">
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" formControlName="descripcion" rows="5" placeholder="Ingrese la descripción del evento"></textarea>
         </div>
 
-        <!-- Eventos Cancelados -->
-        <div class="card mb-4">
-          <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Eventos Cancelados</h5>
-          </div>
-          <ul class="list-group list-group-flush list-group-scroll">
-            <li *ngFor="let evento of eventosCancelados" class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{{ evento.Descripcion }}</strong> <br>
-                <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
-              </div>
-              <button class="btn btn-outline-light btn-sm" (click)="editarEvento(evento)">Editar</button>
-            </li>
-            <li *ngIf="!eventosCancelados.length" class="list-group-item text-center text-muted">No hay eventos cancelados.</li>
-          </ul>
+        <div class="form-group">
+          <label for="nombre_contacto">Nombre de Contacto</label>
+          <input id="nombre_contacto" formControlName="nombre_contacto" />
         </div>
 
-        <!-- Eventos Por Confirmar -->
-        <div class="card mb-4">
-          <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Eventos por Confirmar</h5>
-          </div>
-          <ul class="list-group list-group-flush list-group-scroll">
-            <li *ngFor="let evento of eventosPorConfirmar" class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{{ evento.Descripcion }}</strong> <br>
-                <small class="text-muted">{{ evento.FechaEvento | date:'short' }}</small>
-              </div>
-              <button class="btn btn-outline-dark btn-sm" (click)="editarEvento(evento)">Editar</button>
-            </li>
-            <li *ngIf="!eventosPorConfirmar.length" class="list-group-item text-center text-muted">No hay eventos por confirmar.</li>
-          </ul>
+        <div class="form-group">
+          <label for="numero_telefono">Número de Teléfono</label>
+          <input id="numero_telefono" formControlName="numero_telefono" type="tel" />
         </div>
-      </div>
+
+        <div class="form-group">
+          <label for="direccion_local">Dirección del Local</label>
+          <input id="direccion_local" formControlName="direccion_local" />
+        </div>
+
+        <div class="form-group">
+          <label for="fecha_evento">Fecha del Evento</label>
+          <input id="fecha_evento" formControlName="fecha_evento" type="date" />
+        </div>
+
+        <div class="form-group">
+          <label for="hora">Hora del Evento</label>
+          <input id="hora" formControlName="hora" type="time" />
+        </div>
+
+        <div class="form-group">
+          <label for="estado_evento">Estado del Evento</label>
+          <select id="estado_evento" formControlName="estado_evento">
+            <option value="por confirmar">Por Confirmar</option>
+            <option value="activo">Activo</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <!-- Botón para crear evento, dentro de la parte blanca del modal -->
+        <button type="submit" [disabled]="!eventoForm.valid">Crear Evento</button>
+      </form>
     </div>
   </div>
-</div>
+
+  <!-- Modal existente para editar evento -->

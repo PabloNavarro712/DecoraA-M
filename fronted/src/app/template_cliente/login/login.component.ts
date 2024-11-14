@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsuarioService, User } from '../../servises/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -7,40 +8,99 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  @Output() loginSuccess = new EventEmitter<void>();
+
   isLoginVisible = true;
   loginData = { usuario: '', contrasena: '' };
-  registerData = { nombre: '', correo: '', usuario: '', contrasena: '' };
+  registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
+  loginErrorMessage: string = '';
+  registerErrorMessage: string = '';
+  currentUser: User | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private usuarioService: UsuarioService, private router: Router) {
+    const userFromSession = sessionStorage.getItem('user');
+    if (userFromSession) {
+      this.currentUser = JSON.parse(userFromSession);  // Recuperar usuario de la sesión si está logueado
+    }
+  }
 
   toggleForm(event: Event) {
     event.preventDefault();
     this.isLoginVisible = !this.isLoginVisible;
+    this.clearErrorMessages();
+  }
+
+  clearErrorMessages() {
+    this.loginErrorMessage = '';
+    this.registerErrorMessage = '';
   }
 
   login() {
-    this.http.post('http://localhost:3000/api/login', this.loginData).subscribe(
-      (response: any) => {
-        console.log('Login exitoso:', response);
-        // Aquí puedes manejar la lógica después de un inicio de sesión exitoso
+    this.usuarioService.getUsers().subscribe(
+      (usuarios: User[]) => {
+        const user = usuarios.find(u => u.usuario === this.loginData.usuario && u.contrasena === this.loginData.contrasena);
+        if (user) {
+          console.log('Login exitoso:', user);
+          sessionStorage.setItem('user', JSON.stringify(user));
+
+          // Emitir el evento de inicio de sesión exitoso
+          this.loginSuccess.emit();
+          this.currentUser = user;
+
+          if (user.esAdministrador) {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/cliente/inicio']);
+          }
+          window.location.reload();
+        } else {
+          this.loginErrorMessage = 'Usuario o contraseña incorrectos';
+        }
       },
       (error) => {
         console.error('Error en el login:', error);
-        // Aquí puedes manejar el error de login
+        this.loginErrorMessage = 'Hubo un error al intentar iniciar sesión. Intenta de nuevo.';
       }
     );
   }
 
   register() {
-    this.http.post('http://localhost:3000/api/usuarios', this.registerData).subscribe(
-      (response: any) => {
+    const newUser: User = {
+      nombreCompleto: this.registerData.nombreCompleto,
+      correo: this.registerData.correo,
+      usuario: this.registerData.usuario,
+      contrasena: this.registerData.contrasena,
+      esAdministrador: false
+    };
+
+    if (!this.registerData.nombreCompleto || !this.registerData.usuario || !this.registerData.correo || !this.registerData.contrasena) {
+      this.registerErrorMessage = 'Todos los campos son obligatorios';
+      return;
+    }
+
+    this.usuarioService.createUser(newUser).subscribe(
+      (response: User) => {
         console.log('Registro exitoso:', response);
-        // Aquí puedes manejar la lógica después de un registro exitoso
-      },
+
+        // Limpiar los datos de registro
+        this.registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
+
+        // Mostrar la vista de login tras el registro exitoso
+        this.isLoginVisible = true;
+        this.registerErrorMessage = ''; // Limpiar cualquier mensaje de error
+        alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+      }, 
       (error) => {
         console.error('Error en el registro:', error);
-        // Aquí puedes manejar el error de registro
+        this.registerErrorMessage = 'Este correo ya está registrado o hubo un error al crear la cuenta.';
       }
     );
+  }
+
+  logout() {
+    sessionStorage.removeItem('user');
+    this.currentUser = null;
+    window.location.reload();
+    this.router.navigate(['/']);  // Redirigir a la página de inicio o login
   }
 }

@@ -5,6 +5,7 @@ const galeriaRoutes = require('./routes/galeria');
 const uploadRoutes = require('./routes/upload');
 const servicios=require('./routes/servicios');
 const eventos=require('./routes/eventos');
+const usuarios=require('./routes/usuarios');
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,7 @@ app.use('/api/galeria-prueba', galeriaRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/servicios', servicios);
 app.use('/api/eventos',eventos);
+app.use('/api/usuarios',usuarios);
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
 });

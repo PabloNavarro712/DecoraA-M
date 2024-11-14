@@ -11,7 +11,7 @@ import * as bootstrap from 'bootstrap';
 export class ServiciosComponent implements OnInit {
   servicios: Servicio[] = [];
   servicioSeleccionado: Servicio | undefined;
-
+  mensajeError: string = ''; // Variable para el mensaje de error
 
   constructor(
     private serviciosService: ServiciosService,
@@ -52,7 +52,25 @@ export class ServiciosComponent implements OnInit {
     }
   }
 
+  // Verificar si el usuario está autenticado
+  isUserAuthenticated(): boolean {
+    const user = JSON.parse(sessionStorage.getItem('user')!);
+    return !!user; // Retorna true si hay un usuario, false si no
+  }
+
   abrirModalReserva(servicio: Servicio) {
+    // Verificar si el usuario está autenticado
+    const user = JSON.parse(sessionStorage.getItem('user')!);
+
+    if (!user) {
+      // Si no está autenticado, mostrar un mensaje de error
+      this.mensajeError = '¡Debes iniciar sesión para realizar una reserva!';
+      return; // Salir de la función sin abrir el modal
+    }
+
+    // Si el usuario está autenticado, proceder con la reserva
+    this.mensajeError = ''; // Limpiar el mensaje de error
+
     const opcionesSeleccionadas = servicio.opciones.filter(opcion => opcion.seleccionada);
     this.reservaService.guardarReserva(servicio, servicio.precioTotal, opcionesSeleccionadas);
     this.servicioSeleccionado = servicio;

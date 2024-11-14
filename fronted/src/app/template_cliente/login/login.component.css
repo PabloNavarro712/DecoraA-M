@@ -94,3 +94,37 @@
     padding: 15px; /* Ajustar el padding en pantallas pequeñas */
   }
 }
+
+.error-banner {
+  color: #fa0c0c;  /* Cambia el color del texto a un azul oscuro */
+  background-color: #ffe6e6;  /* Fondo rosa claro */
+  border: 1px solid #ff4c4c;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 10px; 
+  text-align: center;
+}
+
+/* Estilos para el botón de Cerrar sesión */
+.logout-button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  background: #d9534f;  /* Color de fondo rojo (peligro) */
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;  /* Bordes redondeados */
+  cursor: pointer;
+  transition: background 0.3s ease;  /* Transición suave para el cambio de color */
+  width: auto;  /* Ajusta el tamaño del botón al contenido */
+  text-align: center;
+}
+
+.logout-button:hover {
+  background: #c9302c;  /* Color más oscuro al pasar el mouse */
+}
+
+.logout-button:focus {
+  outline: none;  /* Eliminar el contorno por defecto cuando el botón es seleccionado */
+}
