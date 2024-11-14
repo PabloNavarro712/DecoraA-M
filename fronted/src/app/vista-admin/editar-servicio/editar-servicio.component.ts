@@ -1,29 +1,20 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ServiciosService, Servicio } from '../../servises/servicio.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-editar-servicio',
   templateUrl: './editar-servicio.component.html',
   styleUrls: ['./editar-servicio.component.css']
 })
-export class EditarServicioComponent implements OnInit {
+export class EditarServicioComponent implements OnInit { 
   servicioForm: FormGroup;
   servicios: Servicio[] = [];
-  editandoServicio: Servicio | null = null;
+  servicioSeleccionado: Servicio | null = null;
   mostrarCrearForm = false;
   imagenPreview: string | null = null;
-  elementosExpandido: boolean = false;
-  opcionesExpandido: boolean = false;
-
-  toggleElementos(): void {
-    this.elementosExpandido = !this.elementosExpandido;
-  }
-
-  toggleOpciones(): void {
-    this.opcionesExpandido = !this.opcionesExpandido;
-  }
-
 
   constructor(private fb: FormBuilder, private serviciosService: ServiciosService) {
     this.servicioForm = this.fb.group({
@@ -43,12 +34,58 @@ export class EditarServicioComponent implements OnInit {
   cargarServicios() {
     this.serviciosService.getServicios().subscribe(servicios => {
       this.servicios = servicios;
+  
+      // Si hay servicios cargados, seleccionamos el primero para editar
+      if (this.servicios.length > 0) {
+        this.seleccionarServicio(this.servicios[0]);
+      }
+    });
+  }
+  
+  seleccionarServicio(servicio: Servicio) {
+    // Cargar los datos del servicio en el formulario
+    this.servicioSeleccionado = servicio;
+    this.servicioForm.patchValue({
+      titulo: servicio.titulo,
+      descripcion: servicio.descripcion,
+      precio: servicio.precio,
+      imagen: servicio.imagen
+    });
+
+    // Cargar los elementos y opciones si existen
+    this.cargarElementos(servicio.elementos);
+    this.cargarOpciones(servicio.opciones);
+  }
+
+  cargarElementos(elementos: string[]) {
+    const elementosFormArray = this.servicioForm.get('elementos') as FormArray;
+    // Limpiar elementos anteriores
+    while (elementosFormArray.length) {
+      elementosFormArray.removeAt(0);
+    }
+    // Agregar los nuevos elementos
+    elementos.forEach(elemento => {
+      elementosFormArray.push(this.fb.control(elemento, Validators.required));
+    });
+  }
+
+  cargarOpciones(opciones: { nombre: string, precio: number, seleccionada: boolean }[]) {
+    const opcionesFormArray = this.servicioForm.get('opciones') as FormArray;
+    // Limpiar opciones anteriores
+    while (opcionesFormArray.length) {
+      opcionesFormArray.removeAt(0);
+    }
+    // Agregar las nuevas opciones
+    opciones.forEach(opcion => {
+      opcionesFormArray.push(this.fb.group({
+        nombre: [opcion.nombre, Validators.required],
+        precio: [opcion.precio, Validators.required]
+      }));
     });
   }
 
   agregarElemento() {
-    const elemento = this.fb.control('', Validators.required);
-    this.elementos.push(elemento);
+    this.elementos.push(this.fb.control('', Validators.required));
   }
 
   eliminarElemento(index: number) {
@@ -75,90 +112,61 @@ export class EditarServicioComponent implements OnInit {
     return this.servicioForm.get('opciones') as FormArray;
   }
 
-  onImageSelected(event: Event) {
-    const file = (event.target as HTMLInputElement).files![0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagenPreview = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-
-      this.serviciosService.uploadImage(file).subscribe({
-        next: response => {
-          this.servicioForm.get('imagen')?.setValue(response.imageUrl);
-        },
-        error: error => console.error('Error al subir la imagen:', error)
-      });
+  confirmarGuardado() {
+    if (confirm('¿Está seguro de que desea guardar los cambios?')) {
+      this.guardarServicio();
     }
   }
 
   guardarServicio() {
-    if (this.servicioForm.valid) {
-      const servicio: Servicio = this.servicioForm.value;
-      if (this.editandoServicio) {
-        this.serviciosService.updateServicio(this.editandoServicio.id!, servicio).subscribe({
-          next: () => this.cargarServicios(),
-          error: error => console.error('Error al actualizar:', error)
-        });
-      } else {
-        this.serviciosService.createServicio(servicio).subscribe({
-          next: () => this.cargarServicios(),
-          error: error => console.error('Error al crear:', error)
-        });
-      }
-      this.resetForm();
-    }
-  }
+    if (this.servicioSeleccionado) {
+      const servicioActualizado: Servicio = {
+        id: this.servicioSeleccionado.id,
+        ...this.servicioForm.value
+      };
 
-  editarServicio(servicio: Servicio) {
-    this.editandoServicio = servicio;
-    this.servicioForm.patchValue({
-      titulo: servicio.titulo,
-      descripcion: servicio.descripcion,
-      imagen: servicio.imagen,
-      precio: servicio.precio
-    });
-    this.imagenPreview = servicio.imagen;
-    
-  
-    // Limpiamos los FormArrays para evitar duplicados
-    this.elementos.clear();
-    this.opciones.clear();
-  
-    // Rellenamos los elementos
-    servicio.elementos.forEach(elemento => {
-      this.elementos.push(this.fb.control(elemento, Validators.required));
-    });
-  
-    // Rellenamos las opciones
-    servicio.opciones.forEach(opcion => {
-      const opcionGroup = this.fb.group({
-        nombre: [opcion.nombre, Validators.required],
-        precio: [opcion.precio, Validators.required]
+      this.serviciosService.updateServicio(servicioActualizado.id || '', servicioActualizado).subscribe(() => {
+        alert('Servicio actualizado correctamente');
+        this.cargarServicios(); // Recargar la lista de servicios
       });
-      this.opciones.push(opcionGroup);
-    });
-  }
-  
-
-  eliminarServicio(id: string) {
-    this.serviciosService.deleteServicio(id).subscribe({
-      next: () => this.cargarServicios(),
-      error: error => console.error('Error al eliminar:', error)
-    });
+    }
   }
 
   toggleCrearForm() {
     this.mostrarCrearForm = !this.mostrarCrearForm;
-    this.resetForm();
+    if (this.mostrarCrearForm) {
+      // Mostrar el modal
+      $('#crearServicioModal').modal('show');
+    } else {
+      $('#crearServicioModal').modal('hide');
+    }
   }
 
-  resetForm() {
-    this.servicioForm.reset();
-    this.editandoServicio = null;
-    this.imagenPreview = null;
-    this.elementos.clear();
-    this.opciones.clear();
+  onImageSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      // Primero subimos la imagen
+      this.serviciosService.uploadImage(file).subscribe(
+        response => {
+          // Una vez obtenemos la URL de la imagen subida
+          this.servicioForm.patchValue({
+            imagen: response.imageUrl // Asignamos la URL al formulario
+          });
+          this.imagenPreview = response.imageUrl; // Actualizamos la vista previa de la imagen
+        },
+        error => {
+          console.error('Error al subir la imagen:', error);
+        }
+      );
+    }
   }
-}
+  
+
+  eliminarServicio(id: string): void {
+    if (confirm('¿Está seguro de que desea eliminar este servicio?')) {
+      this.serviciosService.deleteServicio(id).subscribe(() => {
+        this.cargarServicios(); // Recargar la lista de servicios después de eliminar
+      });
+    }
+  }
+}  

@@ -44,8 +44,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/cliente/inicio', pathMatch: 'full' },  // Redirige la raíz a /cliente/inicio
 
   // Manejo de rutas no encontradas
-  { path: '**', redirectTo: '/cliente/inicio', pathMatch: 'full' } // Redirige rutas no encontradas a /inicio
-];
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
