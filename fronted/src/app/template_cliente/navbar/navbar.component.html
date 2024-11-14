@@ -39,7 +39,6 @@
     </div>
   </div>
 </nav>  
-
 <!-- Modal de Servicios Pedidos -->
 <div class="modal fade" id="serviciosPedidosModal" tabindex="-1" aria-labelledby="serviciosPedidosModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -52,8 +51,13 @@
         <div *ngIf="serviciosPedidos.length > 0; else noServicios">
           <ul class="list-group">
             <li *ngFor="let servicio of serviciosPedidos" class="list-group-item d-flex justify-content-between align-items-center">
-              {{ servicio.nombre }} - <span [ngClass]="{'activo': servicio.estado === 'activo', 'cancelado': servicio.estado === 'cancelado', 'por-confirmar': servicio.estado === 'por confirmar'}">{{ servicio.estado }}</span>
-              <button *ngIf="servicio.estado === 'activo' || servicio.estado === 'por confirmar'" class="btn btn-danger btn-sm" (click)="cancelarServicio(servicio)">Cancelar</button>
+              {{ servicio.servicio_seleccionado }} - 
+              <span [ngClass]="{'activo': servicio.estado_evento === 'activo', 'cancelado': servicio.estado_evento === 'cancelado', 'por-confirmar': servicio.estado_evento === 'por confirmar'}">
+                {{ servicio.estado_evento }}
+              </span>
+              <button *ngIf="servicio.estado_evento === 'activo' || servicio.estado_evento === 'por confirmar'" class="btn btn-danger btn-sm" (click)="cancelarServicio(servicio)">
+                Cancelar
+              </button>
             </li>
           </ul>
         </div>

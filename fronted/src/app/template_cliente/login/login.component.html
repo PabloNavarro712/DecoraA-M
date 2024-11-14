@@ -1,16 +1,24 @@
-<!-- login.component.html -->
 <div class="contenedor__todo">
   <div class="caja__trasera"> 
     <h3 *ngIf="loginErrorMessage || registerErrorMessage" class="error-banner">
       {{ loginErrorMessage || registerErrorMessage }}
     </h3>
     <h3 *ngIf="!loginErrorMessage && !registerErrorMessage">
-      {{ isLoginVisible ? 'Bienvenido de nuevo' : 'Regístrate para comenzar' }}
+      {{ isLoggedIn ? 'Bienvenido de nuevo, ' + currentUser?.nombreCompleto : (isLoginVisible ? 'Bienvenido de nuevo' : 'Regístrate para comenzar') }}
     </h3>
   </div>
+  
   <div class="contenedor__login-register">
+    <!-- Si hay sesión, mostrar información del usuario y botón de cerrar sesión -->
+    <div *ngIf="isLoggedIn">
+      <h2>Información de Usuario</h2>
+      <p>Nombre: {{ currentUser?.nombreCompleto }}</p>
+      <p>Correo: {{ currentUser?.correo }}</p>
+      <button (click)="logout()">Cerrar sesión</button>
+    </div>
+    
     <!-- Formulario de Login -->
-    <form *ngIf="isLoginVisible" class="formulario__login" (ngSubmit)="login()">
+    <form *ngIf="!isLoggedIn && isLoginVisible" class="formulario__login" (ngSubmit)="login()">
       <h2>Iniciar Sesión</h2>
       <input type="text" placeholder="Usuario" [(ngModel)]="loginData.usuario" name="usuario" required />
       <input type="password" placeholder="Contraseña" [(ngModel)]="loginData.contrasena" name="contrasena" required />
@@ -23,7 +31,7 @@
     </form>
 
     <!-- Formulario de Registro -->
-    <form *ngIf="!isLoginVisible" class="formulario__register" (ngSubmit)="register()">
+    <form *ngIf="!isLoggedIn && !isLoginVisible" class="formulario__register" (ngSubmit)="register()">
       <h2>Regístrate</h2>
       <input type="text" placeholder="Nombre completo" [(ngModel)]="registerData.nombreCompleto" name="nombre" required />
       <input type="text" placeholder="Correo Electrónico" [(ngModel)]="registerData.correo" name="correo" required />
@@ -34,7 +42,7 @@
         <p>¿Ya tienes una cuenta? 
           <a href="#" (click)="toggleForm($event)">Inicia sesión aquí</a>
         </p>
-      </div>
+      </div> 
     </form>
   </div>
-</div>  
+</div>

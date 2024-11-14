@@ -98,10 +98,22 @@ export class CalendarioComponent implements OnInit {
 
   enviarFormulario(form: NgForm) {
     if (form.valid && this.servicioSeleccionado && this.fechaSeleccionada) {
+      // Comenzamos con el título y el precio total
+      let descripcion = `Reserva del servicio: ${this.servicioSeleccionado.titulo}\n`;
+      descripcion += `Precio total: $${this.calcularPrecioTotal()}\n\n`;
+  
+      // Desglose de las opciones seleccionadas
+      descripcion += "Opciones seleccionadas:\n";
+      this.servicioSeleccionado.opciones.forEach(opcion => {
+        if (opcion.seleccionada) {
+          descripcion += `- ${opcion.nombre}: $${opcion.precio}\n`;
+        }
+      });
+  
       const evento = {
         id_del_cliente: this.idCliente,
         usuario: this.usuario,
-        descripcion: `Reserva del servicio: ${this.servicioSeleccionado.titulo}`,
+        descripcion: descripcion,
         servicio_seleccionado: this.servicioSeleccionado.titulo,
         estado_evento: 'por confirmar',
         tipo_evento: '------',
@@ -109,7 +121,8 @@ export class CalendarioComponent implements OnInit {
         numero_telefono: form.value.numero,
         direccion_local: form.value.direccion,
         fecha_evento: this.fechaSeleccionada.toISOString(),
-        hora: form.value.hora
+        hora: form.value.hora,
+        precio: this.calcularPrecioTotal()
       };
   
       this.eventosService.createEvento(evento).subscribe({
@@ -122,8 +135,8 @@ export class CalendarioComponent implements OnInit {
           };
   
           // Actualizar las fechas no seleccionables y regenerar el calendario
-          this.obtenerFechasNoSeleccionables(); // Actualizar las fechas bloqueadas
-          this.generarDias(); // Forzar la actualización del calendario
+          this.obtenerFechasNoSeleccionables();
+          this.generarDias();
   
           // Ocultar el banner después de 5 segundos
           setTimeout(() => {
@@ -132,8 +145,6 @@ export class CalendarioComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error al guardar el evento:', error);
-  
-          // Mostrar el banner de error
           this.mensajeBanner = {
             mensaje: 'Hubo un problema al agendar el evento. Intenta nuevamente más tarde.',
             clase: 'error'
@@ -147,6 +158,7 @@ export class CalendarioComponent implements OnInit {
       });
     }
   }
+  
   
   
 

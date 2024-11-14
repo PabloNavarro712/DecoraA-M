@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService, User } from '../../servises/usuario.service';
 
@@ -7,16 +7,28 @@ import { UsuarioService, User } from '../../servises/usuario.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   @Output() loginSuccess = new EventEmitter<void>();
 
   isLoginVisible = true;
+  isLoggedIn = false; // Nuevo estado para verificar si el usuario está logueado
+  currentUser: User | null = null;
+
   loginData = { usuario: '', contrasena: '' };
   registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
   loginErrorMessage: string = '';
   registerErrorMessage: string = '';
 
   constructor(private usuarioService: UsuarioService, private router: Router) {}
+
+  ngOnInit(): void {
+    // Verificar si hay una sesión de usuario activa
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      this.currentUser = JSON.parse(storedUser);
+      this.isLoggedIn = true;
+    }
+  }
 
   toggleForm(event: Event) {
     event.preventDefault();
@@ -37,7 +49,8 @@ export class LoginComponent {
           console.log('Login exitoso:', user);
           sessionStorage.setItem('user', JSON.stringify(user));
 
-          // Emitir el evento de inicio de sesión exitoso
+          this.currentUser = user;
+          this.isLoggedIn = true;
           this.loginSuccess.emit();
 
           if (user.esAdministrador) {
@@ -73,19 +86,22 @@ export class LoginComponent {
     this.usuarioService.createUser(newUser).subscribe(
       (response: User) => {
         console.log('Registro exitoso:', response);
-
-        // Limpiar los datos de registro
         this.registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
-
-        // Mostrar la vista de login tras el registro exitoso
         this.isLoginVisible = true;
-        this.registerErrorMessage = ''; // Limpiar cualquier mensaje de error
+        this.registerErrorMessage = ''; 
         alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
-      },
+      }, 
       (error) => {
         console.error('Error en el registro:', error);
         this.registerErrorMessage = 'Este correo ya está registrado o hubo un error al crear la cuenta.';
       }
     );
   }
-} 
+
+  logout() {
+    sessionStorage.removeItem('user');
+    this.isLoggedIn = false;
+    this.currentUser = null;
+    this.router.navigate(['/']); // Redirige a la página de inicio o a otra que prefieras
+  }
+}
