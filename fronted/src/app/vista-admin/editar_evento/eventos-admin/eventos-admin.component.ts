@@ -12,6 +12,7 @@ export class EventosAdminComponent implements OnInit {
   eventosActivos: Evento[] = [];
   eventosCancelados: Evento[] = [];
   showModal = false;
+  showForm = false;  // Variable para mostrar el formulario
   eventoForm: FormGroup;
   eventoSeleccionado: Evento | null = null;
 
@@ -26,7 +27,9 @@ export class EventosAdminComponent implements OnInit {
       direccion_local: ['', Validators.required],
       fecha_evento: ['', Validators.required],
       hora: ['', Validators.required],
-      estado_evento: ['', Validators.required]
+      estado_evento: ['', Validators.required],
+      id_usuario: ['none'],  // Establece el id_usuario por defecto como 'none'
+      usuario: ['none']      // Establece el usuario por defecto como 'none'
     });
   }
 
@@ -52,7 +55,9 @@ export class EventosAdminComponent implements OnInit {
       direccion_local: evento.direccion_local,
       fecha_evento: evento.fecha_evento.split('T')[0],
       hora: evento.hora,
-      estado_evento: evento.estado_evento
+      estado_evento: evento.estado_evento,
+      id_usuario: 'none',  // El id_usuario sigue siendo 'none' para este evento
+      usuario: 'none'      // El usuario sigue siendo 'none'
     });
   }
 
@@ -82,4 +87,50 @@ export class EventosAdminComponent implements OnInit {
       }
     }
   }
+
+  // Función para abrir el formulario de crear un nuevo evento
+  openForm(): void {
+    this.showForm = true;
+    this.eventoForm.reset({
+      descripcion: '',
+      nombre_contacto: '',
+      numero_telefono: '',
+      direccion_local: '',
+      fecha_evento: '',
+      hora: '',
+      estado_evento: 'por confirmar',
+      id_usuario: 'none',
+      usuario: 'none'
+    });
+  }
+
+  // Función para cerrar el formulario
+  closeForm(): void {
+    this.showForm = false;
+  }
+
+  // Función para crear un nuevo evento
+  onCreateEvento(): void {
+    if (this.eventoForm.valid) {
+      const eventoNuevo: Evento = {
+        ...this.eventoForm.value, // Copia los valores del formulario
+        id_del_cliente: 'none', // Establece el ID del cliente (si lo tienes disponible)
+        usuario: 'none', // Establece el usuario por defecto
+        tipo_evento: 'generico', // Asegúrate de definir un valor predeterminado para tipo_evento
+        servicio_seleccionado: 'servicio no especificado' // Puedes establecer un valor predeterminado si es necesario
+      };
+  
+      this.eventosService.createEvento(eventoNuevo).subscribe(
+        response => {
+          alert('Evento creado correctamente');
+          this.closeForm(); // Cierra el formulario
+          this.ngOnInit(); // Refresca la lista de eventos
+        },
+        error => {
+          alert('Error al crear el evento');
+        }
+      );
+    }
+  }
+  
 }

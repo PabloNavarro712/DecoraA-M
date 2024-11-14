@@ -214,3 +214,112 @@ button:not(:disabled):hover {
 button:not(:disabled):active {
   transform: scale(0.98);
 }
+/* Botón flotante más pequeño en la esquina inferior derecha */
+.btn-float {
+  position: fixed;
+  bottom: 20px;  /* Mantener en la parte inferior */
+  right: 20px;   /* Alineación a la derecha */
+  background-color: #007bff; /* Color de fondo */
+  color: white;  /* Color del texto */
+  border: none;  /* Sin bordes */
+  border-radius: 50%; /* Redondear los bordes */
+  padding: 10px; /* Más pequeño que antes */
+  font-size: 20px; /* Tamaño de fuente reducido */
+  cursor: pointer; /* Cambio de cursor */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-float span {
+  margin-left: 5px; /* Espacio entre ícono y texto */
+}
+
+/* Modal de crear evento - ajustado para ser más bajo */
+.form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 400px; /* Altura más baja */
+  overflow-y: auto; /* Hacer scroll si el contenido excede la altura */
+}
+
+.close {
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Botón de crear evento dentro del modal */
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  align-self: flex-end;
+}
+
+button[type="submit"]:disabled {
+  background-color: #cccccc;
+}
+
+/* Estilo para el texto "Nuevo" dentro del botón flotante */
+.btn-float span {
+  font-size: 12px;
+  font-weight: bold;
+}
+/* Botón flotante con forma de bolita */
+.btn-float {
+  position: fixed;
+  bottom: 20px;  /* Ubicado a 20px de la parte inferior */
+  right: 20px;   /* Ubicado a 20px de la parte derecha */
+  background-color: #007bff; /* Color de fondo */
+  color: white;  /* Color del texto */
+  border: none;  /* Sin bordes */
+  border-radius: 50%; /* Forma circular */
+  width: 90px;  /* Tamaño del botón */
+  height: 60px;  /* Tamaño del botón */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* Cambia el cursor cuando pasa sobre el botón */
+  font-size: 18px; /* Tamaño de la fuente */
+  padding: 0; /* Sin padding adicional */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para que resalte */
+}
+
+/* Para el ícono y texto dentro del botón */
+.btn-float span {
+  font-size: 14px; /* Reducir tamaño del texto */
+  margin-left: 5px; /* Espacio entre el ícono y el texto */
+  display: inline-block; /* Asegura que el texto no se desborde */
+  text-align: center;
+}
+
+/* Asegurar que el contenido dentro del botón no se desborde */
+.btn-float span, .btn-float svg {
+  white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+}
