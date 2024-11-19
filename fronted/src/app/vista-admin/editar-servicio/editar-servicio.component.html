@@ -1,89 +1,84 @@
+
+
 <div class="container">
-  <div class="form-list-container">
-    <!-- Formulario -->
-    <div class="formulario">
-      <h2 *ngIf="editandoServicio">Editar Servicio</h2>
-      <h2 *ngIf="!editandoServicio">Crear Servicio</h2>
-
-      <form [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
-        <div class="form-group">
-          <label for="titulo">Título</label>
-          <input id="titulo" formControlName="titulo" class="form-control" />
-        </div>
-
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea id="descripcion" formControlName="descripcion" class="form-control"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="imagen">Imagen</label>
-          <input type="file" (change)="onImageSelected($event)" class="form-control" />
-          <div *ngIf="imagenPreview" class="image-preview">
-            <img [src]="imagenPreview" alt="Vista previa de imagen" />
+  <!-- Si hay un servicio seleccionado, se muestra el formulario de edición sin necesidad de un botón flotante -->
+  <div *ngIf="servicioSeleccionado; else noServicioSeleccionado">
+    <div class="card mb-3">
+      <div class="card-header d-flex justify-content-between">
+        <span>Servicio: {{ servicioSeleccionado.titulo }}</span>
+        <button class="btn btn-danger btn-sm" (click)="eliminarServicio(servicioSeleccionado.id ? servicioSeleccionado.id.toString() : '')">Eliminar</button>
+        <button class="btn btn-primary btn-sm" (click)="seleccionarServicio(servicioSeleccionado)">Editar</button>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
+          <div class="form-group">
+            <label>Título</label>
+            <input formControlName="titulo" class="form-control" placeholder="Título" />
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="precio">Precio</label>
-          <input id="precio" type="number" formControlName="precio" class="form-control" />
-        </div>
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
+          </div>
 
-        <!-- Contenedor de Elementos -->
-        <div class="elementos-container">
-          <h4 (click)="toggleElementos()" class="toggle-header">
-            Elementos <i [ngClass]="{'fas fa-chevron-down': !elementosExpandido, 'fas fa-chevron-up': elementosExpandido}"></i>
-          </h4>
-          <div *ngIf="elementosExpandido" formArrayName="elementos">
-            <div *ngFor="let elemento of elementos.controls; let i = index" class="elemento-item">
-              <input [formControlName]="i" class="form-control" placeholder="Elemento" />
-              <button type="button" (click)="eliminarElemento(i)" class="btn btn-danger btn-sm">Eliminar</button>
+          <div class="form-group">
+            <label>Precio</label>
+            <input formControlName="precio" type="number" class="form-control" placeholder="Precio" />
+          </div>
+
+          <div class="form-group">
+            <label>Imagen</label>
+            <input type="file" (change)="onImageSelected($event)" />
+            <img *ngIf="imagenPreview" [src]="imagenPreview" class="img-thumbnail mt-2" alt="Vista previa de la imagen">
+          </div>
+
+          <!-- Elementos -->
+          <div formArrayName="elementos">
+            <div *ngFor="let elemento of elementos.controls; let i = index">
+              <label>Elemento {{ i + 1 }}</label>
+              <input [formControlName]="i" class="form-control" />
+              <button (click)="eliminarElemento(i)" class="btn btn-sm btn-danger">Eliminar Elemento</button>
             </div>
-            <button type="button" (click)="agregarElemento()" class="btn btn-secondary mt-2">Agregar Elemento</button>
+            <button (click)="agregarElemento()" class="btn btn-sm btn-secondary">Agregar Elemento</button>
           </div>
-        </div>
 
-        <!-- Contenedor de Opciones -->
-        <div class="opciones-container">
-          <h4 (click)="toggleOpciones()" class="toggle-header">
-            Opciones <i [ngClass]="{'fas fa-chevron-down': !opcionesExpandido, 'fas fa-chevron-up': opcionesExpandido}"></i>
-          </h4>
-          <div *ngIf="opcionesExpandido" formArrayName="opciones">
-            <div *ngFor="let opcion of opciones.controls; let i = index" [formGroupName]="i" class="opcion-item">
-              <input formControlName="nombre" class="form-control" placeholder="Nombre de Opción" />
-              <input formControlName="precio" type="number" class="form-control" placeholder="Precio" />
-              <button type="button" (click)="eliminarOpcion(i)" class="btn btn-danger btn-sm">Eliminar</button>
+          <!-- Opciones -->
+          <div formArrayName="opciones">
+            <div *ngFor="let opcion of opciones.controls; let j = index" [formGroupName]="j">
+              <label>Opción {{ j + 1 }}</label>
+              <input formControlName="nombre" placeholder="Nombre de la opción" class="form-control" />
+              <input formControlName="precio" type="number" placeholder="Precio de la opción" class="form-control" />
+              <button (click)="eliminarOpcion(j)" class="btn btn-sm btn-danger">Eliminar Opción</button>
             </div>
-            <button type="button" (click)="agregarOpcion()" class="btn btn-secondary mt-2">Agregar Opción</button>
+            <button (click)="agregarOpcion()" class="btn btn-sm btn-secondary">Agregar Opción</button>
           </div>
-        </div>
 
-        <button type="submit" class="btn btn-primary mt-3">{{ editandoServicio ? 'Actualizar' : 'Crear' }}</button>
-        <button type="button" (click)="toggleCrearForm()" class="btn btn-light mt-3">Cancelar</button>
-      </form>
+          <!-- Botones de guardar y cancelar -->
+          <button type="submit" class="btn btn-success mt-3" (click)="confirmarGuardado()">Guardar cambios</button>
+        </form>
+      </div>
     </div>
+  </div>
 
-    <!-- Lista de Servicios -->
-    <div class="servicios-list">
-      <h3>Servicios</h3>
-      <ul>
-        <li *ngFor="let servicio of servicios" class="servicio-item">
-          <div class="servicio-info">
-            <img [src]="servicio.imagen || 'placeholder.jpg'" alt="{{ servicio.titulo }}" class="servicio-img" />
-            <div class="servicio-text">
-              <strong>{{ servicio.titulo }}</strong>
-              <div class="servicio-buttons">
-                <button (click)="editarServicio(servicio)" class="btn btn-warning btn-icon">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button (click)="eliminarServicio(servicio.id!)" class="btn btn-danger btn-icon">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
+  <!-- En caso de que no haya servicio seleccionado, muestra el mensaje o el modal para agregar un nuevo servicio -->
+  <ng-template #noServicioSeleccionado>
+    <button class="btn btn-primary floating-btn" (click)="toggleCrearForm()">+</button>
+  </ng-template>
+</div>
+
+<!-- Modal para crear un nuevo servicio -->
+<div class="modal fade" id="crearServicioModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear Nuevo Servicio</h5>
+        <button type="button" class="close" (click)="toggleCrearForm()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario de creación de servicio reutilizando servicioForm -->
+        <!-- Similar a la tarjeta de edición pero para un nuevo servicio -->
+      </div>
     </div>
   </div>
 </div>
+ 

@@ -51,8 +51,9 @@ export class LoginComponent {
             this.router.navigate(['/admin']);
           } else {
             this.router.navigate(['/cliente/inicio']);
+            window.location.reload();
           }
-          window.location.reload();
+          
         } else {
           this.loginErrorMessage = 'Usuario o contraseña incorrectos';
         }
