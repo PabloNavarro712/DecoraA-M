@@ -5,3 +5,4 @@ export interface IGenericService<T> {
     update(id: string, data: Partial<T>): Promise<void>;
     delete(id: string): Promise<void>;
   }
+  
