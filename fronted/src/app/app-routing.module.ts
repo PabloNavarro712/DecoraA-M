@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Importaciones del cliente
-import { InicioComponent } from './vista-cliente/_inicio/inicio/inicio.component';
-import { NuestraHistoriaComponent } from './vista-cliente/_NuestraHistoria/nuestra-historia/nuestra-historia.component';
-import { ServiciosComponent } from './vista-cliente/_Servicios/servicios/servicios.component';
+import { InicioComponent } from './Modules/Client/InicioClient/inicio/inicio.component';
+import { NuestraHistoriaComponent } from './Modules/Client/NuestraHistoriaClient/nuestra-historia/nuestra-historia.component';
+import { ServiciosComponent } from './Modules/Client/ServicioClient/servicios/servicios.component';
 // Importaciones del administrador
-import { HomeAdminComponent } from './vista-admin/home/home-admin/home-admin.component';
-import { PanelEdicionComponent } from './vista-admin/salpicadero/panel-edicion/panel-edicion.component';
+import { HomeAdminComponent } from './Modules/Admin/HomeAdmin/home-admin/home-admin.component';
+import { PanelEdicionComponent } from './Modules/Admin/AdminGaleria/panel-edicion/panel-edicion.component';
 // Ruteo de vistas
-import { AdminTemplateComponent } from './admin-template/admin-template.component';
-import { ClientTemplateComponent } from './template_cliente/client-template/client-template.component';
-import { EditarServicioComponent } from './vista-admin/editar-servicio/editar-servicio.component';
-import { FaqComponent } from './vista-cliente/faq/faq.component';
-import { EventosAdminComponent } from './vista-admin/editar_evento/eventos-admin/eventos-admin.component';
-import { AdminServiciosComponent } from './vista-admin/home/home-admin/admin-servicios/admin-servicios.component';
+import { AdminTemplateComponent } from './Modules/Admin/Plantilla-Admin/admin-template/admin-template.component';
+import { ClientTemplateComponent } from './Modules/Client/Plantilla-Client/client-template/client-template.component';
+import { EditarServicioComponent } from './Modules/Admin/AdminServcio/editar-servicio/editar-servicio.component';
+import { FaqComponent } from './Modules/Client/ServicioClient/faq/faq.component';
+import { EventosAdminComponent } from './Modules/Admin/AdminEventos/eventos-admin/eventos-admin.component';
+import { AdminServiciosComponent } from './Modules/Admin/AdminServcio/admin-servicios/admin-servicios.component';
 const routes: Routes = [
   // Rutas del cliente
   {
