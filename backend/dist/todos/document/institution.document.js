@@ -5,4 +5,4 @@ class InstitutionDocument {
 }
 exports.InstitutionDocument = InstitutionDocument;
 InstitutionDocument.collectionName = 'Institution';
-//# sourceMappingURL=institution.document.js.map
+//# sourceMappingURL=Institution.document.js.map
