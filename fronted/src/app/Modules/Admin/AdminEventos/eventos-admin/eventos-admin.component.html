@@ -19,7 +19,7 @@
     <select id="tipoEvento" [(ngModel)]="filtros.tipoEvento" (change)="aplicarFiltros()">
       <option value="">Todos</option>
       <option value="Boda">Boda</option>
-      <option value="XV Años">XV Años</option>
+      <option value="XV Años">XV Años</option> 
       <option value="Baby Shower">Baby Shower</option>
       <option value="Evento Corporativo">Evento Corporativo</option>
       <option value="Fiesta Infantil">Fiesta Infantil</option>
@@ -70,7 +70,7 @@
   <div class="modal" *ngIf="reservaSeleccionada">
     <div class="modal-content">
       <h2>Detalles de la Reserva</h2>
-      <form #editarForm="ngForm" (ngSubmit)="guardarCambios()">
+      <form #editarForm="ngForm" (ngSubmit)="guardarCambios()" novalidate>
         <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre_contacto }}</p>
         <p><strong>Contacto:</strong> {{ reservaSeleccionada.numero_telefono }}</p>
 
@@ -117,7 +117,8 @@
         <div class="modal-actions">
           <button *ngIf="!modoEdicion" type="button" (click)="activarEdicion()">Editar</button>
           <button *ngIf="modoEdicion" type="submit" [disabled]="!editarForm.valid">Guardar Cambios</button>
-          <button type="button" (click)="cerrarModal()">Cancelar</button>
+        
+           <button type="button" (click)="cerrarModal()">Cancelar</button>
         </div>
       </form> 
     </div>

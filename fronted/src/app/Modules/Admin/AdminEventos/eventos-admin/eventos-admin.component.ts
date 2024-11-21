@@ -29,7 +29,7 @@ export class EventosAdminComponent implements OnInit {
   cargarReservas(): void {
     this.eventosService.getEventos().subscribe(
       (eventos) => {
-        this.reservas = eventos;
+        this.reservas = eventos; 
         this.aplicarFiltros();
       },
       (error) => {
@@ -69,7 +69,7 @@ export class EventosAdminComponent implements OnInit {
   // Guardar cambios en el evento
   guardarCambios(): void {
     if (this.reservaSeleccionada) {
-      this.eventosService.updateEvento(this.reservaSeleccionada.id_del_cliente, this.reservaSeleccionada).subscribe(
+      this.eventosService.updateEvento(this.reservaSeleccionada.id!, this.reservaSeleccionada).subscribe(
         (actualizado) => {
           const index = this.reservas.findIndex(
             (reserva) => reserva.id_del_cliente === this.reservaSeleccionada?.id_del_cliente

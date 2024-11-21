@@ -1,7 +1,4 @@
-<!-- Banner de notificación -->
-<div *ngIf="mensajeBanner" [ngClass]="mensajeBanner.clase" class="banner">
-  {{ mensajeBanner.mensaje }}
-</div>
+
 
 <div class="calendario-contenedor">
   <div class="calendario text-center">
@@ -95,6 +92,26 @@
         El número debe contener exactamente 10 dígitos.
       </span>
     </div>
+   <!--  tipo de evento -->
+    <div class="form-group">
+      <label for="tipoEvento">Tipo de Evento:</label>
+      <div class="underline">
+        <select 
+          id="tipoEvento" 
+          name="tipoEvento" 
+          required 
+          [(ngModel)]="evento.tipo_evento" 
+          #tipoEvento="ngModel" 
+          aria-required="true">
+          <option value="------" disabled selected>Seleccione un tipo de evento</option>
+          <option *ngFor="let tipo of tiposDeEvento" [value]="tipo">{{ tipo }}</option>
+        </select>
+      </div>
+      <span class="text-danger" *ngIf="tipoEvento.invalid && tipoEvento.touched">
+        Por favor, seleccione un tipo de evento.
+      </span>
+    </div>
+    
 
     
 

@@ -7,7 +7,7 @@ export interface Evento {
     estado_evento: string;
     tipo_evento: string;
     nombre_contacto: string;
-    numero_telefono: string;
+    numero_telefono: string; 
     direccion_local: string;
     fecha_evento: string;
     hora: string;

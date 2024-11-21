@@ -22,6 +22,11 @@ export class CalendarioComponent implements OnInit {
 
   usuario: string = '';  
   idCliente: string = '';
+  tiposDeEvento: string[] = ['Boda', 'XV Años', 'Baby Shower', 'Evento Corporativo', 'Fiesta Infantil'];
+evento = {
+  tipo_evento: '------'
+};
+
 
   constructor(private eventosService: EventosService) {}
 
@@ -100,77 +105,56 @@ export class CalendarioComponent implements OnInit {
 
   enviarFormulario(form: NgForm) {
     if (form.valid && this.servicioSeleccionado && this.fechaSeleccionada) {
-      // Comenzamos con el título y el precio total
-      let descripcion = `Reserva del servicio: ${this.servicioSeleccionado.titulo}\n`;
-      descripcion += `Precio total: $${this.calcularPrecioTotal()}\n\n`;
-  
-      // Desglose de las opciones seleccionadas
-      descripcion += "Opciones seleccionadas:\n";
-      this.servicioSeleccionado.opciones.forEach(opcion => {
-        if (opcion.seleccionada) {
-          descripcion += `- ${opcion.nombre}: $${opcion.precio}\n`;
-        }
-      });
+      const descripcion = `Reserva del servicio: ${this.servicioSeleccionado.titulo}\nPrecio total: $${this.calcularPrecioTotal()}\n\nOpciones seleccionadas:\n` +
+        this.servicioSeleccionado.opciones
+          .filter(opcion => opcion.seleccionada)
+          .map(opcion => `- ${opcion.nombre}: $${opcion.precio}`)
+          .join('\n');
   
       const evento = {
         id_del_cliente: this.idCliente,
         usuario: this.usuario,
-        descripcion: descripcion,
+        descripcion,
         servicio_seleccionado: this.servicioSeleccionado.titulo,
         estado_evento: 'por confirmar',
-        tipo_evento: '------',
+        tipo_evento: form.value.tipoEvento,
         nombre_contacto: form.value.nombre,
         numero_telefono: form.value.numero,
-        direccion_local: form.value.direccion,
+        direccion_local: `Direccion ${form.value.direccion}, \n localidad ${form.value.localidad}`, 
         fecha_evento: this.fechaSeleccionada.toISOString(),
         hora: form.value.hora,
         precio: this.calcularPrecioTotal()
       };
   
       this.eventosService.createEvento(evento).subscribe({
-        next: (respuesta) => {
-          console.log('Evento guardado con éxito:', respuesta);
-          form.resetForm();
-          this.mensajeBanner = {
-            mensaje: '¡Evento agendado con éxito! Estás en espera, en breve nos pondremos en contacto contigo. Las reservas se confirman en un lapso de 48 hrs.',
-            clase: 'exito'
-          };
+        next: () => {
           Swal.fire({
             icon: 'success',
             title: '¡Reserva confirmada!',
-            text: 'Tu evento ha sido agendado con éxito. Nos pondremos en contacto contigo pronto.Las reservas se confirman en un lapso de 48 hrs.',
+            text: 'Tu evento ha sido agendado con éxito. Nos pondremos en contacto en breve.',
             confirmButtonText: 'Aceptar',
           });
-          // Actualizar las fechas no seleccionables y regenerar el calendario
-          this.obtenerFechasNoSeleccionables();
-          this.generarDias();
-  
-          // Ocultar el banner después de 5 segundos
-          setTimeout(() => {
-            this.mensajeBanner = null;
-          }, 5000);
+          form.resetForm();
         },
-        error: (error) => {
+        error: () => {
           Swal.fire({
             icon: 'error',
             title: 'Error al agendar el evento',
             text: 'Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.',
             confirmButtonText: 'Aceptar',
           });
-          console.error('Error al guardar el evento:', error);
-          this.mensajeBanner = {
-            mensaje: 'Hubo un problema al agendar el evento. Intenta nuevamente más tarde.',
-            clase: 'error'
-          };
-  
-          // Ocultar el banner de error después de 5 segundos
-          setTimeout(() => {
-            this.mensajeBanner = null;
-          }, 5000);
         }
+      });
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Formulario incompleto',
+        text: 'Por favor, llena todos los campos obligatorios.',
+        confirmButtonText: 'Aceptar',
       });
     }
   }
+  
   
   
   

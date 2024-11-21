@@ -258,3 +258,22 @@
     padding: 15px;
   }
 }
+.underline select {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  appearance: none; /* Oculta el ícono predeterminado */
+  -webkit-appearance: none; /* Compatibilidad con navegadores WebKit */
+  -moz-appearance: none; /* Compatibilidad con Firefox */
+}
+
+.underline select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
