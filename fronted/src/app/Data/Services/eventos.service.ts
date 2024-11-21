@@ -6,7 +6,7 @@ import { Evento } from '../Interfaces/evento';
 // Definir la interfaz del evento
 @Injectable({
   providedIn: 'root'
-})
+}) 
 export class EventosService {
   private apiUrl = 'http://localhost:3000/api/eventos'; // URL de tu API en el backend
 

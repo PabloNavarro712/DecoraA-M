@@ -9,7 +9,7 @@ body {
 
 .container {
   width: 100%;
-  margin: 80px auto;
+  margin: 10px auto;
   background: #fff;
   padding: 50px;
   border-radius: 10px;
@@ -176,3 +176,29 @@ h1 {
 .modal-actions button:last-child:hover {
   background-color: #b02a37;
 }
+.filters .btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #6c757d;
+  color: white;
+  cursor: pointer;
+}
+
+.filters .btn:hover {
+  background-color: #5a6268;
+}
+/* Estilo del banner */
+.banner {
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border-radius: 10px;
+  color: white;
+}
+
+/* Estilo para la hora y fecha */
+.banner #current-date,
+.banner #current-time {
+  font-size: 14px;
+  margin: 0;
+}
+

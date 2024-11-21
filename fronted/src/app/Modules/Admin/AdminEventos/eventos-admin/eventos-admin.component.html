@@ -1,10 +1,20 @@
 <div class="container">
-  <h1>Reservas</h1>
+    <!-- Banner con título y datos -->
+    <div class="banner d-flex justify-content-between align-items-center p-3 mb-4">
+      <div>
+        <h1 class="text-white mb-0">Reservas</h1>
+        <p class="text-light mb-0">Administra tus reservas fácilmente</p>
+      </div>
+      <div class="text-light text-end">
+        <p class="mb-0" id="current-date"></p>
+        <p class="mb-0" id="current-time"></p>
+      </div>
+    </div>
   <!-- Filtros -->
   <div class="filters">
     <label for="fecha">Fecha:</label>
     <input type="date" id="fecha" [(ngModel)]="filtros.fecha" (input)="aplicarFiltros()" />
-
+  
     <label for="tipoEvento">Tipo de Evento:</label>
     <select id="tipoEvento" [(ngModel)]="filtros.tipoEvento" (change)="aplicarFiltros()">
       <option value="">Todos</option>
@@ -14,7 +24,7 @@
       <option value="Evento Corporativo">Evento Corporativo</option>
       <option value="Fiesta Infantil">Fiesta Infantil</option>
     </select>
-
+  
     <label for="estadoEvento">Estado:</label>
     <select id="estadoEvento" [(ngModel)]="filtros.estadoEvento" (change)="aplicarFiltros()">
       <option value="">Todos</option>
@@ -22,7 +32,11 @@
       <option value="pendiente">Pendiente</option>
       <option value="cancelado">Cancelado</option>
     </select>
+  
+    <!-- Botón para limpiar filtros -->
+    <button class="btn btn-secondary" (click)="limpiarFiltros()">Limpiar Filtros</button>
   </div>
+  
 
   <!-- Tabla -->
   <div class="table-responsive">
@@ -105,7 +119,7 @@
           <button *ngIf="modoEdicion" type="submit" [disabled]="!editarForm.valid">Guardar Cambios</button>
           <button type="button" (click)="cerrarModal()">Cancelar</button>
         </div>
-      </form>
+      </form> 
     </div>
   </div>
 </div>
