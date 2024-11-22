@@ -14,7 +14,6 @@ import { ClientTemplateComponent } from './Modules/Client/Plantilla-Client/clien
 import { EditarServicioComponent } from './Modules/Admin/AdminServcio/editar-servicio/editar-servicio.component';
 import { FaqComponent } from './Modules/Client/ServicioClient/faq/faq.component';
 import { EventosAdminComponent } from './Modules/Admin/AdminEventos/eventos-admin/eventos-admin.component';
-import { AdminServiciosComponent } from './Modules/Admin/AdminServcio/admin-servicios/admin-servicios.component';
 const routes: Routes = [
   // Rutas del cliente
   {

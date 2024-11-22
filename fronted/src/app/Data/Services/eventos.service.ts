@@ -22,7 +22,7 @@ export class EventosService {
     return this.http.get<Evento>(`${this.apiUrl}/${id}`);
   }
 
-  // Crear un nuevo evento
+  // Crear un nuevo evento 
   createEvento(evento: Evento): Observable<Evento> {
     return this.http.post<Evento>(this.apiUrl, evento);
   }
