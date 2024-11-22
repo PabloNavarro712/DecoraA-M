@@ -19,6 +19,8 @@ import { LoginComponent } from './Modules/Client/Plantilla-Client/login/login.co
 import { LoginModalComponent } from './Modules/Client/Plantilla-Client/login-modal/login-modal.component';
 import { AdminTemplateComponent } from './Modules/Admin/Plantilla-Admin/admin-template/admin-template.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetallerEventoClienteComponent } from './Modules/Client/Plantilla-Client/detaller-evento-cliente/detaller-evento-cliente.component';
+
 @NgModule({
   declarations: [
 
@@ -29,7 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginModalComponent,
     AppComponent,
     ClientTemplateComponent,
-    NavbarComponent 
+    NavbarComponent,
+    DetallerEventoClienteComponent 
     
 
   ],

@@ -47,24 +47,9 @@
         <h5 class="modal-title" id="serviciosPedidosModalLabel">Servicios Pedidos</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div *ngIf="serviciosPedidos.length > 0; else noServicios">
-          <ul class="list-group">
-            <li *ngFor="let servicio of serviciosPedidos" class="list-group-item d-flex justify-content-between align-items-center">
-              {{ servicio.servicio_seleccionado }} - 
-              <span [ngClass]="{'activo': servicio.estado_evento === 'activo', 'cancelado': servicio.estado_evento === 'cancelado', 'por-confirmar': servicio.estado_evento === 'por confirmar'}">
-                {{ servicio.estado_evento }}
-              </span>
-              <button *ngIf="servicio.estado_evento === 'activo' || servicio.estado_evento === 'por confirmar'" class="btn btn-danger btn-sm" (click)="cancelarServicio(servicio)">
-                Cancelar
-              </button>
-            </li>
-          </ul>
-        </div>
-        <ng-template #noServicios>
-          <p>No hay servicios pedidos.</p>
-        </ng-template>
-      </div>
+<!-- Mi codigo -->
+      <app-detaller-evento-cliente> </app-detaller-evento-cliente>
+
     </div>
   </div>
 </div>
