@@ -1,173 +1,289 @@
-
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ServiciosService } from 'src/app/Data/Services/servicio.service';
-import { Servicio } from 'src/app/Data/Interfaces/servicio';
-import * as $ from 'jquery';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-editar-servicio',
   templateUrl: './editar-servicio.component.html',
   styleUrls: ['./editar-servicio.component.css']
 })
-export class EditarServicioComponent implements OnInit { 
-  servicioForm: FormGroup;
-  servicios: Servicio[] = [];
-  servicioSeleccionado: Servicio | null = null;
-  mostrarCrearForm = false;
-  imagenPreview: string | null = null;
+export class EditarServicioComponent { 
 
-  constructor(private fb: FormBuilder, private serviciosService: ServiciosService) {
-    this.servicioForm = this.fb.group({
-      titulo: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      imagen: ['', Validators.required],
-      precio: ['', Validators.required],
-      elementos: this.fb.array([]),
-      opciones: this.fb.array([])
-    });
-  }
-
-  ngOnInit() {
-    this.cargarServicios();
-  }
-
-  cargarServicios() {
-    this.serviciosService.getServicios().subscribe(servicios => {
-      this.servicios = servicios;
-  
-      // Si hay servicios cargados, seleccionamos el primero para editar
-      if (this.servicios.length > 0) {
-        this.seleccionarServicio(this.servicios[0]);
-      }
-    });
-  }
-  
-  seleccionarServicio(servicio: Servicio) {
-    // Cargar los datos del servicio en el formulario
-    this.servicioSeleccionado = servicio;
-    this.servicioForm.patchValue({
-      titulo: servicio.titulo,
-      descripcion: servicio.descripcion,
-      precio: servicio.precio,
-      imagen: servicio.imagen
-    });
-
-    // Cargar los elementos y opciones si existen
-    this.cargarElementos(servicio.elementos);
-    this.cargarOpciones(servicio.opciones);
-  }
-
-  cargarElementos(elementos: string[]) {
-    const elementosFormArray = this.servicioForm.get('elementos') as FormArray;
-    // Limpiar elementos anteriores
-    while (elementosFormArray.length) {
-      elementosFormArray.removeAt(0);
-    }
-    // Agregar los nuevos elementos
-    elementos.forEach(elemento => {
-      elementosFormArray.push(this.fb.control(elemento, Validators.required));
-    });
-  }
-
-  cargarOpciones(opciones: { nombre: string, precio: number, seleccionada: boolean }[]) {
-    const opcionesFormArray = this.servicioForm.get('opciones') as FormArray;
-    // Limpiar opciones anteriores
-    while (opcionesFormArray.length) {
-      opcionesFormArray.removeAt(0);
-    }
-    // Agregar las nuevas opciones
-    opciones.forEach(opcion => {
-      opcionesFormArray.push(this.fb.group({
-        nombre: [opcion.nombre, Validators.required],
-        precio: [opcion.precio, Validators.required]
-      }));
-    });
-  }
-
-  agregarElemento() {
-    this.elementos.push(this.fb.control('', Validators.required));
-  }
-
-  eliminarElemento(index: number) {
-    this.elementos.removeAt(index);
-  }
-
-  get elementos(): FormArray {
-    return this.servicioForm.get('elementos') as FormArray;
-  }
-
-  agregarOpcion() {
-    const opcion = this.fb.group({
-      nombre: ['', Validators.required],
-      precio: ['', Validators.required]
-    });
-    this.opciones.push(opcion);
-  }
-
-  eliminarOpcion(index: number) {
-    this.opciones.removeAt(index);
-  }
-
-  get opciones(): FormArray {
-    return this.servicioForm.get('opciones') as FormArray;
-  }
-
-  confirmarGuardado() {
-    if (confirm('¿Está seguro de que desea guardar los cambios?')) {
-      this.guardarServicio();
-    }
-  }
-
-  guardarServicio() {
-    if (this.servicioSeleccionado) {
-      const servicioActualizado: Servicio = {
-        id: this.servicioSeleccionado.id,
-        ...this.servicioForm.value
-      };
-
-      this.serviciosService.updateServicio(servicioActualizado.id || '', servicioActualizado).subscribe(() => {
-        alert('Servicio actualizado correctamente');
-        this.cargarServicios(); // Recargar la lista de servicios
-      });
-    }
-  }
-
-  toggleCrearForm() {
-    this.mostrarCrearForm = !this.mostrarCrearForm;
-    if (this.mostrarCrearForm) {
-      // Mostrar el modal
-      $('#crearServicioModal').modal('show');
-    } else {
-      $('#crearServicioModal').modal('hide');
-    }
-  }
-
-  onImageSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      // Primero subimos la imagen
-      this.serviciosService.uploadImage(file).subscribe(
-        response => {
-          // Una vez obtenemos la URL de la imagen subida
-          this.servicioForm.patchValue({
-            imagen: response.imageUrl // Asignamos la URL al formulario
-          });
-          this.imagenPreview = response.imageUrl; // Actualizamos la vista previa de la imagen
+  // Datos simulados (reemplazados con el JSON proporcionado)
+  servicios = [
+    {
+      "id": "2LiHMh3anHlhvJvnzeu2",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
         },
-        error => {
-          console.error('Error al subir la imagen:', error);
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
         }
-      );
+      ]
+    },
+    {
+      "id": "6WtlfQktu37tzJEULWMO",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
+    },
+    {
+      "id": "7gYbiaPaDffra0M3T7r3",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
+    },
+    {
+      "id": "FRmDOFJozuqm2H7EfWfo",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
+    },
+    {
+      "id": "anEUTzGXMJGJ3bVGia44",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
+    },
+    {
+      "id": "gziBN5ykaypYijrWCxff",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
+    },
+    {
+      "id": "kQ9p54IHUHhkPuWHrcfb",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
+    },
+    {
+      "id": "o5psI2QuTbvDMhsACDh3",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
+    },
+    {
+      "id": "pkA7pBAbMQeXJbR7jJMh",
+      "titulo": "Paquete Boda 2",
+      "descripcion": "Nos encargamos de que este día sea como siempre lo soñaste. ",
+      "imagen": "https://storage.googleapis.com/equipo-4-f104b.appspot.com/1732077143394_439848657_965582272243882_9042865243303341043_n.jpg",
+      "elementos": [
+        "Luces en cascada",
+        "Decoración Floral",
+        "Iniciales de los novios",
+        "Área de recibimiento "
+      ],
+      "precio": 2500,
+      "opciones": [
+        {
+          "nombre": "Camino con luces ",
+          "precio": 200
+        },
+        {
+          "nombre": "Centros de mesa",
+          "precio": 300
+        },
+        {
+          "nombre": "Juegos Artificiales ",
+          "precio": 500
+        }
+      ]
     }
-  }
-  
+  ];
 
-  eliminarServicio(id: string): void {
-    if (confirm('¿Está seguro de que desea eliminar este servicio?')) {
-      this.serviciosService.deleteServicio(id).subscribe(() => {
-        this.cargarServicios(); // Recargar la lista de servicios después de eliminar
-      });
-    }
+  // Filtros y paginación
+  categorias = ['Todos', 'Bodas', 'XV Años']; // Puedes ajustar las categorías según sea necesario
+  categoriaSeleccionada = 'Todos';
+  paginaActual = 1;
+  elementosPorPagina = 5;
+
+  // Obtener servicios filtrados
+  get serviciosFiltrados() {
+    const serviciosFiltrados = this.categoriaSeleccionada === 'Todos'
+      ? this.servicios
+      : this.servicios.filter(s => s.titulo.includes(this.categoriaSeleccionada));
+
+    const inicio = (this.paginaActual - 1) * this.elementosPorPagina;
+    const fin = inicio + this.elementosPorPagina;
+    return serviciosFiltrados.slice(inicio, fin);
   }
-}  
+
+  // Cambiar página
+  cambiarPagina(direccion: number) {
+    this.paginaActual += direccion;
+  }
+
+  // Editar servicio
+  editarServicio(id: string) {
+    console.log(`Editando servicio con ID: ${id}`);
+  }
+
+  // Eliminar servicio
+  eliminarServicio(id: string) {
+    console.log(`Eliminando servicio con ID: ${id}`);
+    this.servicios = this.servicios.filter(s => s.id !== id);
+  }
+}
