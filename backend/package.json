@@ -30,7 +30,7 @@
     "express": "^4.21.1",
     "firebase": "^10.13.2",
     "firebase-admin": "^12.6.0",
-    "proyecto": "^1.0.3",
+    "proyecto": "file:",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },
