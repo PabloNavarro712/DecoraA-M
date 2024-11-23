@@ -1,0 +1,156 @@
+/* Contenedor principal */
+.calendar-container {
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff;
+  }
+  
+  /* Banner del año */
+  .year-banner {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4a90e2;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 100%; /* Asegura que el banner ocupe todo el ancho en pantallas pequeñas */
+    display: flex;
+    justify-content: space-between; /* Esto coloca los elementos a los extremos */
+    align-items: center;
+  }
+  
+  /* Encabezado de controles de año */
+  .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra los elementos dentro del contenedor */
+    gap: 15px;  /* Espacio entre los elementos (botones y el año) */
+  }
+  
+  /* Estilo para el texto del año */
+  .calendar-header h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  /* Estilo para los botones de navegación y colapso */
+  .nav-button, .collapse-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Hover para los botones */
+  .nav-button:hover, .collapse-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+  }
+  
+  /* Cuadrícula de los meses */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+  
+  /* Ajustes responsivos */
+  @media (max-width: 1024px) {
+    .calendar-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .calendar-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .calendar-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Contenedor de cada mes */
+  .month {
+    background: #e1e4f0;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Encabezado de cada mes */
+  .month-header {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+  
+  /* Colores únicos para cada mes */
+  .header-color-0 { background-color: #ff8a80; } /* Enero */
+  .header-color-1 { background-color: #ff80ab; } /* Febrero */
+  .header-color-2 { background-color: #ea80fc; } /* Marzo */
+  .header-color-3 { background-color: #b388ff; } /* Abril */
+  .header-color-4 { background-color: #8c9eff; } /* Mayo */
+  .header-color-5 { background-color: #80d8ff; } /* Junio */
+  .header-color-6 { background-color: #84ffff; } /* Julio */
+  .header-color-7 { background-color: #a7ffeb; } /* Agosto */
+  .header-color-8 { background-color: #b9f6ca; } /* Septiembre */
+  .header-color-9 { background-color: #ccff90; } /* Octubre */
+  .header-color-10 { background-color: #fffd61; } /* Noviembre */
+  .header-color-11 { background-color: #ffab40; } /* Diciembre */
+  
+  /* Días del mes */
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 12px;
+    gap: 3px;
+  }
+  
+  .day {
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Día actual */
+  .today {
+    background-color: #ffdd57;
+    color: #333;
+  }
+  
+  /* Hover sobre cada día */
+  .day:hover {
+    background-color: #b2ebf2;
+  }
+  
+  /* Estilo para el icono de colapsar */
+  .collapse-button {
+    margin-left: 20px; /* Se asegura de que no esté pegado al borde izquierdo */
+  }
+  
+  /* Ajustes para pantallas grandes */
+  @media (min-width: 1024px) {
+    .year-banner {
+      width: 960px;  /* El ancho fijo que desees para pantallas grandes */
+      margin: 0 auto; /* Centrar el banner */
+    }
+  }
+  

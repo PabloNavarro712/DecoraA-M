@@ -1,0 +1,100 @@
+/* Estilo para el contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Barra de búsqueda */
+.input-group {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.input-group .form-control {
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+}
+
+.input-group .btn {
+  border-radius: 0 8px 8px 0;
+}
+
+/* Botones de categoría */
+.btn-group .btn {
+  margin-right: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-group .btn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Estilo de las tarjetas de servicios */
+.card {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body h5 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+.card-body ul {
+  padding-left: 20px;
+}
+
+.card-body ul li {
+  list-style-type: disc;
+}
+
+.card-body .btn-primary,
+.card-body .btn-success {
+  width: 100%;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Estilo para los botones de administrador (editar/eliminar) */
+.admin-buttons .btn-warning,
+.admin-buttons .btn-danger {
+  width: 48%;
+  font-size: 0.85rem;
+}
+
+.admin-buttons .btn-warning {
+  margin-right: 4%;
+}
+
+/* Botón para agregar nuevo servicio */
+.btn-primary {
+  width: 100%;
+  font-size: 1.1rem;
+}
+
+.btn-primary i {
+  margin-right: 8px;
+}
+
+/* Alinear todo el contenido */
+.text-center {
+  text-align: center;
+}

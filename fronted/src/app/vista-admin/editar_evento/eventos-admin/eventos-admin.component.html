@@ -1,0 +1,164 @@
+<div class="estado-eventos-container">
+    <div class="header">
+      <h2>Gestión de Eventos</h2>
+      <div class="calendario-miniatura">
+        <app-calendario></app-calendario>
+      </div>
+    </div>
+  
+    <div class="filtro">
+      <h3>Filtrado por evento</h3>
+    </div>
+  
+    <div class="panel-estados">
+      <!-- Columna Por Confirmar -->
+      <div class="estado por-confirmar">
+        <h4>Por Confirmar</h4>
+        <div class="contenedor-eventos">
+          <div *ngFor="let evento of eventosPorConfirmar" class="evento">
+            <p>{{ evento.nombre_contacto }}</p>
+            <button (click)="openModal(evento)" class="detalles">Detalles</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Columna Activos -->
+      <div class="estado activos">
+        <h4>Activos</h4>
+        <div class="contenedor-eventos">
+          <div *ngFor="let evento of eventosActivos" class="evento">
+            <p>{{ evento.nombre_contacto }}</p>
+            <button (click)="openModal(evento)" class="detalles">Detalles</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Columna Cancelados -->
+      <div class="estado cancelados">
+        <h4>Cancelados</h4>
+        <div class="contenedor-eventos">
+          <div *ngFor="let evento of eventosCancelados" class="evento">
+            <p>{{ evento.nombre_contacto }}</p>
+            <button (click)="openModal(evento)" class="detalles">Detalles</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h3>Detalles del Evento</h3>
+        <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+          <!-- Descripción como Textarea -->
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" formControlName="descripcion" rows="5" placeholder="Ingrese la descripción del evento"></textarea>
+          </div>
+  
+          <!-- Nombre de Contacto -->
+          <div class="form-group">
+            <label for="nombre_contacto">Nombre de Contacto</label>
+            <input id="nombre_contacto" formControlName="nombre_contacto" />
+          </div>
+  
+          <!-- Número de Teléfono -->
+          <div class="form-group">
+            <label for="numero_telefono">Número de Teléfono</label>
+            <input id="numero_telefono" formControlName="numero_telefono" type="tel" />
+          </div>
+  
+          <!-- Dirección Local -->
+          <div class="form-group">
+            <label for="direccion_local">Dirección del Local</label>
+            <input id="direccion_local" formControlName="direccion_local" />
+          </div>
+  
+          <!-- Fecha del Evento -->
+          <div class="form-group">
+            <label for="fecha_evento">Fecha del Evento</label>
+            <input id="fecha_evento" formControlName="fecha_evento" type="date" />
+          </div>
+  
+          <!-- Hora del Evento -->
+          <div class="form-group">
+            <label for="hora">Hora del Evento</label>
+            <input id="hora" formControlName="hora" type="time" />
+          </div>
+  
+          <!-- Estado del Evento -->
+          <div class="form-group">
+            <label for="estado_evento">Estado del Evento</label>
+            <select id="estado_evento" formControlName="estado_evento">
+              <option value="por confirmar">Por Confirmar</option>
+              <option value="activo">Activo</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+  
+          <!-- Botón de Confirmar Cambios -->
+          <button type="submit" [disabled]="!eventoForm.valid">Confirmar Cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
+   
+
+  <!-- Botón Flotante con ícono y texto "Nuevo" -->
+  <button class="btn-float" (click)="openForm()">
+    <span>+</span> Nuevo
+  </button>
+
+  <!-- Formulario para Crear Nuevo Evento -->
+  <div class="form-container" *ngIf="showForm">
+    <div class="form-content">
+      <span class="close" (click)="closeForm()">&times;</span>
+      <h3>Crear Nuevo Evento</h3>
+      <form [formGroup]="eventoForm" (ngSubmit)="onCreateEvento()">
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" formControlName="descripcion" rows="5" placeholder="Ingrese la descripción del evento"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre_contacto">Nombre de Contacto</label>
+          <input id="nombre_contacto" formControlName="nombre_contacto" />
+        </div>
+
+        <div class="form-group">
+          <label for="numero_telefono">Número de Teléfono</label>
+          <input id="numero_telefono" formControlName="numero_telefono" type="tel" />
+        </div>
+
+        <div class="form-group">
+          <label for="direccion_local">Dirección del Local</label>
+          <input id="direccion_local" formControlName="direccion_local" />
+        </div>
+
+        <div class="form-group">
+          <label for="fecha_evento">Fecha del Evento</label>
+          <input id="fecha_evento" formControlName="fecha_evento" type="date" />
+        </div>
+
+        <div class="form-group">
+          <label for="hora">Hora del Evento</label>
+          <input id="hora" formControlName="hora" type="time" />
+        </div>
+
+        <div class="form-group">
+          <label for="estado_evento">Estado del Evento</label>
+          <select id="estado_evento" formControlName="estado_evento">
+            <option value="por confirmar">Por Confirmar</option>
+            <option value="activo">Activo</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <!-- Botón para crear evento, dentro de la parte blanca del modal -->
+        <button type="submit" [disabled]="!eventoForm.valid">Crear Evento</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal existente para editar evento -->

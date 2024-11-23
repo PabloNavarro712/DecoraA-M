@@ -1,0 +1,325 @@
+.estado-eventos-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.header h2 {
+  color: #4c9fd2;
+  font-size: 2rem;
+}
+
+.calendario-miniatura img {
+  width: 80px;
+  max-width: 100%;
+}
+
+.filtro h3 {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.panel-estados {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.estado {
+  flex: 1;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  min-width: 250px;
+  max-height: 400px;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
+.estado .contenedor-eventos {
+  background-color: #ffffff;
+  color: black;
+  width: 300px;
+  height: 250px;
+  overflow-y: auto;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.por-confirmar {
+  background-color: #f9c74f;
+}
+
+.activos {
+  background-color: #90be6d;
+}
+
+.cancelados {
+  background-color: #f94144;
+}
+
+.evento {
+  background-color: #e0e0e0;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+}
+
+.detalles {
+  margin-top: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+  .header h2 {
+    font-size: 1.5rem;
+  }
+  .estado {
+    min-width: 100%;
+  }
+}
+/* Modal Background */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 350px; /* Ajuste para un ancho más compacto */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: scaleUp 0.3s ease;
+  max-height: 80vh; /* Limita la altura del modal al 80% de la altura de la pantalla */
+  overflow-y: auto; /* Permite scroll si el contenido sobrepasa la altura */
+}
+
+@keyframes scaleUp {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Close Button */
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: #333;
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 15px; /* Espacio más pequeño entre campos */
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px; /* Reduce espacio debajo del label */
+  font-size: 0.9rem;
+}
+
+/* Input and Textarea Styles */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 8px 10px; /* Reducción del padding */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  font-size: 0.9rem; /* Reduce ligeramente el tamaño del texto */
+  color: #333;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #4c9fd2;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(76, 159, 210, 0.2);
+  outline: none;
+}
+
+/* Button Styles */
+button {
+  width: 100%;
+  padding: 10px 18px; /* Ajuste de padding para que sea más compacto */
+  background-color: #4c9fd2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:disabled {
+  background-color: #bbb;
+}
+
+button:not(:disabled):hover {
+  background-color: #3a8fb7;
+}
+
+button:not(:disabled):active {
+  transform: scale(0.98);
+}
+/* Botón flotante más pequeño en la esquina inferior derecha */
+.btn-float {
+  position: fixed;
+  bottom: 20px;  /* Mantener en la parte inferior */
+  right: 20px;   /* Alineación a la derecha */
+  background-color: #007bff; /* Color de fondo */
+  color: white;  /* Color del texto */
+  border: none;  /* Sin bordes */
+  border-radius: 50%; /* Redondear los bordes */
+  padding: 10px; /* Más pequeño que antes */
+  font-size: 20px; /* Tamaño de fuente reducido */
+  cursor: pointer; /* Cambio de cursor */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-float span {
+  margin-left: 5px; /* Espacio entre ícono y texto */
+}
+
+/* Modal de crear evento - ajustado para ser más bajo */
+.form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 400px; /* Altura más baja */
+  overflow-y: auto; /* Hacer scroll si el contenido excede la altura */
+}
+
+.close {
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Botón de crear evento dentro del modal */
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  align-self: flex-end;
+}
+
+button[type="submit"]:disabled {
+  background-color: #cccccc;
+}
+
+/* Estilo para el texto "Nuevo" dentro del botón flotante */
+.btn-float span {
+  font-size: 12px;
+  font-weight: bold;
+}
+/* Botón flotante con forma de bolita */
+.btn-float {
+  position: fixed;
+  bottom: 20px;  /* Ubicado a 20px de la parte inferior */
+  right: 20px;   /* Ubicado a 20px de la parte derecha */
+  background-color: #007bff; /* Color de fondo */
+  color: white;  /* Color del texto */
+  border: none;  /* Sin bordes */
+  border-radius: 50%; /* Forma circular */
+  width: 90px;  /* Tamaño del botón */
+  height: 60px;  /* Tamaño del botón */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* Cambia el cursor cuando pasa sobre el botón */
+  font-size: 18px; /* Tamaño de la fuente */
+  padding: 0; /* Sin padding adicional */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para que resalte */
+}
+
+/* Para el ícono y texto dentro del botón */
+.btn-float span {
+  font-size: 14px; /* Reducir tamaño del texto */
+  margin-left: 5px; /* Espacio entre el ícono y el texto */
+  display: inline-block; /* Asegura que el texto no se desborde */
+  text-align: center;
+}
+
+/* Asegurar que el contenido dentro del botón no se desborde */
+.btn-float span, .btn-float svg {
+  white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+}
