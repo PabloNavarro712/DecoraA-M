@@ -1,0 +1,92 @@
+.card-img-container {
+  width: 100%;
+  height: 200px; /* Fija la altura de las imágenes */
+  overflow: hidden; /* Oculta las partes que se salen del contenedor */
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Mantiene el recorte centrado */
+}
+
+.card {
+  border: none; /* Quita el borde estándar */
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin: 15px; /* Espaciado entre tarjetas */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Hace zoom al pasar el mouse */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
+}
+
+.card-title {
+  color: #007bff; /* Color azul para destacar el título */
+}
+
+h5, h6 {
+  color: #28a745; /* Verde para resaltar el precio */
+  font-size: 1.25rem; /* Aumenta el tamaño de fuente de h5 y h6 */
+}
+
+h6 {
+  font-size: 1rem; /* Ajusta el tamaño de h6, si es necesario */
+}
+
+.form-check-label {
+  margin-left: 8px;
+}
+
+h2 {
+  color: #343a40; /* Título principal en color oscuro */
+  font-weight: bold;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 5px 0;
+}
+.card-img-container {
+  width: 100%;
+  height: 200px; /* Fija la altura de las imágenes */
+  overflow: hidden; /* Oculta las partes que se salen del contenedor */
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recorta las imágenes para mantener el aspecto centrado */
+}
+/* Estilo adicional para centrar el contenido dentro del calendario */
+.calendario {
+  display: flex; /* Utiliza flexbox */
+  flex-direction: column; /* Apila los elementos verticalmente */
+  align-items: center; /* Centra los elementos horizontalmente */
+  justify-content: center; /* Centra los elementos verticalmente */
+}.modal-lg-custom {
+  max-width: 60%; /* Ajusta el ancho máximo como desees */
+}
+
+.modal-sm-custom {
+  max-width: 30%; /* Para un modal más pequeño */
+}
+
+.autentificacion{
+  font: bold;
+
+}

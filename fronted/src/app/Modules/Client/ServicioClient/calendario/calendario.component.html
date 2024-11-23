@@ -1,0 +1,193 @@
+
+
+<div class="calendario-contenedor">
+  <div class="calendario text-center">
+    <!-- Navegación del calendario -->
+    <div class="cabecera">
+      <button type="button" (click)="navegarMes(-1)" aria-label="Mes anterior">&#10094;</button>
+      <h5>{{ mes + 1 }} / {{ anio }}</h5>
+      <button type="button" (click)="navegarMes(1)" aria-label="Mes siguiente">&#10095;</button>
+    </div>
+
+    <!-- Días de la semana -->
+    <div class="dias-semana">
+      <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
+    </div>
+
+    <!-- Días del mes -->
+    <div class="dias">
+      <div *ngFor="let dia of dias" 
+           (click)="isSelectable(dia) ? seleccionarFecha(dia) : null" 
+           [ngClass]="{
+             'hoy': isToday(dia), 
+             'seleccionado': fechaSeleccionada?.getDate() === dia, 
+             'no-seleccionable': !isSelectable(dia) && dia > 0
+           }">
+        {{ dia > 0 ? dia : '' }}
+      </div>  
+    </div>
+
+    <!-- Fecha seleccionada -->
+    <div *ngIf="fechaSeleccionada" class="mt-2">
+      <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
+    </div>
+
+    <!-- Resumen del servicio -->
+    <div *ngIf="servicioSeleccionado" class="informacion-servicio">
+      <h4>Resumen de Reserva: {{ servicioSeleccionado.titulo }}</h4>
+      <h4>{{ servicioSeleccionado.descripcion }}</h4>
+      <ul>
+        <li *ngFor="let opcion of servicioSeleccionado.opciones">
+          <span *ngIf="opcion.seleccionada">
+            {{ opcion.nombre }}: {{ opcion.precio | currency }}
+          </span>
+        </li>
+      </ul>
+      <p><strong>Precio Total:</strong> {{ calcularPrecioTotal() | currency }}</p>
+    </div>
+  </div>
+
+  <!-- Formulario de contacto -->
+ <!-- Formulario de contacto -->
+<div class="formulario-contacto">
+  <h4>Información de Contacto</h4>
+  <form #contactForm="ngForm" (ngSubmit)="enviarFormulario(contactForm)">
+    
+    <!-- Nombre -->
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <div class="underline">
+        <input 
+          type="text" 
+          id="nombre" 
+          name="nombre" 
+          required 
+          minlength="3" 
+          maxlength="50" 
+          pattern="[a-zA-Z\s]+" 
+          ngModel 
+          #nombre="ngModel" 
+          aria-required="true">
+      </div>
+      <span class="text-danger" *ngIf="nombre.invalid && nombre.touched">
+        El nombre debe contener entre 3 y 50 caracteres y solo letras.
+      </span>
+    </div>
+
+    <!-- Número de Teléfono -->
+    <div class="form-group">
+      <label for="numero">Número de Teléfono:</label>
+      <div class="underline">
+        <input 
+          type="tel" 
+          id="numero" 
+          name="numero" 
+          required 
+          pattern="^\d{10}$" 
+          ngModel 
+          #numero="ngModel" 
+          aria-required="true">
+      </div>
+      <span class="text-danger" *ngIf="numero.invalid && numero.touched">
+        El número debe contener exactamente 10 dígitos.
+      </span>
+    </div>
+   <!--  tipo de evento -->
+    <div class="form-group">
+      <label for="tipoEvento">Tipo de Evento:</label>
+      <div class="underline">
+        <select 
+          id="tipoEvento" 
+          name="tipoEvento" 
+          required 
+          [(ngModel)]="evento.tipo_evento" 
+          #tipoEvento="ngModel" 
+          aria-required="true">
+          <option value="------" disabled selected>Seleccione un tipo de evento</option>
+          <option *ngFor="let tipo of tiposDeEvento" [value]="tipo">{{ tipo }}</option>
+        </select>
+      </div>
+      <span class="text-danger" *ngIf="tipoEvento.invalid && tipoEvento.touched">
+        Por favor, seleccione un tipo de evento.
+      </span>
+    </div>
+    
+
+    
+
+    <!--Dirección-->
+    <div class="form-group">
+      <label for="direccion">Dirección:</label>
+      <div class="underline">
+        <input 
+          type="text" 
+          id="direccion" 
+          name="direccion" 
+          required 
+          minlength="5" 
+          maxlength="100" 
+          ngModel 
+          #direccion="ngModel" 
+          aria-required="true">
+      </div>
+      <span class="text-danger" *ngIf="direccion.invalid && direccion.touched">
+        La dirección debe contener entre 5 y 100 caracteres.
+      </span>
+    </div>
+
+    <!-- Localidad -->
+<div class="form-group">
+  <label for="localidad">Localidad:</label>
+  <div class="underline">
+    <select 
+      id="localidad" 
+      name="localidad" 
+      required 
+      ngModel 
+      #localidad="ngModel" 
+      aria-required="true">
+      <option value="" disabled selected>Seleccione una localidad</option>
+      <option value="hecelchakan">Hecelchakán</option>
+      <option value="pomuch">Pomuch</option>
+      <option value="campeche">Campeche</option>
+      <option value="dzibalche">Dzibalché</option>
+      <option value="calkini">Calkiní</option>
+      <option value="santa_cruz">Santa Cruz</option>
+      <option value="pocboc">Pocboc</option>
+    </select>
+  </div>
+  <span class="text-danger" *ngIf="localidad.invalid && localidad.touched">
+    Por favor, seleccione una localidad.
+  </span>
+</div>
+
+    <!-- Hora del Evento -->
+    <div class="form-group">
+      <label for="hora">Hora del Evento:</label>
+      <div class="underline">
+        <input 
+          type="time" 
+          id="hora" 
+          name="hora" 
+          required 
+          ngModel 
+          #hora="ngModel" 
+          aria-required="true">
+      </div>
+      <span class="text-danger" *ngIf="hora.invalid && hora.touched">
+        La hora es obligatoria.
+      </span>
+    </div>
+
+    <!-- Botón de Enviar -->
+    <button 
+      type="submit" 
+      class="minimal-btn" 
+      [ngClass]="{ 'btn-active': contactForm.valid && fechaSeleccionada, 'btn-disabled': !(contactForm.valid && fechaSeleccionada) }" 
+      [disabled]="!(contactForm.valid && fechaSeleccionada)">
+      Confirmar Paquete
+    </button>
+  </form>
+</div>
+
+</div>

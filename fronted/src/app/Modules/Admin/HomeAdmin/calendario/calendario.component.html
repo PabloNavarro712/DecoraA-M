@@ -1,0 +1,31 @@
+<div class="calendar-container">
+    <!-- Banner del año -->
+    <div class="year-banner">
+      <div class="calendar-header">
+        <button (click)="prevYear()" class="nav-button">&#9664;</button>
+        <h2>{{ currentYear }}</h2>
+        <button (click)="nextYear()" class="nav-button">&#9654;</button>
+        <!-- Botón de colapso -->
+        <button (click)="toggleCollapse()" class="collapse-button">
+          &#x2193; <!-- Icono de colapso hacia abajo -->
+        </button>
+      </div>
+    </div>
+  
+    <!-- Contenido del calendario, controlado por la bandera de colapso -->
+    <div *ngIf="!isCollapsed" class="calendar-grid">
+      <div *ngFor="let month of months; let i = index" class="month">
+        <h3 [ngClass]="'month-header header-color-' + i">{{ month }}</h3>
+        <div class="days">
+          <div *ngFor="let empty of getFirstDayOffset(i)"></div>
+          <div *ngFor="let day of getDaysInMonth(i)" 
+               class="day" 
+               [ngClass]="{ today: isToday(day, i) }"
+               (click)="selectDate(day, i)">
+            {{ day }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

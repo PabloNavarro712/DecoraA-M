@@ -5,6 +5,7 @@
 
 <div class="calendario-contenedor">
   <div class="calendario text-center">
+    
     <!-- Navegación del calendario -->
     <div class="cabecera">
       <button type="button" (click)="navegarMes(-1)" aria-label="Mes anterior">&#10094;</button>
@@ -97,24 +98,24 @@
     </div>
 
     <!-- Dirección -->
-    <div class="form-group">
-      <label for="direccion">Dirección:</label>
-      <div class="underline">
-        <input 
-          type="text" 
-          id="direccion" 
-          name="direccion" 
-          required 
-          minlength="5" 
-          maxlength="100" 
-          ngModel 
-          #direccion="ngModel" 
-          aria-required="true">
-      </div>
-      <span class="text-danger" *ngIf="direccion.invalid && direccion.touched">
-        La dirección debe contener entre 5 y 100 caracteres.
-      </span>
-    </div>
+   <!-- Correo Electrónico -->
+<div class="form-group">
+  <label for="correo">Correo Electrónico:</label>
+  <div class="underline">
+    <input 
+      type="email" 
+      id="correo" 
+      name="correo" 
+      required 
+      ngModel 
+      #correo="ngModel" 
+      aria-required="true"
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+  </div>
+  <span class="text-danger" *ngIf="correo.invalid && correo.touched">
+    Introduzca un correo electrónico válido.
+  </span>
+</div>
 
     <!-- Hora del Evento -->
     <div class="form-group">
@@ -134,13 +135,40 @@
       </span>
     </div>
 
+    <!-- Localidad -->
+<div class="form-group">
+  <label for="localidad">Localidad:</label>
+  <div class="underline">
+    <select 
+      id="localidad" 
+      name="localidad" 
+      required 
+      ngModel 
+      #localidad="ngModel" 
+      aria-required="true">
+      <option value="" disabled selected>Seleccione una localidad</option>
+      <option value="hecelchakan">Hecelchakán</option>
+      <option value="pomuch">Pomuch</option>
+      <option value="campeche">Campeche</option>
+      <option value="dzibalche">Dzibalché</option>
+      <option value="calkini">Calkiní</option>
+      <option value="santa_cruz">Santa Cruz</option>
+      <option value="pocboc">Pocboc</option>
+    </select>
+  </div>
+  <span class="text-danger" *ngIf="localidad.invalid && localidad.touched">
+    Por favor, seleccione una localidad.
+  </span>
+</div>
+
+
     <!-- Botón de Enviar -->
     <button 
       type="submit" 
       class="minimal-btn" 
       [ngClass]="{ 'btn-active': contactForm.valid && fechaSeleccionada, 'btn-disabled': !(contactForm.valid && fechaSeleccionada) }" 
       [disabled]="!(contactForm.valid && fechaSeleccionada)">
-      Enviar
+      Confirmar Paquete
     </button>
   </form>
 </div>
