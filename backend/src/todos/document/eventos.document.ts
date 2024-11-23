@@ -1,7 +1,7 @@
 export class EventosDocument {
   static collectionName = 'eventos';
   id: string;
-  idServicio: string;
+  idServicio: string; // id del servicio 
   idCliente: string;
   nombre: string;
   contacto: string;
