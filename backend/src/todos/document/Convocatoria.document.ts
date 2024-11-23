@@ -2,7 +2,7 @@ export class ConvocatoriaDocument {
   static collectionName = 'Convocatoria';
   id: string;
   title: string;
-  startDate: Date;
+  startDate: Date; 
   endDate: Date;
   status: boolean;
   cupo: number; // Cupo total
