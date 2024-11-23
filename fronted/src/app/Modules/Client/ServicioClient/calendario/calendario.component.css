@@ -1,0 +1,279 @@
+/* Contenedor principal */
+.calendario-contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 900px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Calendario */
+.calendario {
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fefefe;
+}
+
+/* Encabezado del calendario */
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+
+.cabecera button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.cabecera button:hover {
+  color: #0056b3;
+}
+
+/* Días de la semana */
+.dias-semana {
+  display: flex;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #d0d0d0;
+}
+
+/* Localidad */
+.localidad {
+  padding: 12px;
+  font-size: 1em;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+.localidad select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  appearance: none; /* Oculta el ícono de la flecha para personalización */
+  -webkit-appearance: none; /* Compatibilidad con navegadores WebKit */
+  -moz-appearance: none; /* Compatibilidad con Firefox */
+}
+
+.localidad select:focus {
+  outline: none;
+  border-color: #007bff; /* Cambia el color del borde al enfocarse */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Agrega un efecto de foco */
+}
+
+.localidad span.text-danger {
+  font-size: 0.9em;
+  color: #dc3545; /* Rojo para el mensaje de error */
+  margin-top: 5px;
+  display: block;
+}
+
+.dia-semana {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Días del mes */
+.dias {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.dias > div {
+  width: 14.28%;
+  text-align: center;
+  padding: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  color: #666;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.dias > div.hoy {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.dias > div.seleccionado {
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.dias > div.no-seleccionable {
+  color: #d9534f;
+  cursor: not-allowed;
+}
+
+.dias > div:hover:not(.hoy):not(.seleccionado):not(.no-seleccionable) {
+  background-color: #e8e8e8;
+}
+
+/* Información del servicio */
+.informacion-servicio {
+  padding: 12px;
+  font-size: 1em;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+/* Formulario de contacto */
+.formulario-contacto {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.formulario-contacto h4 {
+  font-size: 1.4em;
+  color: #007bff;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.underline input[type="text"],
+.underline input[type="tel"],
+.underline input[type="time"] {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.underline input[type="text"]:focus,
+.underline input[type="tel"]:focus,
+.underline input[type="time"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+.text-danger {
+  font-size: 0.85em;
+  color: #dc3545;
+  margin-top: 5px;
+}
+
+.minimal-btn {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.minimal-btn:hover {
+  background-color: #0056b3;
+}
+
+.minimal-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Mejorar la apariencia del campo de selección de hora */
+.underline input[type="time"] {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  width: 100%;
+  transition: border 0.3s ease;
+}
+
+.underline input[type="time"]:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 8px rgba(40, 167, 69, 0.2);
+  height: 15px;  /* Ajusta la altura del campo */
+  padding: 5px 10px;  /* Ajusta el espacio interno */
+  font-size: 0.9em; 
+}
+
+
+/* Adaptación para móviles */
+@media (max-width: 768px) {
+  .calendario-contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .calendario {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .formulario-contacto {
+    max-width: 100%;
+    padding: 15px;
+  }
+}
+.underline select {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  appearance: none; /* Oculta el ícono predeterminado */
+  -webkit-appearance: none; /* Compatibilidad con navegadores WebKit */
+  -moz-appearance: none; /* Compatibilidad con Firefox */
+}
+
+.underline select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+

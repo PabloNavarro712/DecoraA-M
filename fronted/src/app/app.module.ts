@@ -9,17 +9,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { VistaClienteModule } from './vista-cliente/vista-cliente.module';
-import { VistaAdminModule } from './vista-admin/vista-admin.module';
-
-import { ClientTemplateComponent } from './template_cliente/client-template/client-template.component';
-import { NavbarComponent } from './template_cliente/navbar/navbar.component';
-import { FooterComponent } from './template_cliente/footer/footer.component';
-import { FloatingButtonComponent } from './template_cliente/floating-button/floating-button.component';
-import { LoginComponent } from './template_cliente/login/login.component';
-import { LoginModalComponent } from './template_cliente/login-modal/login-modal.component';
-import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import { VistaClienteModule } from './Modules/Client/vista-cliente.module';
+import { VistaAdminModule } from './Modules/Admin/vista-admin.module';
+import { ClientTemplateComponent } from './Modules/Client/Plantilla-Client/client-template/client-template.component';
+import { NavbarComponent } from './Modules/Client/Plantilla-Client/navbar/navbar.component';
+import { FooterComponent } from './Modules/Client/Plantilla-Client/footer/footer.component';
+import { FloatingButtonComponent } from './Modules/Client/Plantilla-Client/floating-button/floating-button.component';
+import { LoginComponent } from './Modules/Client/Plantilla-Client/login/login.component';
+import { LoginModalComponent } from './Modules/Client/Plantilla-Client/login-modal/login-modal.component';
+import { AdminTemplateComponent } from './Modules/Admin/Plantilla-Admin/admin-template/admin-template.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetallerEventoClienteComponent } from './Modules/Client/Plantilla-Client/detaller-evento-cliente/detaller-evento-cliente.component';
+
 @NgModule({
   declarations: [
 
@@ -30,7 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginModalComponent,
     AppComponent,
     ClientTemplateComponent,
-    NavbarComponent 
+    NavbarComponent,
+    DetallerEventoClienteComponent 
     
 
   ],
@@ -43,7 +45,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
-    
+  
 
   ],
   providers: [],

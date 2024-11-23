@@ -1,0 +1,16 @@
+<section id="faq" class="faq-section">
+  <h2>Preguntas Frecuentes</h2>
+
+  <div
+    class="faq-item"
+    [ngClass]="{ 'active': activeAnswer === i }"
+    *ngFor="let faq of faqs; let i = index"
+  >
+    <h3 class="faq-question" (click)="toggleAnswer(i)">
+      {{ faq.question }}
+    </h3>
+    <div class="faq-answer" #answer>
+      <p>{{ faq.answer }}</p>
+    </div>
+  </div>
+</section>
