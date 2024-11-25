@@ -1,18 +1,39 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { GenericService } from '../shared/generic.service';
 import { EventosDocument } from '../todos/document/eventos.document';
-import { Firestore } from '@google-cloud/firestore';
+import { Firestore, Timestamp } from '@google-cloud/firestore';
 
 @Injectable()
 export class EventosService extends GenericService<EventosDocument> {
   private readonly logger = new Logger(EventosService.name);
+
   constructor() {
     super(EventosDocument.collectionName);
     this.firestore = new Firestore();
   }
 
+  // Obtener eventos por estado, pero solo las fechas
+  async getFechasEventosPendientesYAceptados(): Promise<string[]> {
+    try {
+      const snapshot = await this.firestore
+        .collection(this.collectionName)
+        .where('estado', 'in', ['aceptado', 'pendiente']) // Filtra por los estados 'aceptado' y 'pendiente'
+        .get();
+
+      // Devolver solo las fechas de los eventos
+      return snapshot.docs.map((doc) => {
+        const data = doc.data();
+        // Convertir fechaEvento a Timestamp y luego a ISO string
+        const fechaEvento = data.fechaEvento as Timestamp; // Acceder correctamente al Timestamp
+        return fechaEvento.toDate().toISOString(); // Convertir a string ISO
+      });
+    } catch (error) {
+      this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+      throw error;
+    }
+  }
   async getEventosByEstado(
-    estado: 'aceptado' | 'reechazado' | 'pendiente',
+    estado: 'aceptado' | 'reechazado' | 'pendiente' | 'cancelado',
   ): Promise<EventosDocument[]> {
     try {
       const snapshot = await this.firestore

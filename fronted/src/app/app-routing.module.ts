@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './Modules/Client/InicioClient/inicio/inicio.component';
 import { NuestraHistoriaComponent } from './Modules/Client/NuestraHistoriaClient/nuestra-historia/nuestra-historia.component';
 import { ServiciosComponent } from './Modules/Client/ServicioClient/servicios/servicios.component';
+import { DetallerEventoClienteComponent } from './Modules/Client/detaller-evento-cliente/detaller-evento-cliente.component';
 // Importaciones del administrador
 import { HomeAdminComponent } from './Modules/Admin/HomeAdmin/home-admin/home-admin.component';
 import { PanelEdicionComponent } from './Modules/Admin/AdminGaleria/panel-edicion/panel-edicion.component';
@@ -24,7 +25,8 @@ const routes: Routes = [
       { path: 'inicio', component: InicioComponent },  // Vista de inicio
       { path: 'nuestra-historia', component: NuestraHistoriaComponent }, // Vista de nuestra historia
       { path: 'servicios', component: ServiciosComponent }, // Vista de servicios
-      { path: 'faq', component: FaqComponent } // Vista de preguntas frecuentes
+      { path: 'faq', component: FaqComponent }, // Vista de preguntas frecuentes
+      { path: 'mis-servicios', component: DetallerEventoClienteComponent } // Vista de preguntas frecuentes
     ]
   },
   // Rutas del administrador

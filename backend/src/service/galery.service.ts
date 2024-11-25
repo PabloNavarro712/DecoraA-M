@@ -27,9 +27,9 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
     imageName: string,
     contentType: string,
   ): Promise<GaleriaDocument> {
-    const id = crypto.randomUUID(); // Genera un ID único
+    // Generar un ID único para el documento
+    const id = this.firestore.collection(GaleriaDocument.collectionName).doc().id;
     const fileName = `${id}_${imageName}`;
-
     try {
       // Subir imagen a Firebase Storage
       const imageUrl = await this.uploadImageToFirebase(
@@ -38,7 +38,6 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
         fileName,
         contentType,
       );
-
       // Crear el documento de la galería
       const galeriaData: GaleriaDocument = {
         id,
@@ -46,13 +45,11 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
         Descripcion: descripcion,
         Imagen: imageUrl,
       };
-
       // Guardar en Firestore
       await this.firestore
         .collection(GaleriaDocument.collectionName)
-        .doc(id)
+        .doc(id) // Especificar el ID del documento
         .set(galeriaData);
-
       this.logger.log(`Galería creada con éxito: ${id}`);
       return galeriaData;
     } catch (error) {

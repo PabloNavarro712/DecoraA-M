@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EventosService } from '../../../../Data/Services/eventos.service';
-import { Evento } from '../../../../Data/Interfaces/evento';
+import { EventosService } from 'src/app/data/Services/eventos.service';
+import { Evento } from 'src/app/data/Interfaces/evento';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-eventos-admin',
@@ -33,7 +34,7 @@ export class EventosAdminComponent implements OnInit {
         this.aplicarFiltros();
       },
       (error) => {
-        console.error('Error al cargar los eventos:', error);
+        Swal.fire('Error', 'Hubo un error al cargar los eventos.', 'error');
       }
     );
   }
@@ -42,9 +43,9 @@ export class EventosAdminComponent implements OnInit {
   aplicarFiltros(): void {
     this.reservasFiltradas = this.reservas.filter((reserva) => {
       const cumpleFecha =
-        !this.filtros.fecha || new Date(reserva.fecha_evento).toISOString().split('T')[0] === this.filtros.fecha;
-      const cumpleTipo = !this.filtros.tipoEvento || reserva.tipo_evento === this.filtros.tipoEvento;
-      const cumpleEstado = !this.filtros.estadoEvento || reserva.estado_evento === this.filtros.estadoEvento;
+        !this.filtros.fecha || new Date(reserva.fechaEvento).toISOString().split('T')[0] === this.filtros.fecha;
+      const cumpleTipo = !this.filtros.tipoEvento || reserva.tipoEvento === this.filtros.tipoEvento;
+      const cumpleEstado = !this.filtros.estadoEvento || reserva.estado === this.filtros.estadoEvento;
       return cumpleFecha && cumpleTipo && cumpleEstado;
     });
   }
@@ -72,16 +73,17 @@ export class EventosAdminComponent implements OnInit {
       this.eventosService.updateEvento(this.reservaSeleccionada.id!, this.reservaSeleccionada).subscribe(
         (actualizado) => {
           const index = this.reservas.findIndex(
-            (reserva) => reserva.id_del_cliente === this.reservaSeleccionada?.id_del_cliente
+            (reserva) => reserva.idCliente === this.reservaSeleccionada?.idCliente
           );
           if (index > -1) {
             this.reservas[index] = actualizado;
             this.aplicarFiltros();
           }
           this.cerrarModal();
+          Swal.fire('Actualizado', 'El evento se ha actualizado con éxito.', 'success');
         },
         (error) => {
-          console.error('Error al actualizar el evento:', error);
+          Swal.fire('Error', 'Hubo un problema al actualizar el evento.', 'error');
         }
       );
     }
@@ -100,19 +102,32 @@ export class EventosAdminComponent implements OnInit {
     );
   }
 
-  // Eliminar un evento
-  eliminarEvento(id: string): void {
-    this.eventosService.deleteEvento(id).subscribe(
-      () => {
-        this.reservas = this.reservas.filter((reserva) => reserva.id_del_cliente !== id);
-        this.aplicarFiltros();
-      },
-      (error) => {
-        console.error('Error al eliminar el evento:', error);
-      }
-    );
-  }
-
+ // Confirmar y eliminar un evento
+ eliminarEvento(id: string): void {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Esta acción no se puede deshacer.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.eventosService.deleteEvento(id).subscribe(
+        () => {
+          this.reservas = this.reservas.filter((reserva) => reserva.idCliente !== id);
+          this.aplicarFiltros();
+          Swal.fire('Eliminado', 'El evento ha sido eliminado.', 'success');
+        },
+        (error) => {
+          Swal.fire('Error', 'Hubo un problema al eliminar el evento.', 'error');
+        }
+      );
+    }
+  });
+}
   limpiarFiltros(): void {
   this.filtros = {
     fecha: '',
@@ -120,6 +135,7 @@ export class EventosAdminComponent implements OnInit {
     estadoEvento: ''
   };
   this.aplicarFiltros();
+  Swal.fire('Filtros limpiados', 'Se han eliminado los filtros.', 'info');
 }
 
 }

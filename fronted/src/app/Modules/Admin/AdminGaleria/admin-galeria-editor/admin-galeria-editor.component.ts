@@ -1,105 +1,154 @@
-
 import { Component, OnInit } from '@angular/core';
 import { GaleriaService } from 'src/app/Data/Services/galeria.service';
+import { Item } from 'src/app/data/Interfaces/item';
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 
-
-
-interface Item {
-  id?: string;
-  Categoria: string;
-  Descripcion: string;
-  Imagen: string;
-}
 @Component({
   selector: 'app-admin-galeria-editor',
   templateUrl: './admin-galeria-editor.component.html',
-  styleUrls: ['./admin-galeria-editor.component.css']
+  styleUrls: ['./admin-galeria-editor.component.css'],
 })
-export class AdminGaleriaEditorComponent {
-
-
+export class AdminGaleriaEditorComponent implements OnInit {
   items: Item[] = [];
-
-  newItem: Item = {
+  newItem: Partial<Item> = {
     Categoria: '',
     Descripcion: '',
-    Imagen: ''
   };
+  itemToEdit: Item | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
+  selectedFile: File | null = null;
 
-  itemToEdit: Item | null = null; // Variable para el item que se está editando
-  imagePreview: string | ArrayBuffer | null = null; // Para mostrar la imagen seleccionada
-
-  constructor(private galeriaService: GaleriaService) { }
+  constructor(private galeriaService: GaleriaService) {}
 
   ngOnInit(): void {
     this.loadItems();
   }
 
   loadItems(): void {
-    this.galeriaService.getItems().subscribe(data => {
-      this.items = data;
-    });
+    this.galeriaService.getItems().subscribe(
+      (data) => {
+        this.items = data;
+        if (data.length === 0) {
+          Swal.fire('Sin datos', 'No se encontraron elementos en la galería.', 'info');
+        }
+      },
+      (error) => {
+        Swal.fire('Error', 'Error al cargar los elementos de la galería.', 'error');
+      }
+    );
   }
 
   addItem(): void {
-    this.galeriaService.createItem(this.newItem).subscribe(item => {
-      this.items.push(item); // Agregar el nuevo item a la lista
-      this.resetForm();
-    });
+    if (!this.selectedFile || !this.newItem.Categoria || !this.newItem.Descripcion) {
+      Swal.fire('Error', 'Todos los campos y la imagen son obligatorios.', 'error');
+      return;
+    }
+
+    this.galeriaService
+      .createItem(this.selectedFile, this.newItem.Categoria, this.newItem.Descripcion)
+      .subscribe(
+        (item) => {
+          this.items.push(item);
+          Swal.fire('Éxito', 'El elemento fue agregado correctamente.', 'success');
+          this.resetForm();
+        },
+        (error) => {
+          Swal.fire('Error', 'Error al agregar el elemento.', 'error');
+        }
+      );
   }
 
   deleteItem(id: string | undefined): void {
-    if (id) {
-      this.galeriaService.deleteItem(id).subscribe(() => {
-        this.items = this.items.filter(item => item.id !== id); // Eliminar el item de la lista
-      });
-    } else {
-      console.error('El id es indefinido');
+    if (!id) {
+      Swal.fire('Error', 'El ID del elemento es indefinido.', 'error');
+      return;
     }
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará el elemento de forma permanente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.galeriaService.deleteItem(id).subscribe(
+          () => {
+            this.items = this.items.filter((item) => item.id !== id);
+            Swal.fire('Eliminado', 'El elemento fue eliminado con éxito.', 'success');
+          },
+          (error) => {
+            Swal.fire('Error', 'Error al eliminar el elemento.', 'error');
+          }
+        );
+      }
+    });
   }
 
   onEdit(item: Item): void {
-    this.itemToEdit = item; // Guardar el item que se está editando
-    this.newItem = { ...item }; // Cargar datos en el formulario
-    this.imagePreview = item.Imagen; // Cargar la imagen en la vista previa
+    this.itemToEdit = item;
+    this.newItem = { ...item };
+    this.imagePreview = item.Imagen;
+    this.selectedFile = null;
   }
 
   updateItem(): void {
-    if (this.itemToEdit) {
-      this.galeriaService.updateItem(this.itemToEdit.id, this.newItem).subscribe(updatedItem => {
-        const index = this.items.findIndex(item => item.id === this.itemToEdit?.id);
-        if (index > -1) {
-          this.items[index] = updatedItem; // Actualizar el item en la lista
-        }
-        this.resetForm(); // Limpiar el formulario
-      });
+    if (!this.itemToEdit) {
+      Swal.fire('Error', 'No hay un elemento seleccionado para actualizar.', 'error');
+      return;
     }
+
+    const updateData: Partial<Item> = {
+      Categoria: this.newItem.Categoria,
+      Descripcion: this.newItem.Descripcion,
+    };
+
+    this.galeriaService.updateItem(this.itemToEdit.id!, updateData).subscribe(
+      () => {
+        const index = this.items.findIndex((item) => item.id === this.itemToEdit?.id);
+        if (index > -1 && this.itemToEdit) {
+          this.items[index] = {
+            id: this.itemToEdit.id!,
+            Categoria: updateData.Categoria ?? this.itemToEdit.Categoria,
+            Descripcion: updateData.Descripcion ?? this.itemToEdit.Descripcion,
+            Imagen: this.itemToEdit.Imagen,
+          };
+        }
+        Swal.fire('Éxito', 'El elemento fue actualizado correctamente.', 'success');
+        this.resetForm();
+      },
+      (error) => {
+        Swal.fire('Error', 'Error al actualizar el elemento.', 'error');
+      }
+    );
   }
 
   resetForm(): void {
-    this.newItem = { Categoria: '', Descripcion: '', Imagen: '' }; // Limpiar el formulario
-    this.itemToEdit = null; // Resetear el item a editar
-    this.imagePreview = null; // Limpiar la vista previa de la imagen
+    this.newItem = { Categoria: '', Descripcion: '' };
+    this.itemToEdit = null;
+    this.imagePreview = null;
+    this.selectedFile = null;
   }
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
+
     if (target.files && target.files.length > 0) {
       const file = target.files[0];
-      
-      // Subir la imagen a Firebase Storage
-      this.galeriaService.uploadImage(file).subscribe(response => {
-        this.newItem.Imagen = response.imageUrl; // Guardar la URL de la imagen en newItem
+      this.selectedFile = file;
 
-        // Mostrar una vista previa de la imagen cargada
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.imagePreview = reader.result; // Asignar la imagen cargada a la vista previa
-        };
-        reader.readAsDataURL(file);
-      }, error => {
-        console.error('Error al subir la imagen:', error);
-      });
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.onerror = (error) => {
+        Swal.fire('Error', 'Error al leer la imagen.', 'error');
+      };
+      reader.readAsDataURL(file);
+    } else {
+      Swal.fire('Advertencia', 'No se seleccionó ningún archivo.', 'warning');
     }
   }
 }

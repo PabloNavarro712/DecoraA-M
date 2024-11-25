@@ -3,12 +3,12 @@ import { Module } from '@nestjs/common';
 import { AppService } from 'src/service/app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreModule } from 'src/firestore/firestore.module'; // Importa el módulo de Firestore
-import { ConvocatoriaModule } from './convocatoria.module';
+
 import { ServiciosModule } from './servicios.module';
 import { UsuariosModule } from './usuarios.module';
 import { EventosModule } from './eventos.module';
 import { GaleriaModule } from './galery.module';
-import { StudentDocModule } from './studentdoc.module';
+
 import { GenericService } from 'src/shared/generic.service';
 
 @Module({
@@ -24,8 +24,6 @@ import { GenericService } from 'src/shared/generic.service';
       inject: [ConfigService], // Inyecta el servicio de configuración
     }),
     // Importa todos los módulos necesarios
-    ConvocatoriaModule,
-    StudentDocModule,
     ServiciosModule,
     UsuariosModule,
     GaleriaModule,

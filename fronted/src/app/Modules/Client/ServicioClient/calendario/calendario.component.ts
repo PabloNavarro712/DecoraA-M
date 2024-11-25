@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Servicio } from 'src/app/Data/Interfaces/servicio';
+import { Servicio } from 'src/app/data/Interfaces/servicio';
 import { NgForm } from '@angular/forms';
-import { EventosService } from 'src/app/Data/Services/eventos.service';
-import { Evento } from 'src/app/Data/Interfaces/evento';
+import { EventosService } from 'src/app/data/Services/eventos.service';
+import { Evento } from 'src/app/data/Interfaces/evento';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,9 +23,7 @@ export class CalendarioComponent implements OnInit {
   usuario: string = '';  
   idCliente: string = '';
   tiposDeEvento: string[] = ['Boda', 'XV Años', 'Baby Shower', 'Evento Corporativo', 'Fiesta Infantil'];
-evento = {
-  tipo_evento: '------'
-};
+
 
 
   constructor(private eventosService: EventosService) {}
@@ -35,7 +33,7 @@ evento = {
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
       const user = JSON.parse(storedUser);
-      this.usuario = user.usuario; // Asignar el usuario desde sessionStorage
+      this.usuario = user.correo; // Asignar el usuario desde sessionStorage
       this.idCliente = user.id; // Asignar el id del cliente desde sessionStorage, asegúrate de que este campo esté disponible
     }
 
@@ -112,18 +110,19 @@ evento = {
           .join('\n');
   
       const evento = {
-        id_del_cliente: this.idCliente,
-        usuario: this.usuario,
-        descripcion,
-        servicio_seleccionado: this.servicioSeleccionado.titulo,
-        estado_evento: 'por confirmar',
-        tipo_evento: form.value.tipoEvento,
-        nombre_contacto: form.value.nombre,
-        numero_telefono: form.value.numero,
-        direccion_local: `Direccion ${form.value.direccion}, \n localidad ${form.value.localidad}`, 
-        fecha_evento: this.fechaSeleccionada.toISOString(),
-        hora: form.value.hora,
-        precio: this.calcularPrecioTotal()
+        idServicio: this.servicioSeleccionado?.id,
+        idCliente: this.idCliente,
+        nombre: form.value.nombre, // Asumiendo que el nombre del evento viene del formulario
+        contacto: form.value.numero, // Asumiendo que es el número de teléfono
+        correoElectronico: this.usuario || '', // Asegúrate de agregar este campo si es necesario
+        fechaHoraReserva: new Date(),
+        ubicacionEvento: `Dirección: ${form.value.direccion}, Localidad: ${form.value.localidad}`,
+        tipoEvento: this.servicioSeleccionado?.categoria,
+        horaEvento: form.value.hora,
+        fechaEvento: new Date(this.fechaSeleccionada), 
+        estado: 'pendiente' as 'pendiente', // Asegurando el tipo literal
+        precio_final: this.calcularPrecioTotal(),
+        adiciones: this.obtenerOpcionesSeleccionadas() 
       };
   
       this.eventosService.createEvento(evento).subscribe({
@@ -173,4 +172,16 @@ evento = {
     }
     return 0;
   }
+  obtenerOpcionesSeleccionadas(): { nombre: string; precio: number }[] {
+    if (this.servicioSeleccionado?.opciones) {
+      return this.servicioSeleccionado.opciones
+        .filter(opcion => opcion.seleccionada) // Filtrar solo las opciones seleccionadas
+        .map(opcion => ({
+          nombre: opcion.nombre,
+          precio: opcion.precio
+        })); // Transformar a un formato compatible con 'adiciones'
+    }
+    return [];
+  }
+  
 }

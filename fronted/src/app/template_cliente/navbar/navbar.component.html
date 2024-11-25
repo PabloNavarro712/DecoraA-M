@@ -24,8 +24,9 @@
         
         <!-- Botón de servicios pedidos solo si hay un usuario registrado -->
         <li class="nav-item" *ngIf="user">
+          <a class="nav-link" routerLink="/cliente/inicio" (click)="closeNavbar()">Inicio</a>
           <button class="btn btn-outline-light btn-servicios-pedidos" (click)="mostrarServiciosPedidos()">
-            Servicios Pedidos
+           Mis Pedidos
           </button>
         </li>
         

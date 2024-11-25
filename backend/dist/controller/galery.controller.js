@@ -15,10 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GaleriaController = void 0;
 const common_1 = require("@nestjs/common");
 const galery_service_1 = require("../service/galery.service");
+const galery_document_1 = require("../todos/document/galery.document");
 const platform_express_1 = require("@nestjs/platform-express");
+const generic_controller_1 = require("../shared/generic.controller");
 const endpoint = 'api/galeria-prueba';
-let GaleriaController = class GaleriaController {
+const GenericGController = (0, generic_controller_1.createGenericController)(galery_document_1.GaleriaDocument.collectionName, endpoint);
+let GaleriaController = class GaleriaController extends GenericGController {
     constructor(galeriaService) {
+        super();
         this.galeriaService = galeriaService;
     }
     async createGallery(file, categoria, descripcion) {
@@ -75,7 +79,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GaleriaController.prototype, "getByCategory", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Patch)('/update/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -83,7 +87,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GaleriaController.prototype, "updateImageDocument", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('/delete/:id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.NO_CONTENT),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
