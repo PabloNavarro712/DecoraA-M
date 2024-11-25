@@ -11,7 +11,7 @@ export declare class EventosDocument {
     tipoEvento: string;
     horaEvento: string;
     fechaEvento: Date;
-    estado: 'aceptado' | 'reechazado' | 'pendiente';
+    estado: 'aceptado' | 'reechazado' | 'pendiente' | 'cancelado';
     precio_final: number;
     adiciones: {
         nombre: string;

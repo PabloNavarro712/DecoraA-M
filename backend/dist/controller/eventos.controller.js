@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var EventosController_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventosController = void 0;
 const common_1 = require("@nestjs/common");
@@ -19,10 +20,11 @@ const eventos_document_1 = require("../todos/document/eventos.document");
 const generic_controller_1 = require("../shared/generic.controller");
 const endpoint = 'api/eventos';
 const GenericEventosController = (0, generic_controller_1.createGenericController)(eventos_document_1.EventosDocument.collectionName, endpoint);
-let EventosController = class EventosController extends GenericEventosController {
+let EventosController = EventosController_1 = class EventosController extends GenericEventosController {
     constructor(eventosService) {
         super();
         this.eventosService = eventosService;
+        this.logger = new common_1.Logger(EventosController_1.name);
     }
     async getEventosByEstado(estado) {
         return this.eventosService.getEventosByEstado(estado);
@@ -33,6 +35,15 @@ let EventosController = class EventosController extends GenericEventosController
     }
     async getEventosByCliente(idCliente) {
         return this.eventosService.getEventosByCliente(idCliente);
+    }
+    async getFechasEventosPendientesYAceptados() {
+        try {
+            return await this.eventosService.getFechasEventosPendientesYAceptados();
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+            throw error;
+        }
     }
 };
 exports.EventosController = EventosController;
@@ -57,7 +68,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], EventosController.prototype, "getEventosByCliente", null);
-exports.EventosController = EventosController = __decorate([
+__decorate([
+    (0, common_1.Get)('/fechas'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "getFechasEventosPendientesYAceptados", null);
+exports.EventosController = EventosController = EventosController_1 = __decorate([
     (0, common_1.Controller)(endpoint),
     __metadata("design:paramtypes", [eventos_service_1.EventosService])
 ], EventosController);

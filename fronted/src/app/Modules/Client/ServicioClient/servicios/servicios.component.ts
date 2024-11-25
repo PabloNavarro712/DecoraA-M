@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiciosService } from 'src/app/Data/Services/servicio.service'; 
-import { Servicio } from 'src/app/Data/Interfaces/servicio';
-import { ReservaService } from 'src/app/Data/Services/internal/reserva.service';
+import { ServiciosService } from 'src/app/data/Services/servicio.service'; 
+import { Servicio } from 'src/app/data/Interfaces/servicio';
+import { ReservaService } from 'src/app/data/Services/internal/reserva.service';
 import * as bootstrap from 'bootstrap';
 
 @Component({

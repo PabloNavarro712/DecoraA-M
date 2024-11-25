@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Servicio } from '../Interfaces/servicio';
+import { Servicio } from 'src/app/data/Interfaces/servicio';
 
 
 

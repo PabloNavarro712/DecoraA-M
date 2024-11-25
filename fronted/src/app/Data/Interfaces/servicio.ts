@@ -2,6 +2,7 @@ export interface Servicio {
     id?: string;
     titulo: string;
     descripcion: string;
+    categoria: string;
     imagen: string;
     elementos: string[];
     precio: number;

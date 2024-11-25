@@ -9,9 +9,11 @@ export class ServiciosDocument {
   opciones: {
     nombre: string;
     precio: number;
+    seleccionada: boolean;
   }[];
-  precio: string;
-
+  precioTotal: string;
+  mostrarOpciones: boolean; // Agregada propiedad mostrarOpciones
+  precio: number;
   constructor(partial: Partial<ServiciosDocument>) {
     Object.assign(this, partial);
   }

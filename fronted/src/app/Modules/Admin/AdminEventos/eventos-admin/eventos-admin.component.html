@@ -28,8 +28,9 @@
     <label for="estadoEvento">Estado:</label>
     <select id="estadoEvento" [(ngModel)]="filtros.estadoEvento" (change)="aplicarFiltros()">
       <option value="">Todos</option>
-      <option value="activo">Activo</option>
+      <option value="aceptado">Aceptado</option>
       <option value="pendiente">Pendiente</option>
+      <option value="reechazado">Rechazado</option>
       <option value="cancelado">Cancelado</option>
     </select>
   
@@ -53,11 +54,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let reserva of reservasFiltradas">
-          <td>{{ reserva.nombre_contacto }}</td>
-          <td>{{ reserva.numero_telefono }}</td>
-          <td>{{ reserva.fecha_evento | date: 'shortDate' }}</td>
-          <td>{{ reserva.tipo_evento }}</td>
-          <td>{{ reserva.estado_evento }}</td>
+          <td>{{ reserva.nombre }}</td>
+          <td>{{ reserva.contacto }}</td>
+          <td>{{ reserva.fechaEvento| date: 'shortDate' }}</td>
+          <td>{{ reserva.tipoEvento }}</td>
+          <td>{{ reserva.estado }}</td>
           <td>
             <button (click)="verDetalles(reserva)">Ver Detalles</button>
           </td>
@@ -71,30 +72,29 @@
     <div class="modal-content">
       <h2>Detalles de la Reserva</h2>
       <form #editarForm="ngForm" (ngSubmit)="guardarCambios()" novalidate>
-        <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre_contacto }}</p>
-        <p><strong>Contacto:</strong> {{ reservaSeleccionada.numero_telefono }}</p>
+        <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre }}</p>
+        <p><strong>Contacto:</strong> {{ reservaSeleccionada.contacto }}</p>
 
         <div *ngIf="!modoEdicion">
-          <p><strong>Dirección:</strong> {{ reservaSeleccionada.direccion_local }}</p>
-          <p><strong>Fecha:</strong> {{ reservaSeleccionada.fecha_evento | date: 'shortDate' }}</p>
-          <p><strong>Hora:</strong> {{ reservaSeleccionada.hora }}</p>
-          <p><strong>Tipo de Evento:</strong> {{ reservaSeleccionada.tipo_evento }}</p>
-          <p><strong>Estado:</strong> {{ reservaSeleccionada.estado_evento }}</p>
-          <p><strong>Descripción:</strong> {{ reservaSeleccionada.descripcion }}</p>
+          <p><strong>Dirección:</strong> {{ reservaSeleccionada.ubicacionEvento }}</p>
+          <p><strong>Fecha:</strong> {{ reservaSeleccionada.fechaEvento| date: 'shortDate' }}</p>
+          <p><strong>Hora:</strong> {{ reservaSeleccionada.horaEvento }}</p>
+          <p><strong>Tipo de Evento:</strong> {{ reservaSeleccionada.tipoEvento }}</p>
+          <p><strong>Estado:</strong> {{ reservaSeleccionada.estado }}</p>
         </div>
 
         <div *ngIf="modoEdicion">
           <label for="direccion"><strong>Dirección:</strong></label>
-          <input type="text" id="direccion" [(ngModel)]="reservaSeleccionada.direccion_local" name="direccion" required />
+          <input type="text" id="direccion" [(ngModel)]="reservaSeleccionada.ubicacionEvento" name="direccion" required />
 
           <label for="fecha"><strong>Fecha:</strong></label>
-          <input type="date" id="fecha" [(ngModel)]="reservaSeleccionada.fecha_evento" name="fecha" required />
+          <input type="date" id="fecha" [(ngModel)]="reservaSeleccionada.fechaEvento" name="fecha" required />
 
           <label for="hora"><strong>Hora:</strong></label>
-          <input type="time" id="hora" [(ngModel)]="reservaSeleccionada.hora" name="hora" required />
+          <input type="time" id="hora" [(ngModel)]="reservaSeleccionada.horaEvento" name="hora" required />
 
           <label for="tipoEvento"><strong>Tipo de Evento:</strong></label>
-          <select id="tipoEvento" [(ngModel)]="reservaSeleccionada.tipo_evento" name="tipoEvento" required>
+          <select id="tipoEvento" [(ngModel)]="reservaSeleccionada.tipoEvento" name="tipoEvento" required>
             <option value="Boda">Boda</option>
             <option value="XV Años">XV Años</option>
             <option value="Baby Shower">Baby Shower</option>
@@ -103,14 +103,15 @@
           </select>
 
           <label for="estado"><strong>Estado:</strong></label>
-          <select id="estado" [(ngModel)]="reservaSeleccionada.estado_evento" name="estado" required>
-            <option value="activo">Activo</option>
+          <select id="estado" [(ngModel)]="reservaSeleccionada.estado" name="estado" required>
+            <option value="aceptado">Aceptado</option>
             <option value="pendiente">Pendiente</option>
+            <option value="reechazado">Rechazado</option>
             <option value="cancelado">Cancelado</option>
           </select>
-
+<!-- 
           <label for="descripcion"><strong>Descripción:</strong></label>
-          <textarea id="descripcion" [(ngModel)]="reservaSeleccionada.descripcion" name="descripcion" rows="3" required></textarea>
+          <textarea id="descripcion" [(ngModel)]="reservaSeleccionada." name="descripcion" rows="3" required></textarea> -->
         </div>
 
         <!-- Botones -->

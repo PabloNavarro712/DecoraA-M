@@ -4,17 +4,16 @@
   <div class="upload-container">
     <div class="image-upload">
       <label for="upload" class="image-label">
-        <img *ngIf="newItem.Imagen" [src]="newItem.Imagen" alt="Vista previa" class="image-placeholder">
-       <!-- Mostrar el ícono si no hay imagen cargada -->
-       <i *ngIf="!newItem.Imagen" class="fas fa-upload fa-5x icon-gray"></i>
-
-
-
+        <!-- Mostrar la vista previa de la imagen cargada -->
+        <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa" class="image-placeholder">
+        <!-- Mostrar el ícono si no hay imagen cargada -->
+        <i *ngIf="!imagePreview" class="fas fa-upload fa-5x icon-gray"></i>
 
         <div class="upload-text">Subir archivo</div>
       </label>
       <input id="upload" type="file" class="upload-input" (change)="onFileSelected($event)">
     </div>
+
 
     <div class="description-container">
       <select class="category-select" [(ngModel)]="newItem.Categoria">

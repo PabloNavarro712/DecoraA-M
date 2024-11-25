@@ -12,9 +12,11 @@ declare const GenericEventosController: {
 };
 export declare class EventosController extends GenericEventosController {
     private readonly eventosService;
+    private readonly logger;
     constructor(eventosService: EventosService);
     getEventosByEstado(estado: 'aceptado' | 'reechazado' | 'pendiente'): Promise<EventosDocument[]>;
     getEventosProximos(fechaBase: string): Promise<EventosDocument[]>;
     getEventosByCliente(idCliente: string): Promise<EventosDocument[]>;
+    getFechasEventosPendientesYAceptados(): Promise<string[]>;
 }
 export {};

@@ -24,9 +24,7 @@
         
         <!-- Botón de servicios pedidos solo si hay un usuario registrado -->
         <li class="nav-item" *ngIf="user">
-          <button class="btn btn-outline-light btn-servicios-pedidos" (click)="mostrarServiciosPedidos()">
-            Servicios Pedidos
-          </button>
+          <a class="nav-link" routerLink="/cliente/mis-servicios" (click)="closeNavbar()">Mis servicios</a>
         </li>
         
         <li class="nav-item">
@@ -40,16 +38,4 @@
   </div>
 </nav>  
 <!-- Modal de Servicios Pedidos -->
-<div class="modal fade" id="serviciosPedidosModal" tabindex="-1" aria-labelledby="serviciosPedidosModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="serviciosPedidosModalLabel">Servicios Pedidos</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-<!-- Mi codigo -->
-      <app-detaller-evento-cliente> </app-detaller-evento-cliente>
 
-    </div>
-  </div>
-</div>
