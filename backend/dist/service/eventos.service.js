@@ -21,6 +21,23 @@ let EventosService = EventosService_1 = class EventosService extends generic_ser
         this.logger = new common_1.Logger(EventosService_1.name);
         this.firestore = new firestore_1.Firestore();
     }
+    async getFechasEventosPendientesYAceptados() {
+        try {
+            const snapshot = await this.firestore
+                .collection(this.collectionName)
+                .where('estado', 'in', ['aceptado', 'pendiente'])
+                .get();
+            return snapshot.docs.map((doc) => {
+                const data = doc.data();
+                const fechaEvento = data.fechaEvento;
+                return fechaEvento.toDate().toISOString();
+            });
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+            throw error;
+        }
+    }
     async getEventosByEstado(estado) {
         try {
             const snapshot = await this.firestore

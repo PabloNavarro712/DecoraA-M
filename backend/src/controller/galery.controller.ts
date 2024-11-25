@@ -15,11 +15,22 @@ import {
 import { GaleriaService } from '../service/galery.service';
 import { GaleriaDocument } from 'src/todos/document/galery.document';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { createGenericController } from 'src/shared/generic.controller';
+
 const endpoint = 'api/galeria-prueba';
 
+// Crear el controlador genérico para 'eventos'
+const GenericGController = createGenericController<GaleriaDocument>(
+  GaleriaDocument.collectionName,
+  endpoint,
+);
+
 @Controller(endpoint)
-export class GaleriaController {
-  constructor(private readonly galeriaService: GaleriaService) {}
+export class GaleriaController extends GenericGController {
+  constructor(private readonly galeriaService: GaleriaService) {
+    super();
+  }
+
   @Post('/crear')
   @UseInterceptors(FileInterceptor('file'))
   async createGallery(
@@ -65,7 +76,7 @@ export class GaleriaController {
     return await this.galeriaService.getImagesByCategory(categoria);
   }
   // Ruta para actualizar un documento específico por ID
-  @Patch(':id') // Método PATCH con ID en la ruta
+  @Patch('/update/:id') // Método PATCH con ID en la ruta
   async updateImageDocument(
     @Param('id') id: string, // Parámetro en la ruta
     @Body() updateData: Partial<GaleriaDocument>, // Datos enviados en el cuerpo de la solicitud
@@ -78,7 +89,7 @@ export class GaleriaController {
     // Llamar al servicio para manejar la actualización
     await this.galeriaService.updateImageDocument(id, updateData);
   }
-  @Delete(':id')
+  @Delete('/delete/:id')
   @HttpCode(HttpStatus.NO_CONTENT) // Respuesta con código 204 en caso de éxito
   async deleteImage(@Param('id') id: string): Promise<void> {
     // Validar que el ID no esté vacío

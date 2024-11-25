@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Evento } from '../Interfaces/evento';
+import { Evento } from 'src/app/data/Interfaces/evento';
 
 // Definir la interfaz del evento
 @Injectable({

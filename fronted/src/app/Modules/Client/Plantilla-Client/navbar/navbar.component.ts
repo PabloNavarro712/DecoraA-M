@@ -1,8 +1,8 @@
 
-import { ModalService } from 'src/app/Data/Services/internal/modal.service';
+import { ModalService } from 'src/app/data/Services/internal/modal.service';
 import { Component, OnInit } from '@angular/core';
-import { EventosService} from '../../../../Data/Services/eventos.service'; // Asegúrate de que la ruta sea correcta
-import { Evento } from 'src/app/Data/Interfaces/evento';
+import { EventosService} from '../../../../data/Services/eventos.service'; // Asegúrate de que la ruta sea correcta
+import { Evento } from 'src/app/data/Interfaces/evento';
 declare var bootstrap: any; // Importamos Bootstrap para manejar el modal
 
 @Component({
@@ -35,19 +35,19 @@ export class NavbarComponent implements OnInit {
     this.modalService.openModal(modal);
   }
 
-  mostrarServiciosPedidos() {
-    if (this.user && this.user.id) {
-      this.eventosService.getEventosByCliente(this.user.id).subscribe(
-        (eventos) => {
-          this.serviciosPedidos = eventos.filter(evento => evento.estado_evento !== 'activo');
-          this.openServiciosPedidosModal();
-        },
-        (error) => {
-          console.error('Error al cargar los eventos:', error);
-        }
-      );
-    }
-  }
+  // mostrarServiciosPedidos() {
+  //   if (this.user && this.user.id) {
+  //     this.eventosService.getEventosByCliente(this.user.id).subscribe(
+  //       (eventos) => {
+  //         this.serviciosPedidos = eventos.filter(evento => evento.estado !== 'activo');
+  //         this.openServiciosPedidosModal();
+  //       },
+  //       (error) => {
+  //         console.error('Error al cargar los eventos:', error);
+  //       }
+  //     );
+  //   }
+  // }
 
   openServiciosPedidosModal() {
     const modalElement = document.getElementById('serviciosPedidosModal');
@@ -55,23 +55,23 @@ export class NavbarComponent implements OnInit {
     modal.show();
   }
 
-  cancelarServicio(servicio: Evento) {
-    // Confirmación para cancelar el servicio
-    const confirmacion = confirm('¿Está seguro de que desea cancelar la reservación?');
+  // cancelarServicio(servicio: Evento) {
+  //   // Confirmación para cancelar el servicio
+  //   const confirmacion = confirm('¿Está seguro de que desea cancelar la reservación?');
     
-    if (confirmacion) {
-      servicio.estado_evento = 'cancelado'; // Cambiar estado del evento a "cancelado"
+  //   if (confirmacion) {
+  //     servicio.estado = 'cancelado'; // Cambiar estado del evento a "cancelado"
       
-      // Actualizar el evento llamando al método del servicio
-      this.eventosService.updateEvento(servicio.id!, servicio).subscribe(
-        () => {
-          console.log('El servicio fue cancelado exitosamente.');
-        },
-        (error) => {
-          console.error('Error al cancelar el servicio:', error);
-          alert('Ocurrió un error al cancelar el servicio. Inténtelo de nuevo más tarde.');
-        }
-      );
-    }
-  }
+  //     // Actualizar el evento llamando al método del servicio
+  //     this.eventosService.updateEvento(servicio.id!, servicio).subscribe(
+  //       () => {
+  //         console.log('El servicio fue cancelado exitosamente.');
+  //       },
+  //       (error) => {
+  //         console.error('Error al cancelar el servicio:', error);
+  //         alert('Ocurrió un error al cancelar el servicio. Inténtelo de nuevo más tarde.');
+  //       }
+  //     );
+  //   }
+  // }
 }

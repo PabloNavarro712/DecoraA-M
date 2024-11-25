@@ -1,0 +1,89 @@
+
+  /* Botón */
+  .estado-reserva button {
+    display: block;
+    margin: 20px auto;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .estado-reserva button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Texto de error */
+  .text-danger {
+    text-align: center;
+    color: #ff4d4d; /* Un rojo más suave y atractivo */
+    font-size: 1.2rem; /* Tamaño de fuente ligeramente más grande */
+    font-family: 'Arial', sans-serif; /* Fuente moderna */
+    font-weight: bold; /* Resaltar el texto */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra sutil para destacar */
+    padding: 10px; /* Espaciado interno */
+    border: 2px solid #ff4d4d; /* Borde con el mismo color */
+    border-radius: 10px; /* Bordes redondeados */
+    background-color: #ffe6e6; /* Fondo claro que combina con el color del texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra externa para dar profundidad */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Animaciones suaves */
+  }
+  /* Estilo para hacer la ventana draggable */
+  .contenido-detalles {
+    cursor: move;
+  }
+ 
+  .eventos-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+  }
+
+  .card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .badge {
+    font-size: 1rem;
+  }
+
+.card-header {
+  border-radius: 10px 10px 0 0;
+}
+
+.card-body {
+  background-color: #ffffff;
+}
+
+.ventana-detalles-evento h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.ventana-detalles-evento p {
+  margin: 0.25rem 0;
+  color: #555;
+}
+
+
+
+.ventana-detalles-evento {
+  padding: 10px;
+}
+
+h4 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}

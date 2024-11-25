@@ -1,9 +1,8 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, Logger } from '@nestjs/common';
 import { EventosService } from '../service/eventos.service';
 import { EventosDocument } from 'src/todos/document/eventos.document';
 import { createGenericController } from 'src/shared/generic.controller';
 
-// Crear el controlador genérico para 'eventos'
 const endpoint = 'api/eventos';
 
 // Crear el controlador genérico para 'eventos'
@@ -14,6 +13,8 @@ const GenericEventosController = createGenericController<EventosDocument>(
 
 @Controller(endpoint)
 export class EventosController extends GenericEventosController {
+  private readonly logger = new Logger(EventosController.name);
+
   constructor(private readonly eventosService: EventosService) {
     super(); // Llama al constructor del controlador genérico
   }
@@ -46,5 +47,16 @@ export class EventosController extends GenericEventosController {
   @Get('/cliente/:idCliente')
   async getEventosByCliente(@Param('idCliente') idCliente: string) {
     return this.eventosService.getEventosByCliente(idCliente);
+  }
+
+  // Endpoint para obtener solo las fechas de los eventos con estado 'aceptado' o 'pendiente'
+  @Get('/fechas')
+  async getFechasEventosPendientesYAceptados(): Promise<string[]> {
+    try {
+      return await this.eventosService.getFechasEventosPendientesYAceptados();
+    } catch (error) {
+      this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+      throw error;
+    }
   }
 }

@@ -24,7 +24,7 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
         this.storage = new storage_1.Storage();
     }
     async createGallery(categoria, descripcion, imageBuffer, imageName, contentType) {
-        const id = crypto.randomUUID();
+        const id = this.firestore.collection(galery_document_1.GaleriaDocument.collectionName).doc().id;
         const fileName = `${id}_${imageName}`;
         try {
             const imageUrl = await this.uploadImageToFirebase(imageBuffer, categoria, fileName, contentType);
