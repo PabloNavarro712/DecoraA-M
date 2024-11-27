@@ -23,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventosAdminComponent } from './editar_evento/eventos-admin/eventos-admin.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarioComponent } from './home/calendario/calendario.component';
+import { BotoneditarComponent } from './editar-servicio/botoneditar/botoneditar.component';
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
@@ -31,7 +32,8 @@ import { CalendarioComponent } from './home/calendario/calendario.component';
     EditarServicioComponent,
     ServiceDialogComponent,
     EventosAdminComponent,
-    CalendarioComponent
+    CalendarioComponent,
+    BotoneditarComponent
   ],
   imports: [
     FullCalendarModule,
