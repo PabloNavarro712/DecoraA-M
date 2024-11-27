@@ -21,13 +21,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventosAdminComponent } from './AdminEventos/eventos-admin/eventos-admin.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { AgregarServicioAdminComponent } from './Agregar-Servicio-Admin/agregar-servicio-admin.component';
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
     HomeAdminComponent,
     PanelEdicionComponent,
     EditarServicioComponent,
-    EventosAdminComponent
+    EventosAdminComponent,
+    AgregarServicioAdminComponent
   ],
   imports: [
     FullCalendarModule,
@@ -43,7 +45,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatNativeDateModule
+    MatNativeDateModule, 
   ]
 })
 export class VistaAdminModule { }
