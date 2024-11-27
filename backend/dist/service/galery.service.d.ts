@@ -8,7 +8,7 @@ export declare class GaleriaService extends GenericService<GaleriaDocument> {
     getImagesByCategory(category: string): Promise<GaleriaDocument[]>;
     private uploadImageToFirebase;
     private deleteImageFromFirebase;
-    updateImageDocument(id: string, updateData: Partial<GaleriaDocument>): Promise<void>;
+    updateImageDocument(id: string, updateData: Partial<GaleriaDocument>, newImageBuffer: Buffer, newImageName: string, newImageContentType: string): Promise<void>;
     deleteImageById(id: string): Promise<void>;
     updateDocumentAndReplaceImage(id: string, newImageBuffer: Buffer, newImageName: string, newImageContentType: string, updatedData: {
         Categoria: string;

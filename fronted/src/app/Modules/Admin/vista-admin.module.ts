@@ -21,13 +21,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventosAdminComponent } from './AdminEventos/eventos-admin/eventos-admin.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { GestionServiciosComponent } from './AdminServcio/editar-servicio/gestion-servicios/gestion-servicios.component';
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
     HomeAdminComponent,
     PanelEdicionComponent,
     EditarServicioComponent,
-    EventosAdminComponent
+    EventosAdminComponent,
+    GestionServiciosComponent
   ],
   imports: [
     FullCalendarModule,
