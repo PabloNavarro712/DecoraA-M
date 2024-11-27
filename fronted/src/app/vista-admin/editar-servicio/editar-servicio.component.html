@@ -1,5 +1,3 @@
-
-
 <div class="container">
   <!-- Si hay un servicio seleccionado, se muestra el formulario de edición sin necesidad de un botón flotante -->
   <div *ngIf="servicioSeleccionado; else noServicioSeleccionado">
@@ -7,8 +5,9 @@
       <div class="card-header d-flex justify-content-between">
         <span>Servicio: {{ servicioSeleccionado.titulo }}</span>
         <button class="btn btn-danger btn-sm" (click)="eliminarServicio(servicioSeleccionado.id ? servicioSeleccionado.id.toString() : '')">Eliminar</button>
-        <button class="btn btn-primary btn-sm" (click)="seleccionarServicio(servicioSeleccionado)">Editar</button>
+        <button class="btn btn-primary btn-sm" (click)="abrirModal(servicioSeleccionado)">Editar/<button>
       </div>
+     
       <div class="card-body">
         <form [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
           <div class="form-group">
@@ -66,6 +65,42 @@
   </ng-template>
 </div>
 
+<!-- Modal para editar servicio -->
+<div *ngIf="servicioSeleccionado" class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Servicio</h5>
+        <button type="button" class="close" (click)="cerrarModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
+          <div class="form-group">
+            <label for="nombreServicio">Título</label>
+            <input formControlName="titulo" id="nombreServicio" class="form-control" placeholder="Título" required />
+          </div>
+          <div class="form-group">
+            <label for="descripcionServicio">Descripción</label>
+            <textarea formControlName="descripcion" id="descripcionServicio" class="form-control" rows="3" placeholder="Descripción" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="precioServicio">Precio</label>
+            <input formControlName="precio" id="precioServicio" type="number" class="form-control" placeholder="Precio" required />
+          </div>
+          <div class="text-right">
+            <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop del modal -->
+<div *ngIf="servicioSeleccionado" class="modal-backdrop fade show"></div>
+
+
 <!-- Modal para crear un nuevo servicio -->
 <div class="modal fade" id="crearServicioModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -80,5 +115,6 @@
       </div>
     </div>
   </div>
+  <app-botoneditar></app-botoneditar>
 </div>
  

@@ -21,7 +21,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventosAdminComponent } from './AdminEventos/eventos-admin/eventos-admin.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+
+import { BotoneditarComponent } from './AdminServcio/editar-servicio/botoneditar/botoneditar.component';
+
 import { GestionServiciosComponent } from './AdminServcio/editar-servicio/gestion-servicios/gestion-servicios.component';
+
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
@@ -29,7 +33,11 @@ import { GestionServiciosComponent } from './AdminServcio/editar-servicio/gestio
     PanelEdicionComponent,
     EditarServicioComponent,
     EventosAdminComponent,
-    GestionServiciosComponent
+
+    BotoneditarComponent,
+
+    GestionServiciosComponent,
+
   ],
   imports: [
     FullCalendarModule,
