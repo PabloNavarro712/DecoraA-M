@@ -14,6 +14,7 @@ export class ServiciosDocument {
   precioTotal: string;
   mostrarOpciones: boolean; // Agregada propiedad mostrarOpciones
   precio: number;
+
   constructor(partial: Partial<ServiciosDocument>) {
     Object.assign(this, partial);
   }

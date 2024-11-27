@@ -28,7 +28,9 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
     contentType: string,
   ): Promise<GaleriaDocument> {
     // Generar un ID único para el documento
-    const id = this.firestore.collection(GaleriaDocument.collectionName).doc().id;
+    const id = this.firestore
+      .collection(GaleriaDocument.collectionName)
+      .doc().id;
     const fileName = `${id}_${imageName}`;
     try {
       // Subir imagen a Firebase Storage
@@ -144,6 +146,9 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
   async updateImageDocument(
     id: string,
     updateData: Partial<GaleriaDocument>, // Los datos que se quieren actualizar
+    newImageBuffer: Buffer, // El nuevo buffer de imagen
+    newImageName: string, // El nombre del archivo de la nueva imagen
+    newImageContentType: string, // El tipo de contenido de la nueva imagen
   ): Promise<void> {
     try {
       // Validar parámetros de entrada
@@ -169,38 +174,34 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
       const currentData = imageDoc.data() as GaleriaDocument;
       const currentImageUrl = currentData.Imagen;
 
-      // Verificar si el enlace de la imagen es diferente
-      if (updateData.Imagen && updateData.Imagen !== currentImageUrl) {
-        // Eliminar la imagen antigua de Firebase Storage
-        if (currentImageUrl) {
-          await this.deleteImageFromFirebase(currentImageUrl);
-        }
-
-        // Subir la nueva imagen a Firebase Storage (implementa tu lógica de subida aquí si es necesario)
-        // updateData.Imagen debería contener el nuevo enlace ya generado
-        console.log(`Nueva imagen cargada: ${updateData.Imagen}`);
-      } else {
-        console.log(
-          'El enlace de la imagen es el mismo. No se realizó ningún cambio en el archivo.',
-        );
+      if (!currentImageUrl) {
+        throw new Error('No se encontró la URL de la imagen actual.');
       }
 
-      // Actualizar el documento con los nuevos datos
-      await imageDocRef.update(updateData);
+      // Eliminar la imagen actual de Firebase Storage
+      await this.deleteImageFromFirebase(currentImageUrl);
+      console.log(`Imagen eliminada de Firebase Storage: ${currentImageUrl}`);
+      const fileName = `${id}_${newImageName}`;
+      // Subir la nueva imagen a Firebase Storage
+      const newImageUrl = await this.uploadImageToFirebase(
+        newImageBuffer,
+        newImageName,
+        fileName,
+        newImageContentType,
+      );
+      console.log(`Nueva imagen cargada a Firebase Storage: ${newImageUrl}`);
 
-      console.log(`Documento con ID ${id} actualizado correctamente.`);
+      // Actualizar los datos del documento en Firestore con la nueva imagen y cualquier otro cambio
+      await imageDocRef.update({
+        ...updateData, // Actualiza otros campos si es necesario
+        Imagen: newImageUrl, // Asegurarse de que la nueva URL de la imagen se guarde
+      });
+      console.log(`Documento con ID: ${id} actualizado exitosamente.`);
     } catch (error) {
-      console.error('Error al actualizar el documento:', error);
-      if (
-        error instanceof NotFoundException ||
-        error instanceof BadRequestException
-      ) {
-        throw error;
-      } else {
-        throw new InternalServerErrorException(
-          'Error interno al intentar actualizar el documento. Por favor, inténtelo de nuevo más tarde.',
-        );
-      }
+      console.error(
+        `Error al actualizar la imagen del documento: ${error.message}`,
+      );
+      throw new Error('Error al actualizar la imagen y el documento.');
     }
   }
 

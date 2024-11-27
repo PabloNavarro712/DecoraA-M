@@ -11,7 +11,15 @@ declare const GenericServiciosController: {
     };
 };
 export declare class ServiciosController extends GenericServiciosController {
-    private readonly studentdocService;
-    constructor(studentdocService: ServiciosService);
+    private readonly serviciosService;
+    constructor(serviciosService: ServiciosService);
+    createService(body: {
+        titulo: string;
+        descripcion: string;
+        categoria: string;
+    }, image: Express.Multer.File): Promise<ServiciosDocument>;
+    updateImageDocument(id: string, updateData: Partial<ServiciosDocument>, newImage: Express.Multer.File): Promise<void>;
+    deleteService(id: string): Promise<void>;
+    getServiciosPaginated(page?: number, categoria?: string): Promise<ServiciosDocument[]>;
 }
 export {};
