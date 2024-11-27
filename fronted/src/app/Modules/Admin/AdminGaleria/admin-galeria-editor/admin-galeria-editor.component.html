@@ -9,7 +9,7 @@
         <!-- Mostrar el ícono si no hay imagen cargada -->
         <i *ngIf="!imagePreview" class="fas fa-upload fa-5x icon-gray"></i>
 
-        <div class="upload-text">Subir archivo</div>
+        <div class="upload-text">Subirr archivo</div>
       </label>
       <input id="upload" type="file" class="upload-input" (change)="onFileSelected($event)">
     </div>
@@ -26,9 +26,10 @@
 
       <textarea placeholder="Agregue una descripción" class="description-textarea" [(ngModel)]="newItem.Descripcion"></textarea>
 
-      <button class="upload-button" (click)="itemToEdit ? updateItem() : addItem()">
+      <button class="upload-button" (click)="itemToEdit ? updateItem() : addItem()" [disabled]="!selectedFile">
         <i class="fas fa-upload"></i> {{ itemToEdit ? 'Actualizar' : 'Subir' }}
       </button>
+      
     </div>
   </div>
 

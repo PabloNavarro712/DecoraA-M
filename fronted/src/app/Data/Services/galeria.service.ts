@@ -28,10 +28,21 @@ export class GaleriaService {
     return this.http.get<Item[]>(this.apiUrl);
   }
 
- // Actualizar un elemento por ID
- updateItem(id: string, updateData: Partial<Item>): Observable<void> {
-  return this.http.patch<void>(`${this.apiUrl}/update/${id}`, updateData);
-}
+  updateItem(
+    id: string,
+    updateData: Partial<Item>,
+    file: File, // Añadido: el archivo de la nueva imagen
+  ): Observable<void> {
+    const formData = new FormData();
+  
+    // Añadir los datos de actualización del documento al FormData
+    formData.append('updateData', JSON.stringify(updateData));
+  
+    // Añadir el archivo de la imagen al FormData
+    formData.append('file', file);
+  
+    return this.http.patch<void>(`${this.apiUrl}/update/${id}`, formData);
+  }
 
   // Eliminar un elemento por ID
   deleteItem(id: string): Observable<void> {
