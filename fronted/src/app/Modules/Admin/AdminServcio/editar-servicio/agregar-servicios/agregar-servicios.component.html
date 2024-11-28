@@ -1,0 +1,50 @@
+<div class="form-container">
+  <h2>Agregar Nuevo Servicio</h2>
+  <form [formGroup]="formServicio" (ngSubmit)="onSubmit()">
+    <!-- Nombre del Servicio -->
+    <div class="form-group">
+      <label for="nombre">Nombre del Servicio</label>
+      <input id="nombre" formControlName="nombre" type="text" />
+      <div class="error" *ngIf="formServicio.get('nombre')?.invalid && formServicio.get('nombre')?.touched">
+        El nombre del servicio no puede estar vacío.
+      </div>
+    </div>
+
+    <!-- Precio -->
+    <div class="form-group">
+      <label for="precio">Precio del Servicio</label>
+      <input id="precio" formControlName="precio" type="number" />
+      <div class="error" *ngIf="formServicio.get('precio')?.invalid && formServicio.get('precio')?.touched">
+        El precio debe ser un número válido mayor o igual a 0.
+      </div>
+    </div>
+
+    <!-- Categoría -->
+    <div class="form-group">
+      <label for="categoria">Categoría</label>
+      <select id="categoria" formControlName="categoria">
+        <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+      </select>
+    </div>
+
+    <!-- Imagen -->
+    <div class="form-group">
+      <label for="imagen">Imagen del Servicio</label>
+      <input id="imagen" type="file" (change)="onFileChange($event)" />
+    </div>
+
+    <!-- Elementos del Paquete -->
+    <div class="form-group">
+      <label>Elementos del Paquete</label>
+      <div *ngFor="let elemento of elementosPaquete.controls; let i = index" [formGroupName]="i" class="paquete-item">
+        <input formControlName="nombre" placeholder="Nombre del paquete" type="text" />
+        <button type="button" (click)="eliminarElemento(i)">Eliminar</button>
+      </div>
+      <button type="button" (click)="agregarElemento()">Agregar Paquete</button>
+    </div>
+
+    <!-- Botón de Enviar -->
+    <button type="submit" [disabled]="formServicio.invalid">Guardar Servicio</button>
+  </form>
+</div>
+

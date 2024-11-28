@@ -15,13 +15,14 @@ import { MatNativeDateModule } from '@angular/material/core'; // AÃ‘ADIR ESTE MÃ
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AgregarServiciosComponent } from 'src/app/Modules/Admin/AdminServcio/editar-servicio/agregar-servicios/agregar-servicios.component';
 import { EditarServicioComponent } from './AdminServcio/editar-servicio/editar-servicio.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventosAdminComponent } from './AdminEventos/eventos-admin/eventos-admin.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { AgregarServicioAdminComponent } from './Agregar-Servicio-Admin/agregar-servicio-admin.component';
+
 @NgModule({
   declarations: [
     AdminGaleriaEditorComponent,
@@ -29,7 +30,8 @@ import { AgregarServicioAdminComponent } from './Agregar-Servicio-Admin/agregar-
     PanelEdicionComponent,
     EditarServicioComponent,
     EventosAdminComponent,
-    AgregarServicioAdminComponent
+    AgregarServiciosComponent,
+
   ],
   imports: [
     FullCalendarModule,
