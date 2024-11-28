@@ -51,6 +51,7 @@ export class AdminGaleriaEditorComponent implements OnInit {
           this.items.push(item);
           Swal.fire('Éxito', 'El elemento fue agregado correctamente.', 'success');
           this.resetForm();
+          this.loadItems();
         },
         (error) => {
           Swal.fire('Error', 'Error al agregar el elemento.', 'error');
@@ -78,6 +79,7 @@ export class AdminGaleriaEditorComponent implements OnInit {
           () => {
             this.items = this.items.filter((item) => item.id !== id);
             Swal.fire('Eliminado', 'El elemento fue eliminado con éxito.', 'success');
+            this.loadItems();
           },
           (error) => {
             Swal.fire('Error', 'Error al eliminar el elemento.', 'error');
@@ -91,39 +93,41 @@ export class AdminGaleriaEditorComponent implements OnInit {
     this.itemToEdit = item;
     this.newItem = { ...item };
     this.imagePreview = item.Imagen;
-    this.selectedFile = null;
+    this.selectedFile
   }
 
   updateItem(): void {
-    if (!this.itemToEdit) {
-      Swal.fire('Error', 'No hay un elemento seleccionado para actualizar.', 'error');
+    if (!this.itemToEdit || !this.selectedFile) {
+      Swal.fire('Error', 'Debe seleccionar un archivo para actualizar.', 'error');
       return;
     }
-
+  
     const updateData: Partial<Item> = {
       Categoria: this.newItem.Categoria,
       Descripcion: this.newItem.Descripcion,
+     // Pasar el archivo para la actualización
     };
-
-    this.galeriaService.updateItem(this.itemToEdit.id!, updateData).subscribe(
+  
+    this.galeriaService.updateItem(this.itemToEdit.id!, updateData,  this.selectedFile).subscribe(
       () => {
         const index = this.items.findIndex((item) => item.id === this.itemToEdit?.id);
         if (index > -1 && this.itemToEdit) {
           this.items[index] = {
-            id: this.itemToEdit.id!,
+            ...this.itemToEdit,
             Categoria: updateData.Categoria ?? this.itemToEdit.Categoria,
             Descripcion: updateData.Descripcion ?? this.itemToEdit.Descripcion,
-            Imagen: this.itemToEdit.Imagen,
           };
         }
         Swal.fire('Éxito', 'El elemento fue actualizado correctamente.', 'success');
         this.resetForm();
+        this.loadItems();
       },
       (error) => {
         Swal.fire('Error', 'Error al actualizar el elemento.', 'error');
       }
     );
   }
+  
 
   resetForm(): void {
     this.newItem = { Categoria: '', Descripcion: '' };

@@ -15,7 +15,7 @@ export declare class GaleriaController extends GenericGController {
     constructor(galeriaService: GaleriaService);
     createGallery(file: Express.Multer.File, categoria: string, descripcion: string): Promise<any>;
     getByCategory(categoria: string): Promise<GaleriaDocument[]>;
-    updateImageDocument(id: string, updateData: Partial<GaleriaDocument>): Promise<void>;
+    updateImageDocument(id: string, updateData: Partial<GaleriaDocument>, file: Express.Multer.File): Promise<void>;
     deleteImage(id: string): Promise<void>;
 }
 export {};
