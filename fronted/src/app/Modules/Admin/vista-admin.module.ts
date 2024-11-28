@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core'; // AÃ‘ADIR ESTE MÃ
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AgregarServiciosComponent } from 'src/app/Modules/Admin/AdminServcio/editar-servicio/agregar-servicios/agregar-servicios.component';
 import { EditarServicioComponent } from './AdminServcio/editar-servicio/editar-servicio.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +26,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { BotoneditarComponent } from './AdminServcio/editar-servicio/botoneditar/botoneditar.component';
 
 import { GestionServiciosComponent } from './AdminServcio/editar-servicio/gestion-servicios/gestion-servicios.component';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,9 @@ import { GestionServiciosComponent } from './AdminServcio/editar-servicio/gestio
     BotoneditarComponent,
 
     GestionServiciosComponent,
+
+    EventosAdminComponent,
+    AgregarServiciosComponent,
 
   ],
   imports: [
@@ -53,7 +58,7 @@ import { GestionServiciosComponent } from './AdminServcio/editar-servicio/gestio
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatNativeDateModule
+    MatNativeDateModule, 
   ]
 })
 export class VistaAdminModule { }

@@ -20,7 +20,6 @@ import { LoginModalComponent } from './Modules/Client/Plantilla-Client/login-mod
 import { AdminTemplateComponent } from './Modules/Admin/Plantilla-Admin/admin-template/admin-template.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetallerEventoClienteComponent } from './Modules/Client/detaller-evento-cliente/detaller-evento-cliente.component';
-
 @NgModule({
   declarations: [
 
@@ -32,10 +31,10 @@ import { DetallerEventoClienteComponent } from './Modules/Client/detaller-evento
     AppComponent,
     ClientTemplateComponent,
     NavbarComponent,
-    DetallerEventoClienteComponent 
+    DetallerEventoClienteComponent
     
 
-  ],
+   ],
   imports: [
     VistaAdminModule,
     VistaClienteModule,
