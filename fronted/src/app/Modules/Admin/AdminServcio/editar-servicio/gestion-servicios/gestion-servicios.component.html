@@ -34,7 +34,7 @@
               <td>{{ servicio.descripcion }}</td>
               <td>{{ servicio.precio | currency }}</td>
               <td>
-                <button class="btn btn-primary btn-sm" (click)="editarServicio(servicio.id)">Editar</button>
+                <app-botoneditar></app-botoneditar>
                 <button class="btn btn-danger btn-sm" (click)="eliminarServicio(servicio.id)">Eliminar</button>
               </td>
             </tr>

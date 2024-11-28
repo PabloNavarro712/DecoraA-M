@@ -96,20 +96,20 @@ export class BotoneditarComponent {
     return this.servicioForm.get('elementos') as FormArray;
   }
 
-  agregarElemento() {
-    this.elementos.push(this.fb.group({
+  agregarElemento(): void {
+    const nuevoElemento = this.fb.group({
       nombre: ['', Validators.required],
-      precio: ['', [Validators.required, Validators.min(0)]]
-    }));
+      precio: [0, [Validators.required, Validators.min(0)]],
+    });
+    this.elementos.push(nuevoElemento);
   }
-
   Elementos() {
     this.elementos.push(this.fb.group({
       nombre: ['', Validators.required],
     }));
   }
 
-  eliminarElemento(index: number) {
+  eliminarElemento(index: number): void {
     this.elementos.removeAt(index);
   }
 

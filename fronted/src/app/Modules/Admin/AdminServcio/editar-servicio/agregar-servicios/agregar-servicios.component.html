@@ -1,50 +1,133 @@
-<div class="form-container">
-  <h2>Agregar Nuevo Servicio</h2>
-  <form [formGroup]="formServicio" (ngSubmit)="onSubmit()">
-    <!-- Nombre del Servicio -->
-    <div class="form-group">
-      <label for="nombre">Nombre del Servicio</label>
-      <input id="nombre" formControlName="nombre" type="text" />
-      <div class="error" *ngIf="formServicio.get('nombre')?.invalid && formServicio.get('nombre')?.touched">
-        El nombre del servicio no puede estar vacío.
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container mt-5">
+  <h3 class="text-center mb-4">Crear Servicio</h3>
+
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <form [formGroup]="formServicio" (ngSubmit)="onSubmit()">
+        <!-- Título -->
+        <div class="form-group">
+          <label for="nombreServicio">Título</label>
+          <input
+            formControlName="titulo"
+            id="nombreServicio"
+            class="form-control"
+            placeholder="Título"
+            [attr.aria-invalid]="formServicio.get('titulo')?.invalid"
+          />
+          <div class="text-danger mt-1" *ngIf="formServicio.get('titulo')?.invalid && formServicio.get('titulo')?.touched">
+            El título no puede estar vacío.
+          </div>
+        </div>
+
+
+        <!-- Descripción -->
+        <div class="form-group">
+          <label for="descripcionServicio">Descripción</label>
+          <textarea
+            formControlName="descripcion"
+            id="descripcionServicio"
+            class="form-control"
+            rows="3"
+            placeholder="Descripción"
+            [attr.aria-invalid]="formServicio.get('descripcion')?.invalid"
+          ></textarea>
+          <div class="text-danger mt-1" *ngIf="formServicio.get('descripcion')?.invalid && formServicio.get('descripcion')?.touched">
+            La descripción no puede estar vacía.
+          </div>
+        </div>
+
+        <!-- Precio -->
+        <div class="form-group">
+          <label for="precioServicio">Precio</label>
+          <input
+            formControlName="precio"
+            id="precioServicio"
+            type="number"
+            class="form-control"
+            placeholder="Precio"
+            [attr.aria-invalid]="formServicio.get('precio')?.invalid"
+          />
+          <div class="text-danger mt-1" *ngIf="formServicio.get('precio')?.invalid && formServicio.get('precio')?.touched">
+            El precio debe ser un número válido y mayor a 0.
+          </div>
+        </div>
+
+        <!-- Categoría -->
+        <div class="form-group">
+          <label for="categoriaServicio">Categoría</label>
+          <select
+            formControlName="categoria"
+            id="categoriaServicio"
+            class="form-control"
+            [attr.aria-invalid]="formServicio.get('categoria')?.invalid"
+          >
+            <option value="" disabled>Seleccione una categoría</option>
+            <option value="XV">XV</option>
+            <option value="Boda">Boda</option>
+            <option value="Bautizo">Bautizo</option>
+            <option value="Fiesta Infantil">Fiesta Infantil</option>
+          </select>
+          <div class="text-danger mt-1" *ngIf="formServicio.get('categoria')?.invalid && formServicio.get('categoria')?.touched">
+            Seleccione una categoría válida.
+          </div>
+        </div>
+
+     <!-- Elementos adicionales -->
+<!-- Elementos del paquete -->
+<div class="form-group">
+  <label>Elementos del paquete</label>
+
+  <!-- Campos generados dinámicamente para elementos -->
+  <div *ngFor="let control of elementos.controls; let i = index" [formGroupName]="i">
+    <div class="input-group mb-2">
+      <input type="text" class="form-control" formControlName="nombre" placeholder="Elemento" />
+      <div class="input-group-append">
+        <button type="button" class="btn btn-danger" (click)="eliminarElemento(i)">
+          <i class="bi bi-trash"></i> <!-- Ícono de papelera de Bootstrap -->
+        </button>
       </div>
     </div>
+  </div>
 
-    <!-- Precio -->
-    <div class="form-group">
-      <label for="precio">Precio del Servicio</label>
-      <input id="precio" formControlName="precio" type="number" />
-      <div class="error" *ngIf="formServicio.get('precio')?.invalid && formServicio.get('precio')?.touched">
-        El precio debe ser un número válido mayor o igual a 0.
-      </div>
-    </div>
-
-    <!-- Categoría -->
-    <div class="form-group">
-      <label for="categoria">Categoría</label>
-      <select id="categoria" formControlName="categoria">
-        <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
-      </select>
-    </div>
-
-    <!-- Imagen -->
-    <div class="form-group">
-      <label for="imagen">Imagen del Servicio</label>
-      <input id="imagen" type="file" (change)="onFileChange($event)" />
-    </div>
-
-    <!-- Elementos del Paquete -->
-    <div class="form-group">
-      <label>Elementos del Paquete</label>
-      <div *ngFor="let elemento of elementosPaquete.controls; let i = index" [formGroupName]="i" class="paquete-item">
-        <input formControlName="nombre" placeholder="Nombre del paquete" type="text" />
-        <button type="button" (click)="eliminarElemento(i)">Eliminar</button>
-      </div>
-      <button type="button" (click)="agregarElemento()">Agregar Paquete</button>
-    </div>
-
-    <!-- Botón de Enviar -->
-    <button type="submit" [disabled]="formServicio.invalid">Guardar Servicio</button>
-  </form>
+  <!-- Botón para agregar más elementos -->
+  <button type="button" class="btn btn-primary btn-sm agregar-elemento" (click)="agregarElemento()">Agregar Elemento</button>
 </div>
 
+<!-- Elementos adicionales (opciones) -->
+<div class="form-group">
+  <label>Elementos Adicionales</label>
+
+  <!-- Campos generados dinámicamente para opciones -->
+  <div *ngFor="let control of opciones.controls; let i = index" [formGroupName]="i">
+    <div class="input-group mb-2">
+      <input type="text" class="form-control" formControlName="nombre" placeholder="Elemento" />
+      <input type="number" class="form-control" formControlName="precio" placeholder="Precio" />
+      <div class="input-group-append">
+        <button type="button" class="btn btn-danger" (click)="eliminarOpcion(i)">
+          <i class="bi bi-trash"></i> <!-- Ícono de papelera de Bootstrap -->
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón para agregar más opciones -->
+  <button type="button" class="btn btn-primary btn-sm agregar-opcion" (click)="agregaropcion()">Agregar Opción</button>
+</div>
+
+
+        <!-- Imagen -->
+        <div class="form-group">
+          <label for="imagenServicio">Imagen</label>
+          <input type="file" id="imagenServicio" class="form-control-file" (change)="onFileChange($event)" />
+        </div>
+
+        <!-- Botones -->
+        <div class="text-right">
+          <button type="submit" class="btn btn-success">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
