@@ -1,0 +1,257 @@
+ /* Contenedor principal */
+ .main-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  
+  /* Estilos generales */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  /* Título */
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Contenedor principal del formulario */
+  .upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px; /* Definimos el ancho del formulario */
+  }
+  
+  /* Contenedor de la imagen para cargar */
+  .image-upload {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    max-width: 90%;
+    max-height: 90%;
+  }
+  
+  /* Imagen del formulario */
+  .image-placeholder {
+    width: 200px; /* Tamaño fijo para las imágenes del formulario */
+    height: 200px;
+    object-fit: cover; /* Corta la imagen si es necesario para que se ajuste al contenedor */
+    border-radius: 8px;
+  }
+  
+  .upload-text {
+    position: absolute;
+    bottom: 10px;
+    background: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-style: oblique;
+  }
+  
+  .icon-gray {
+    color: #a1a0a0; /* Color gris claro */
+  }
+  
+  /* Estilo del input para cargar archivo */
+  .upload-input {
+    display: none;
+  }
+  
+  /* Contenedor de la descripción, categoría y botón */
+  .description-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Estilo del menú desplegable de categoría */
+  .category-select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  /* Estilo del área de texto */
+  .description-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    font-size: 16px;
+  }
+  
+  /* Botón de subir */
+  .upload-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .upload-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Tabla para mostrar items guardados */
+  .table-container {
+    flex-grow: 1;
+    max-height: 520px; /* Igual al tamaño del formulario */
+    overflow-y: auto;
+  }
+  
+  .items-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .items-table th, .items-table td {
+    border: 2px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .items-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .items-table td {
+    background-color: #ffffff;
+  }
+  
+  /* Imagen dentro de la tabla */
+  .table-image {
+    width: 80px; /* Tamaño fijo para las imágenes en la tabla */
+    height: 80px;
+    object-fit: cover; /* Corta la imagen si es necesario para que se ajuste al contenedor */
+    border-radius: 8px;
+  }
+  
+  /* Botones de acción */
+  .edit-button, .delete-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+  }
+  
+  .edit-button {
+    background-color: #007BFF;
+    color: white;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .delete-button {
+    background-color: #DC3545;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .main-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .upload-container {
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .items-table th, .items-table td {
+      font-size: 12px;
+    }
+  
+    .table-image {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .edit-button, .delete-button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  
+    .image-preview-container {
+      width: 100%;
+      padding-top: 100%; /* Hace que el contenedor sea cuadrado */
+      position: relative;
+      border: 2px dashed #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .image-preview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Hace que la imagen ocupe todo el espacio sin deformarse */
+      border-radius: 8px;
+    }
+  
+    .placeholder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #888;
+    }
+  
+    .placeholder i {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+    }
+  
+    button.btn-success {
+      display: flex;
+      align-items: center;
+    }
+  
+    button.btn-success i {
+      margin-right: 8px;
+    }
+  }
+  

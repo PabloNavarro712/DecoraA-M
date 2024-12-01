@@ -1,0 +1,15 @@
+<!-- login-modal.component.html -->
+<div class="modal" [ngClass]="{'show': activeModal === 'login'}" (click)="close($event)">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" (click)="stopPropagation($event)">
+        <div class="modal-header">
+          <!-- Opcional: Contenido de encabezado del modal -->
+        </div> 
+        <div class="modal-body">
+          <!-- Incluye el componente de login y escucha el evento loginSuccess -->
+          <app-login (loginSuccess)="closeModal()"></app-login>
+        </div>
+      </div>
+    </div>
+  </div>  
+  

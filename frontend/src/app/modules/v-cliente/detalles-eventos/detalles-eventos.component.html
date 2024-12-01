@@ -1,0 +1,104 @@
+<div *ngIf="eventos.length > 0; else noEventos" class="eventos-container">
+    <h2 class="mb-4 text-primary">
+      <i class="bi bi-calendar-event"></i> Mis Eventos 
+    </h2>
+  
+    <div *ngFor="let evento of eventos; let i = index" class="card mb-4 shadow-lg border-0">
+      <!-- Header -->
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">
+          <i class="bi bi-star-fill text-warning"></i> {{ evento.nombre }}
+        </h3>
+        <button 
+          class="btn btn-light btn-sm fw-bold" 
+          (click)="toggleDetalles(i)"
+        >
+          <i class="bi" [class.bi-eye-slash-fill]="detallesAbiertos[i]" [class.bi-eye-fill]="!detallesAbiertos[i]"></i>
+          {{ detallesAbiertos[i] ? 'Ocultar Detalles' : 'Ver Detalles' }}
+        </button>
+      </div>
+  
+      <!-- Body -->
+      <div class="card-body" *ngIf="detallesAbiertos[i]">
+        <div class="row">
+          <!-- Información General -->
+          <div class="col-md-6 mb-3">
+            <h4><i class="bi bi-info-circle-fill text-info"></i> Información General</h4>
+            <p><strong>Nombre del Evento:</strong> {{ evento.nombre }}</p>
+            <p><strong>Fecha:</strong> {{ evento.fechaEvento | date }}</p>
+            <p><strong>Hora:</strong> {{ evento.horaEvento }}</p>
+            <p><strong>Ubicación:</strong> {{ evento.ubicacionEvento }}</p>
+          </div>
+  
+          <!-- Paquete Básico -->
+          <div class="col-md-6 mb-3" *ngIf="evento.idServicio">
+            <h4><i class="bi bi-box-seam-fill text-success"></i> Paquete Seleccionado</h4>
+  
+       
+          <div *ngIf="servicio">
+            <hr>
+            <p><strong>Servicio:</strong> {{ servicio.titulo }}</p>
+            <p><strong>Descripción:</strong> {{ servicio.descripcion }}</p>
+            <p><strong>Precio:</strong> <span class="text-success">{{ servicio.precio | currency }}</span></p>
+            <p><strong>Precio Total:</strong> <span class="text-success">{{ evento.precio_final| currency }}</span></p>
+      
+          </div>
+        </div>
+      </div>
+        <div class="row">
+                  <!-- Información del Cliente -->
+                  <div class="col-md-6 mb-3">
+                    <h4><i class="bi bi-person-fill text-primary"></i> Información del Cliente</h4>
+                    <p><strong>Nombre:</strong> {{ evento.nombre }}</p>
+                    <p><strong>Correo Electrónico:</strong> <a href="mailto:{{ evento.correoElectronico }}" class="text-decoration-none">{{ evento.correoElectronico }}</a></p>
+                    <p><strong>Teléfono:</strong> <a href="tel:{{ evento.contacto }}" class="text-decoration-none">{{ evento.contacto }}</a></p>
+                  </div>
+           
+          <!-- Decoraciones Adicionales -->
+          <div class="col-md-6 mb-3" *ngIf="evento.adiciones.length > 0">
+            <h4><i class="bi bi-brush-fill text-warning"></i> Decoraciones Adicionales</h4>
+            <ul>
+              <li *ngFor="let decoracion of evento.adiciones">
+                <strong>{{ decoracion.nombre }}:</strong> <span class="text-success">{{ decoracion.precio | currency }}</span>
+              </li>
+            </ul>
+          </div>
+  
+        </div>
+  
+        <!-- Estado de la Reserva -->
+        <div class="row mt-3">
+          <div class="col-12">
+            <h4><i class="bi bi-check-circle-fill text-success"></i> Estado de la Reserva</h4>
+            <p><strong>Estado:</strong> 
+              <span 
+                class="badge" 
+                [class.bg-success]="evento.estado === 'aceptado'" 
+                [class.bg-danger]="evento.estado === 'reechazado'" 
+                [class.bg-warning]="evento.estado === 'pendiente'"
+              >
+                {{ evento.estado }}
+              </span>
+            </p>
+            <button
+    *ngIf="(evento.estado === 'aceptado' || evento.estado === 'pendiente') && evento.id"
+    class="btn btn-danger mt-3"
+    (click)="cancelarReserva(evento.id!)"
+  >
+    <i class="bi bi-x-circle"></i> Cancelar Reserva
+  </button>
+  <p *ngIf="evento.estado === 'cancelado'" class="text-danger mt-3">
+    Has cancelado este evento 
+  </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #noEventos>
+    <div class="alert alert-warning text-center">
+      <i class="bi bi-emoji-frown-fill"></i> No se encontraron eventos para este cliente.
+    </div>
+  </ng-template>
+  
