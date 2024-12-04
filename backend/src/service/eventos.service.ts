@@ -12,6 +12,42 @@ export class EventosService extends GenericService<EventosDocument> {
     this.firestore = new Firestore();
   }
 
+  async getEventosOrdenados(): Promise<EventosDocument[]> {
+    try {
+      const snapshot = await this.firestore
+        .collection(this.collectionName)
+        .where('estado', 'in', ['pendiente', 'rechazado', 'cancelado'])
+        .get();
+
+      const eventos = snapshot.docs.map(
+        (doc) => new EventosDocument(doc.data() as Partial<EventosDocument>),
+      );
+
+      // Ordenar según los criterios establecidos
+      const eventosOrdenados = eventos.sort((a, b) => {
+        if (a.estado === b.estado) {
+          // Si el estado es igual y es "pendiente", ordenar por solicitud_cancelar y reagendar
+          if (a.estado === 'pendiente') {
+            if (a.solicitud_cancelar && a.reagendar) return -1;
+            if (a.solicitud_cancelar && !a.reagendar) return -1;
+            return 1;
+          }
+          return 0;
+        }
+        // Ordenar pendiente primero, luego rechazado, y finalmente cancelado
+        return (
+          ['pendiente', 'rechazado', 'cancelado'].indexOf(a.estado) -
+          ['pendiente', 'rechazado', 'cancelado'].indexOf(b.estado)
+        );
+      });
+
+      return eventosOrdenados;
+    } catch (error) {
+      console.error(`Error al obtener los eventos ordenados: ${error.message}`);
+      throw error;
+    }
+  }
+
   // Obtener eventos por estado, pero solo las fechas
   async getFechasEventosPendientesYAceptados(): Promise<string[]> {
     try {

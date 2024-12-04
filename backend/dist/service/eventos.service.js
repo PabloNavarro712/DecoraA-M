@@ -21,6 +21,34 @@ let EventosService = EventosService_1 = class EventosService extends generic_ser
         this.logger = new common_1.Logger(EventosService_1.name);
         this.firestore = new firestore_1.Firestore();
     }
+    async getEventosOrdenados() {
+        try {
+            const snapshot = await this.firestore
+                .collection(this.collectionName)
+                .where('estado', 'in', ['pendiente', 'rechazado', 'cancelado'])
+                .get();
+            const eventos = snapshot.docs.map((doc) => new eventos_document_1.EventosDocument(doc.data()));
+            const eventosOrdenados = eventos.sort((a, b) => {
+                if (a.estado === b.estado) {
+                    if (a.estado === 'pendiente') {
+                        if (a.solicitud_cancelar && a.reagendar)
+                            return -1;
+                        if (a.solicitud_cancelar && !a.reagendar)
+                            return -1;
+                        return 1;
+                    }
+                    return 0;
+                }
+                return (['pendiente', 'rechazado', 'cancelado'].indexOf(a.estado) -
+                    ['pendiente', 'rechazado', 'cancelado'].indexOf(b.estado));
+            });
+            return eventosOrdenados;
+        }
+        catch (error) {
+            console.error(`Error al obtener los eventos ordenados: ${error.message}`);
+            throw error;
+        }
+    }
     async getFechasEventosPendientesYAceptados() {
         try {
             const snapshot = await this.firestore

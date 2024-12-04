@@ -18,5 +18,6 @@ export declare class EventosController extends GenericEventosController {
     getEventosProximos(fechaBase: string): Promise<EventosDocument[]>;
     getEventosByCliente(idCliente: string): Promise<EventosDocument[]>;
     getFechasEventosPendientesYAceptados(): Promise<string[]>;
+    getEventosOrdenados(): Promise<EventosDocument[]>;
 }
 export {};

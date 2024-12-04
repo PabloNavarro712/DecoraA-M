@@ -45,6 +45,15 @@ let EventosController = EventosController_1 = class EventosController extends Ge
             throw error;
         }
     }
+    async getEventosOrdenados() {
+        try {
+            return await this.eventosService.getEventosOrdenados();
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener eventos ordenados: ${error.message}`);
+            throw error;
+        }
+    }
 };
 exports.EventosController = EventosController;
 __decorate([
@@ -74,6 +83,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], EventosController.prototype, "getFechasEventosPendientesYAceptados", null);
+__decorate([
+    (0, common_1.Get)('/ordenados'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "getEventosOrdenados", null);
 exports.EventosController = EventosController = EventosController_1 = __decorate([
     (0, common_1.Controller)(endpoint),
     __metadata("design:paramtypes", [eventos_service_1.EventosService])

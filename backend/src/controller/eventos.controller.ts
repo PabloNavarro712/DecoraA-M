@@ -59,4 +59,14 @@ export class EventosController extends GenericEventosController {
       throw error;
     }
   }
+
+  @Get('/ordenados')
+  async getEventosOrdenados() {
+    try {
+      return await this.eventosService.getEventosOrdenados();
+    } catch (error) {
+      this.logger.error(`Error al obtener eventos ordenados: ${error.message}`);
+      throw error;
+    }
+  }
 }

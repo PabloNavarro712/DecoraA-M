@@ -34,4 +34,8 @@ export class EventosService extends GenericServiceService<any> {
   getEventosByCliente(id_del_cliente: string): Observable<IEvento[]> {
     return this.http.get<IEvento[]>(`${this.url}${this.endpoint}/cliente/${id_del_cliente}`);
   }
+    // Obtener eventos ordenados por prioridad y estado
+    getEventosOrdenados(): Observable<IEvento[]> {
+      return this.http.get<IEvento[]>(`${this.url}${this.endpoint}/ordenados`);
+    }
 }
