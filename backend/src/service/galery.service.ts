@@ -3,7 +3,6 @@ import {
   Logger,
   BadRequestException,
   InternalServerErrorException,
-  
   NotFoundException,
 } from '@nestjs/common';
 import { GenericService } from '../shared/generic.service';
