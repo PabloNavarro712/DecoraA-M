@@ -29,7 +29,18 @@ let EventosService = EventosService_1 = class EventosService extends generic_ser
                 .get();
             return snapshot.docs.map((doc) => {
                 const data = doc.data();
-                const fechaEvento = data.fechaEvento;
+                let fechaEvento = data.fechaEvento;
+                if (!(fechaEvento instanceof firestore_1.Timestamp)) {
+                    if (typeof fechaEvento === 'string') {
+                        fechaEvento = firestore_1.Timestamp.fromDate(new Date(fechaEvento));
+                    }
+                    else if (typeof fechaEvento === 'number') {
+                        fechaEvento = firestore_1.Timestamp.fromMillis(fechaEvento);
+                    }
+                    else {
+                        throw new Error(`Formato de fecha no compatible: ${fechaEvento}`);
+                    }
+                }
                 return fechaEvento.toDate().toISOString();
             });
         }

@@ -17,15 +17,25 @@ export class EventosService extends GenericService<EventosDocument> {
     try {
       const snapshot = await this.firestore
         .collection(this.collectionName)
-        .where('estado', 'in', ['aceptado', 'pendiente']) // Filtra por los estados 'aceptado' y 'pendiente'
+        .where('estado', 'in', ['aceptado', 'pendiente'])
         .get();
 
-      // Devolver solo las fechas de los eventos
       return snapshot.docs.map((doc) => {
         const data = doc.data();
-        // Convertir fechaEvento a Timestamp y luego a ISO string
-        const fechaEvento = data.fechaEvento as Timestamp; // Acceder correctamente al Timestamp
-        return fechaEvento.toDate().toISOString(); // Convertir a string ISO
+        let fechaEvento = data.fechaEvento;
+
+        // Si no es un Timestamp, intentar convertirlo
+        if (!(fechaEvento instanceof Timestamp)) {
+          if (typeof fechaEvento === 'string') {
+            fechaEvento = Timestamp.fromDate(new Date(fechaEvento));
+          } else if (typeof fechaEvento === 'number') {
+            fechaEvento = Timestamp.fromMillis(fechaEvento);
+          } else {
+            throw new Error(`Formato de fecha no compatible: ${fechaEvento}`);
+          }
+        }
+
+        return fechaEvento.toDate().toISOString();
       });
     } catch (error) {
       this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
