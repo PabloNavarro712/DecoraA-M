@@ -9,6 +9,7 @@ import { PlantillaAdminComponent } from './modules/v-admin/plantilla-admin/plant
 import { ServiciosComponent } from './modules/v-admin/servicios/servicios.component';
 import { GaleriaComponent } from './modules/v-admin/galeria/galeria.component';
 import { EventosComponent } from './modules/v-admin/eventos/eventos.component';
+import { HomeComponent } from './modules/v-admin/home/home.component';
 const routes: Routes = [
   {
     path: 'cliente',
@@ -27,7 +28,7 @@ const routes: Routes = [
     component: PlantillaAdminComponent, // Template para admin
     children: [
       // { path: '', component: HomeAdminComponent },
-      // { path: 'home_a', component: HomeAdminComponent }, // Vista home para admin
+       { path: 'home', component: HomeComponent }, // Vista home para admin
       { path: 'gestion-galeria', component: GaleriaComponent }, // Vista de panel de edición
        { path: 'gestion_servicios', component: ServiciosComponent}, // Vista para editar servicios
       { path: 'gestion-eventos', component: EventosComponent }, // Vista de panel de edición

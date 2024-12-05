@@ -5,7 +5,6 @@ export class ServiciosDocument {
   descripcion: string;
   categoria: string;
   elementos: [];
-
   imagen: string;
   opciones: {
     nombre: string;
@@ -13,7 +12,7 @@ export class ServiciosDocument {
     seleccionada: boolean;
   }[];
 
-  precioTotal: string;
+  precioTotal: number;
   mostrarOpciones: boolean; // Agregada propiedad mostrarOpciones
   precio: number;
 

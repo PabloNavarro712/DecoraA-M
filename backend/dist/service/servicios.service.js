@@ -24,25 +24,18 @@ let ServiciosService = ServiciosService_1 = class ServiciosService extends gener
         this.firestore = new firestore_1.Firestore();
         this.storage = new storage_1.Storage();
     }
-    async createService(titulo, descripcion, categoria, imageBuffer, imageName, contentType) {
+    async createService(servicio, imageBuffer, imageName, contentType) {
         const id = this.firestore
             .collection(servicios_document_1.ServiciosDocument.collectionName)
             .doc().id;
-        const fileName = `${id}_${imageName}`;
         try {
-            const imageUrl = await this.uploadImageToFirebase(imageBuffer, fileName, contentType);
-            const newService = {
-                id,
-                titulo,
-                descripcion,
-                categoria,
-                elementos: [],
-                imagen: imageUrl,
-                opciones: [],
-                precioTotal: '0',
-                mostrarOpciones: false,
-                precio: 0,
-            };
+            const imageUrl = await this.uploadImageToFirebase(imageBuffer, imageName, contentType);
+            if (typeof servicio !== 'object') {
+                throw new Error('El servicio debe ser un objeto');
+            }
+            const newService = { ...servicio, id, imageUrl };
+            this.logger.log('Nuevo servicio a guardar:', JSON.stringify(newService, null, 2));
+            this.logger.log('Nuevo servicio a guardar:', newService);
             await this.firestore
                 .collection(servicios_document_1.ServiciosDocument.collectionName)
                 .doc(id)
@@ -109,7 +102,7 @@ let ServiciosService = ServiciosService_1 = class ServiciosService extends gener
         }
     }
     async uploadImageToFirebase(imageBuffer, imageName, contentType) {
-        const fileName = `${imageName}.${contentType}`;
+        const fileName = `${imageName}`;
         try {
             const bucket = this.storage.bucket(this.bucketName);
             const file = bucket.file(fileName);

@@ -59,7 +59,7 @@ cargarServicios(): void {
       this.servicioForm.patchValue({
         titulo: servicio.titulo,
         descripcion: servicio.descripcion,
-        imagen: servicio.imagen,
+        imagen: servicio.imageUrl,
         precio: servicio.precio,
         categoria: servicio.categoria
       });

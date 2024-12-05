@@ -26,6 +26,16 @@ let EventosController = EventosController_1 = class EventosController extends Ge
         this.eventosService = eventosService;
         this.logger = new common_1.Logger(EventosController_1.name);
     }
+    async getEventosPorFecha(fechaInicio) {
+        try {
+            const fecha = new Date(fechaInicio);
+            return await this.eventosService.getEventosPorFecha(fecha);
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener eventos por fecha: ${error.message}`);
+            throw error;
+        }
+    }
     async getEventosByEstado(estado) {
         return this.eventosService.getEventosByEstado(estado);
     }
@@ -45,6 +55,24 @@ let EventosController = EventosController_1 = class EventosController extends Ge
             throw error;
         }
     }
+    async getFechasEventosAceptados() {
+        try {
+            return await this.eventosService.getFechasEventosAceptados();
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+            throw error;
+        }
+    }
+    async getFechasEventosPendientes() {
+        try {
+            return await this.eventosService.getFechasEventosPendientes();
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+            throw error;
+        }
+    }
     async getEventosOrdenados() {
         try {
             return await this.eventosService.getEventosOrdenados();
@@ -54,8 +82,18 @@ let EventosController = EventosController_1 = class EventosController extends Ge
             throw error;
         }
     }
+    async actualizarEstado(id, estado) {
+        return this.eventosService.actualizarEstadoEvento(id, estado);
+    }
 };
 exports.EventosController = EventosController;
+__decorate([
+    (0, common_1.Get)('/fecha'),
+    __param(0, (0, common_1.Query)('fechaInicio')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "getEventosPorFecha", null);
 __decorate([
     (0, common_1.Get)('/estado/:estado'),
     __param(0, (0, common_1.Param)('estado')),
@@ -84,11 +122,31 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventosController.prototype, "getFechasEventosPendientesYAceptados", null);
 __decorate([
+    (0, common_1.Get)('/aceptados'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "getFechasEventosAceptados", null);
+__decorate([
+    (0, common_1.Get)('/pendientes'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "getFechasEventosPendientes", null);
+__decorate([
     (0, common_1.Get)('/ordenados'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], EventosController.prototype, "getEventosOrdenados", null);
+__decorate([
+    (0, common_1.Patch)(':id/estado'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)('estado')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "actualizarEstado", null);
 exports.EventosController = EventosController = EventosController_1 = __decorate([
     (0, common_1.Controller)(endpoint),
     __metadata("design:paramtypes", [eventos_service_1.EventosService])

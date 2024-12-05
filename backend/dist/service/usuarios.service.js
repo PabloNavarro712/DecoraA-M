@@ -37,7 +37,7 @@ let UsuariosService = UsuariosService_1 = class UsuariosService extends generic_
                 throw new common_1.BadRequestException('El correo ya está registrado.');
             }
             await usuariosRef.add({ ...usuario });
-            return 'Usuario creado exitosamente.';
+            return { message: 'Usuario creado exitosamente.' };
         }
         catch (error) {
             this.logger.error(`Error al crear usuario: ${error.message}`);

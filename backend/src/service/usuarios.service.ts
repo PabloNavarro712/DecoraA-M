@@ -10,7 +10,9 @@ export class UsuariosService extends GenericService<UsuariosDocument> {
     super(UsuariosDocument.collectionName);
     this.firestore = new Firestore();
   }
-  async verificarYCrearUsuario(usuario: UsuariosDocument): Promise<string> {
+  async verificarYCrearUsuario(
+    usuario: UsuariosDocument,
+  ): Promise<{ message: string }> {
     try {
       const usuariosRef = this.firestore.collection(
         UsuariosDocument.collectionName,
@@ -34,10 +36,10 @@ export class UsuariosService extends GenericService<UsuariosDocument> {
 
       // Crear el usuario si no hay conflictos
       await usuariosRef.add({ ...usuario });
-      return 'Usuario creado exitosamente.';
+      return { message: 'Usuario creado exitosamente.' }; // Devuelve el objeto con el mensaje
     } catch (error) {
       this.logger.error(`Error al crear usuario: ${error.message}`);
-      throw error;
+      throw error; // Mantener el error para que el controlador lo maneje
     }
   }
 }

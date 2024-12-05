@@ -1,10 +1,41 @@
-.container {
-    max-width: 900px;
-  }
-  .table {
-    margin-top: 20px;
-  }
-  .pagination {
-    margin-top: 20px;
-  }
-  
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #1d3557, #457b9d);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  padding: 2rem;
+}
+
+button.btn-outline-light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  font-size: 1.4rem;
+  border-width: 2px;
+  transition: all 0.3s ease;
+}
+
+button.btn-outline-light:hover {
+  background-color: white;
+  color: #1d3557;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h3.mb-0 {
+  font-size: 1.8rem;
+}
+
+.card-body {
+  border-top: 5px solid #457b9d;
+}

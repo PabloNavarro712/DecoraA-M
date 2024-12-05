@@ -14,7 +14,7 @@ export declare class UsuariosController extends GenericUsuariosController {
     private readonly usuariosService;
     private readonly logger;
     constructor(usuariosService: UsuariosService);
-    crearUsuario(usuario: UsuariosDocument): Promise<string | {
+    crearUsuario(usuario: UsuariosDocument): Promise<{
         message: string;
     }>;
 }
