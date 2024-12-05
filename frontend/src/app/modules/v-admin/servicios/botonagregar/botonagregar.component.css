@@ -48,7 +48,23 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+button.btn-outline-light {
+  display: flex;
+  justify-content:end;
 
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 1.4rem;
+  border-width: 2px;
+  transition: all 0.3s ease;
+}
+
+button.btn-outline-light:hover {
+  background-color: white;
+  color: #1d3557;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 .dynamic-input {
   display: flex;
   gap: 10px;
@@ -86,20 +102,6 @@ button i {
   border-bottom: 1px solid #ccc;
 }
 
-button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button[type="submit"]:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
 
 .error {
   color: red;

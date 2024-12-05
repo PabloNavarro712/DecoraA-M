@@ -1,25 +1,19 @@
 <div class="container mt-5">
-    <div class="card shadow-lg border-0">
-      <!-- Encabezado de la tarjeta con mejoras visuales -->
-      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-        <h3 class="mb-0">Gestión de Servicios</h3>
-        <button 
-          type="button" 
-          class="btn btn-outline-light rounded-circle" 
-          data-bs-toggle="modal" 
-          data-bs-target="#productoModal2"
-        >
-          <i class="fa fa-plus"></i>
-        </button>
-      </div>
-  
-      <!-- Cuerpo de la tarjeta -->
-      <div class="card-body bg-light">
-        <app-lista-servicios></app-lista-servicios>
+  <div class="card shadow-lg border-0">
+    <!-- Encabezado de la tarjeta con mejoras visuales -->
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Gestión de Servicios</h3>
+      <div class="ms-auto">
+        <app-botonagregar></app-botonagregar>
       </div>
     </div>
+
+    <!-- Cuerpo de la tarjeta -->
+    <div class="card-body bg-light">
+      <app-lista-servicios></app-lista-servicios>
+    </div>
   </div>
-  
-  <!-- Incluye Font Awesome para iconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+</div>
+
+<!-- Incluye Font Awesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

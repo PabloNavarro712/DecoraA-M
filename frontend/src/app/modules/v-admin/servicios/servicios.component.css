@@ -15,23 +15,9 @@
   padding: 2rem;
 }
 
-button.btn-outline-light {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 45px;
-  height: 45px;
-  font-size: 1.4rem;
-  border-width: 2px;
-  transition: all 0.3s ease;
+.custom-btn-position {
+  margin-left: auto;
 }
-
-button.btn-outline-light:hover {
-  background-color: white;
-  color: #1d3557;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
 h3.mb-0 {
   font-size: 1.8rem;
 }
