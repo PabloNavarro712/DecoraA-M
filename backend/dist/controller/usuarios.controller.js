@@ -33,7 +33,7 @@ let UsuariosController = UsuariosController_1 = class UsuariosController extends
         catch (error) {
             this.logger.error(`Error al crear usuario: ${error.message}`);
             if (error instanceof common_1.BadRequestException) {
-                return { message: error.message };
+                throw new common_1.HttpException({ message: error.message }, common_1.HttpStatus.BAD_REQUEST);
             }
             throw error;
         }

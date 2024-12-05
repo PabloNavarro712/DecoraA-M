@@ -5,7 +5,7 @@ import { ServiciosService } from 'src/services/api/servicio/servicio.service';
 import { IEvento } from 'src/models/ievento.metadata';
 import { IServicio} from 'src/models/iservicios.metadata';
 import Swal from 'sweetalert2';
-
+import { TemplateRef } from '@angular/core';
 @Component({
   selector: 'app-detalles-eventos',
   templateUrl: './detalles-eventos.component.html',
@@ -16,11 +16,18 @@ export class DetallesEventosComponent implements OnInit {
   idCliente!: string; // ID del cliente obtenido
   servicio!: IServicio; // Servicio asociado a un evento
   detallesAbiertos: boolean[] = [];
+  eventoSeleccionado!: IEvento | null;
+  motivoCancelacion: string = '';
+  showCancelModal = false;  // Control para mostrar/ocultar el modal
+  selectedEventoId: string | null = null;  // Evento seleccionado para cancelar
+  deseaReagendar: boolean = false;
+  cancelReason: string = '';
   constructor(
     private elRef: ElementRef,
     private eventoService: EventosService, // Inyección del servicio
     private serveService: ServiciosService, // Inyección del servicio
-    private route: ActivatedRoute // Para obtener parámetros de la URL
+    private route: ActivatedRoute, // Para obtener parámetros de la URL
+
   ) {}
 
   ngOnInit(): void {
@@ -39,12 +46,46 @@ export class DetallesEventosComponent implements OnInit {
       }
     });
   }
+
+ 
+    // Función para abrir el modal
+    openCancelModal(eventoId: string) {
+      this.selectedEventoId = eventoId;
+      this.showCancelModal = true;
+    }
+  
+
+  // Función para cerrar el modal
+  closeCancelModal() {
+    this.showCancelModal = false;
+    this.selectedEventoId = null;
+  }
+
+
+  // Función para alternar la visualización de los detalles
+  toggleDetalles(index: number) {
+    this.detallesAbiertos[index] = !this.detallesAbiertos[index];
+  }
   cargarEventos(idCliente: string): void {
     this.eventoService.getEventosByCliente(idCliente).subscribe({
       next: (eventos: IEvento[]) => {
-        this.eventos = eventos; // Guardar los eventos obtenidos
-        if (eventos.length > 0) {
-          const idServicio = eventos[0].idServicio ?? ''; // Valor predeterminado si es undefined
+        // Ordenar los eventos según el estado en el orden especificado
+        const estadoPrioridad = {
+          rechazado: 1,
+          aceptado: 2,
+          pendiente: 3,
+          cancelado: 4
+        };
+        
+        this.eventos = eventos.sort((a, b) => {
+          const prioridadA = estadoPrioridad[a.estado.toLowerCase() as keyof typeof estadoPrioridad] || 5;
+          const prioridadB = estadoPrioridad[b.estado.toLowerCase() as keyof typeof estadoPrioridad] || 5;
+          return prioridadA - prioridadB;
+        });
+  
+        // Si hay eventos, cargar el servicio relacionado
+        if (this.eventos.length > 0) {
+          const idServicio = this.eventos[0].idServicio ?? ''; 
           if (idServicio) {
             this.cargarServicio(idServicio);
           } else {
@@ -57,6 +98,7 @@ export class DetallesEventosComponent implements OnInit {
       },
     });
   }
+  
   
   cargarServicio(idServicio: string): void {
     this.serveService.getById(idServicio).subscribe({
@@ -74,19 +116,19 @@ export class DetallesEventosComponent implements OnInit {
     });
   }
   
-  toggleDetalles(index: number): void {
-    this.detallesAbiertos[index] = !this.detallesAbiertos[index];
-  }
+
 
 cancelarReserva(eventoId: string): void {
   // Encuentra el evento en la lista
   const evento = this.eventos.find(e => e.id === eventoId);
-
+ 
   if (evento) {
     // Crea un nuevo objeto con el estado actualizado
     const eventoActualizado: IEvento = { 
       ...evento, 
-      estado: 'cancelado' as 'cancelado' 
+      solicitud_cancelar: true,
+      reagendar: this.deseaReagendar,
+      Motivo: this.motivoCancelacion,  // Asigna el motivo de la cancelación
     };
 
     // Llama al servicio para actualizar
@@ -94,31 +136,24 @@ cancelarReserva(eventoId: string): void {
       next: (response) => {
         if (!response.error && response.data) {
           console.log(`Reserva cancelada para el evento con ID: ${eventoId}`);
-          
+                  // Muestra el mensaje de confirmación
+                 
           // Actualiza la lista local de eventos
           this.eventos = this.eventos.map(e =>
             e.id === eventoId ? response.data! : e
           );
-
-          // Muestra el mensaje de confirmación
-          Swal.fire({
-            icon: 'success',
-            title: 'Reserva Cancelada',
-            text: 'La reserva se ha cancelado exitosamente.',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar'
-          });
         } else {
           console.error('Error al cancelar la reserva:', response.msg);
           
           // Muestra un mensaje de error
           Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: response.msg || 'Hubo un problema al cancelar la reserva. Intenta nuevamente.',
-            confirmButtonColor: '#d33',
+            icon: 'success',
+            title: 'Solicitud enviada',
+            text: 'Se ha enviado solicitud para la cancelacion del evento.',
+            confirmButtonColor: '#3085d6',
             confirmButtonText: 'Aceptar'
           });
+          this.closeCancelModal();
         }
       },
       error: (error) => {
@@ -148,6 +183,7 @@ cancelarReserva(eventoId: string): void {
   }
 }
 
-  
+
+
   
 }

@@ -3,7 +3,7 @@ import { ServiciosService } from 'src/services/api/servicio/servicio.service';
 import { IServicio } from 'src/models/iservicios.metadata';
 import { ReservaService } from 'src/services/global/reserva/reserva.service';
 declare var bootstrap: any; // Importamos Bootstrap para manejar el modal
-
+import { ModalService } from 'src/services/global/modal/modal.service';
 
 @Component({
   selector: 'app-vista-servicios',
@@ -17,10 +17,12 @@ export class VistaServiciosComponent implements OnInit {
 
   constructor(
     private serviciosService: ServiciosService,
-    private reservaService: ReservaService
+    private reservaService: ReservaService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
+    this.modalService.closeModal$.subscribe(() => this.cerrarModal());
     this.cargarServicios();
   }
   cargarServicios() {
@@ -90,6 +92,13 @@ export class VistaServiciosComponent implements OnInit {
         document.body.classList.remove('modal-open');
         document.querySelector('.modal-backdrop')?.remove();
       });
+    }
+  }
+  cerrarModal() {
+    // Código para cerrar el modal, dependiendo de cómo lo creaste
+    const modalElement = document.getElementById('reservaModal');
+    if (modalElement) {
+      modalElement.style.display = 'none'; // o usa Bootstrap: $('#modalId').modal('hide');
     }
   }
 }

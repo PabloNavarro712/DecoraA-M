@@ -31,22 +31,24 @@
       <div *ngIf="fechaSeleccionada" class="mt-2">
         <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
       </div>
-  
-      <!-- Resumen del servicio -->
-      <div *ngIf="servicioSeleccionado" class="informacion-servicio">
-        <h4>Resumen de Reserva: {{ servicioSeleccionado.titulo }}</h4>
-        <h4>{{ servicioSeleccionado.descripcion }}</h4>
-        <ul>
-          <li *ngFor="let opcion of servicioSeleccionado.opciones">
-            <span *ngIf="opcion.seleccionada">
-              {{ opcion.nombre }}: {{ opcion.precio | currency }}
-            </span>
-          </li>
-        </ul>
-        <p><strong>Precio Total:</strong> {{ calcularPrecioTotal() | currency }}</p>
-      </div>
-    </div>
-  
+
+
+  <!-- Resumen del servicio -->
+  <div *ngIf="servicioSeleccionado" class="informacion-servicio">
+    <h4 class="titulo-servicio">Resumen de Reserva: {{ servicioSeleccionado.titulo }}</h4>
+    <p class="descripcion-servicio">{{ servicioSeleccionado.descripcion }}</p>
+    <ul class="opciones-servicio">
+      <li *ngFor="let opcion of servicioSeleccionado.opciones">
+        <span *ngIf="opcion.seleccionada" class="opcion-seleccionada">
+          {{ opcion.nombre }}: {{ opcion.precio | currency }}
+        </span>
+      </li>
+    </ul>
+    <p><strong>Precio Total:</strong> {{ calcularPrecioTotal() | currency }}</p>
+  </div>
+</div>
+
+    
     <!-- Formulario de contacto -->
    <!-- Formulario de contacto -->
   <div class="formulario-contacto">
@@ -55,7 +57,7 @@
       
       <!-- Nombre -->
       <div class="form-group">
-        <label for="nombre">Nombre:</label>
+        <label for="nombre">Nombre de registro del evento:</label>
         <div class="underline">
           <input 
             type="text" 
@@ -92,48 +94,11 @@
           El número debe contener exactamente 10 dígitos.
         </span>
       </div>
-     <!--  tipo de evento -->
-      <!-- <div class="form-group">
-        <label for="tipoEvento">Tipo de Evento:</label>
-        <div class="underline">
-          <select 
-            id="tipoEvento" 
-            name="tipoEvento" 
-            required 
-            [(ngModel)]="evento.tipo_evento" 
-            #tipoEvento="ngModel" 
-            aria-required="true">
-            <option value="------" disabled selected>Seleccione un tipo de evento</option>
-            <option *ngFor="let tipo of tiposDeEvento" [value]="tipo">{{ tipo }}</option>
-          </select>
-        </div>
-        <span class="text-danger" *ngIf="tipoEvento.invalid && tipoEvento.touched">
-          Por favor, seleccione un tipo de evento.
-        </span>
-      </div>
-       -->
-  
+
+      <h4>Información del evento</h4>
       
   
-      <!--Dirección-->
-      <div class="form-group">
-        <label for="direccion">Dirección:</label>
-        <div class="underline">
-          <input 
-            type="text" 
-            id="direccion" 
-            name="direccion" 
-            required 
-            minlength="5" 
-            maxlength="100" 
-            ngModel 
-            #direccion="ngModel" 
-            aria-required="true">
-        </div>
-        <span class="text-danger" *ngIf="direccion.invalid && direccion.touched">
-          La dirección debe contener entre 5 y 100 caracteres.
-        </span>
-      </div>
+
   
       <!-- Localidad -->
   <div class="form-group">
@@ -160,7 +125,25 @@
       Por favor, seleccione una localidad.
     </span>
   </div>
-  
+        <!--Dirección-->
+        <div class="form-group">
+          <label for="direccion">Direccion detallada:</label>
+          <div class="underline">
+            <input 
+              type="text" 
+              id="direccion" 
+              name="direccion" 
+              required 
+              minlength="5" 
+              maxlength="100" 
+              ngModel 
+              #direccion="ngModel" 
+              aria-required="true">
+          </div>
+          <span class="text-danger" *ngIf="direccion.invalid && direccion.touched">
+            La dirección debe contener entre 5 y 100 caracteres.
+          </span>
+        </div>
       <!-- Hora del Evento -->
       <div class="form-group">
         <label for="hora">Hora del Evento:</label>
@@ -178,6 +161,7 @@
           La hora es obligatoria.
         </span>
       </div>
+
   
       <!-- Botón de Enviar -->
       <button 

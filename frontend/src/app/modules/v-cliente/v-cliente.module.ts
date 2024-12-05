@@ -8,17 +8,20 @@ import { VistaServiciosComponent } from './vista-servicios/vista-servicios.compo
 import { ReservacionComponent } from './vista-servicios/reservacion/reservacion.component';
 import { RouterModule } from '@angular/router';  // Importa RouterModule
 import { FormsModule } from '@angular/forms';  // Agrega FormsModule aquí
-
+import { LoginComponent } from './plantilla/login/login.component';
+import { AyudaComponent } from './ayuda/ayuda.component';
 @NgModule({
   declarations: [
     DetallesEventosComponent,
     NosotrosComponent,
-
+    LoginComponent,
     VistaServiciosComponent,
-     ReservacionComponent
+     ReservacionComponent,
+     AyudaComponent
   ],
   imports: [
     CommonModule,
+    
     InicioClienteModule,
     PlantillaModule,  RouterModule,
     FormsModule 

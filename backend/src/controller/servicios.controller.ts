@@ -33,26 +33,39 @@ export class ServiciosController extends GenericServiciosController {
     super(); // Llama al constructor del controlador genérico
   }
 
-  // Crear un nuevo servicio con imagen
-  @Post('create')
-  @UseInterceptors(FileInterceptor('image'))
-  async createService(
-    @Body() body: { titulo: string; descripcion: string; categoria: string },
-    @UploadedFile() image: Express.Multer.File,
+  @Post('/create')
+  @UseInterceptors(FileInterceptor('image')) // Usar FileInterceptor para manejar la imagen
+  async createServicio(
+    @Body() servicioData: any, // Aceptamos el cuerpo como cualquier tipo para poder manejarlo como una cadena
+    @UploadedFile() file: Express.Multer.File, // Obtener el archivo cargado
   ) {
-    if (!image) {
-      throw new BadRequestException('La imagen es obligatoria.');
+    if (!file) {
+      throw new Error('No file uploaded');
     }
 
-    const { buffer, originalname, mimetype } = image;
-    return this.serviciosService.createService(
-      body.titulo,
-      body.descripcion,
-      body.categoria,
-      buffer,
-      originalname,
-      mimetype,
-    );
+    try {
+      // Si servicioData es una cadena JSON, parseamos a objeto
+      const servicio = JSON.parse(servicioData.servicioData);
+
+      console.log(servicio); // Los datos del servicio convertidos en objeto
+      console.log(file); // El archivo subido
+
+      const imageBuffer = file.buffer; // Obtener el buffer de la imagen
+      const imageName = file.originalname; // Obtener el nombre original del archivo
+      const contentType = file.mimetype; // Obtener el tipo MIME del archivo
+
+      // Llamar al servicio para crear el servicio con los datos y la imagen
+      return await this.serviciosService.createService(
+        servicio, // Pasa el objeto servicio (después de parsear)
+        imageBuffer, // Pasa el buffer de la imagen
+        imageName, // Pasa el nombre de la imagen
+        contentType, // Pasa el tipo MIME de la imagen
+      );
+    } catch (error) {
+      // Manejo de errores si no se puede parsear el JSON
+      console.error('Error al parsear el JSON:', error);
+      throw new Error('Error al procesar los datos del servicio');
+    }
   }
 
   // Actualizar un documento con una nueva imagen
@@ -60,21 +73,37 @@ export class ServiciosController extends GenericServiciosController {
   @UseInterceptors(FileInterceptor('newImage'))
   async updateImageDocument(
     @Param('id') id: string,
-    @Body() updateData: Partial<ServiciosDocument>,
+    @Body() updateData: any, // Aceptamos el cuerpo como cualquier tipo para manejarlo como una cadena
     @UploadedFile() newImage: Express.Multer.File,
   ) {
     if (!newImage) {
       throw new BadRequestException('La nueva imagen es obligatoria.');
     }
+    try {
+      // Si updateData es una cadena JSON, parseamos a objeto
+      const servicioData = JSON.parse(updateData.servicioData); // Asegúrate de que 'servicioData' sea el nombre correcto del campo en el cuerpo
 
-    const { buffer, originalname, mimetype } = newImage;
-    await this.serviciosService.updateImageDocument(
-      id,
-      updateData,
-      buffer,
-      originalname,
-      mimetype,
-    );
+      console.log(servicioData); // Los datos del servicio convertidos en objeto
+      console.log(newImage); // El archivo subido
+
+      // Extraemos la información de la nueva imagen
+      const { buffer, originalname, mimetype } = newImage;
+
+      // Llamamos al servicio para actualizar el documento con los nuevos datos y la nueva imagen
+      await this.serviciosService.updateImageDocument(
+        id, // ID del documento a actualizar
+        servicioData, // Los datos del servicio (después de parsear)
+        buffer, // Buffer de la nueva imagen
+        originalname, // Nombre original de la imagen
+        mimetype, // Tipo MIME de la imagen
+      );
+
+      return { message: 'Servicio actualizado exitosamente' };
+    } catch (error) {
+      // Manejo de errores si no se puede parsear el JSON o si hay algún otro problema
+      console.error('Error al procesar los datos del servicio:', error);
+      throw new Error('Error al procesar los datos del servicio o la imagen.');
+    }
   }
 
   // Eliminar un servicio por ID

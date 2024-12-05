@@ -11,7 +11,7 @@ export declare class ServiciosDocument {
         precio: number;
         seleccionada: boolean;
     }[];
-    precioTotal: string;
+    precioTotal: number;
     mostrarOpciones: boolean;
     precio: number;
     constructor(partial: Partial<ServiciosDocument>);

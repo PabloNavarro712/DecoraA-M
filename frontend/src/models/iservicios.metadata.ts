@@ -4,7 +4,7 @@ export class IServicio implements IBaseModel {
     titulo!: string;
     descripcion!: string;
     categoria!: string;
-    imagen!: string;
+    imageUrl?: string;
     elementos!: string[];
     precio!: number;
     precioTotal!: number; // Agregada propiedad precioTotal

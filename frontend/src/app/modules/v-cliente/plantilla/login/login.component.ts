@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioService } from 'src/services/api/usuario/usuario.service';
 import { IUser } from 'src/models/iusuario.metadata';
+import { ModalService } from 'src/services/global/modal/modal.service';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +18,25 @@ export class LoginComponent {
   loginErrorMessage: string = '';
   registerErrorMessage: string = '';
   currentUser: IUser | null = null;
-
-  constructor(private usuarioService: UsuarioService, private router: Router) {
+  activeModal: string | null = null;
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private modalService: ModalService
+  ) {
     const userFromSession = sessionStorage.getItem('user');
     if (userFromSession) {
       this.currentUser = JSON.parse(userFromSession);  // Recuperar usuario de la sesión si está logueado
     }
+  }
+  openModal(modalType: string) {
+    this.activeModal = modalType;
+  }
+  ngOnInit(): void {
+    // Suscribirse a los cambios de estado del modal desde el servicio
+    this.modalService.activeModal$.subscribe(modal => {
+      this.activeModal = modal;
+    });
   }
 
   toggleForm(event: Event) {
@@ -40,14 +54,14 @@ export class LoginComponent {
     this.usuarioService.getAll().subscribe(
       (response) => {
         const usuarios = response.data;
-  
+
         if (usuarios && usuarios.length > 0) {
           const user = usuarios.find(u => u.usuario === this.loginData.usuario && u.contrasena === this.loginData.contrasena);
-  
+
           if (user) {
             console.log('Login exitoso:', user);
             sessionStorage.setItem('user', JSON.stringify(user));
-  
+
             // Emitir el evento de inicio de sesión exitoso
             this.loginSuccess.emit();
             Swal.fire({
@@ -57,7 +71,7 @@ export class LoginComponent {
               confirmButtonText: 'Ok'
             });
             this.currentUser = user;
-  
+
             if (user.esAdministrador) {
               this.router.navigate(['/admin']);
             } else {
@@ -97,6 +111,8 @@ export class LoginComponent {
     );
   }
   
+
+
   register() {
     const newUser: IUser = {
       nombreCompleto: this.registerData.nombreCompleto,
@@ -106,65 +122,45 @@ export class LoginComponent {
       esAdministrador: false
     };
   
-    // Validating the input fields
+    // Validación de campos
     if (!this.registerData.nombreCompleto || !this.registerData.usuario || !this.registerData.correo || !this.registerData.contrasena) {
-      this.registerErrorMessage = 'Todos los campos son obligatorios';
       Swal.fire({
         title: 'Error',
-        text: this.registerErrorMessage,
+        text: 'Todos los campos son obligatorios',
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });
       return;
     }
   
-    this.usuarioService.create('usuarios', newUser).subscribe(
-      (response) => {
-        if (response.error) {
-          console.error('Error en el registro:', response.msg);
-          this.registerErrorMessage = response.msg;
-  
-          // Show SweetAlert2 error message for registration failure
-          Swal.fire({
-            title: 'Error',
-            text: this.registerErrorMessage,
-            icon: 'error',
-            confirmButtonText: 'Intentar de nuevo'
-          });
-        } else {
-          console.log('Registro exitoso:', response.data);
-  
-          // Limpiar los datos de registro
-          this.registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
-  
-          // Mostrar la vista de login tras el registro exitoso
-          this.isLoginVisible = true;
-          this.registerErrorMessage = ''; // Limpiar cualquier mensaje de error
-  
-          // Show SweetAlert2 success message for successful registration
-          Swal.fire({
-            title: '¡Registro exitoso!',
-            text: 'Ahora puedes iniciar sesión.',
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-          });
-        }
-      },
-      (error) => {
-        console.error('Error en el registro:', error);
-        this.registerErrorMessage = 'Este correo ya está registrado o hubo un error al crear la cuenta.';
-        
-        // Show SweetAlert2 error message for registration failure
+    this.usuarioService.crearUsuario(newUser).subscribe({
+      next: (response) => {
+        console.log('Servicio creado:', response);
         Swal.fire({
-          title: 'Error',
-          text: this.registerErrorMessage,
-          icon: 'error',
-          confirmButtonText: 'Intentar de nuevo'
+          icon: 'success',
+          title: 'Registro exitoso',
+          text: 'Se ha registrado con exito.',
+          confirmButtonText: 'Aceptar',
         });
-      }
-    );
-  }
+        this.registerData = { nombreCompleto: '', correo: '', usuario: '', contrasena: '', esAdministrador: false };
+        this.isLoginVisible = true;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: err.message,
+          confirmButtonText: 'Intentar nuevamente',
+        });
+      },
+    });
+   
   
+  }
+  closeModal() {
+    this.modalService.closeModal();
+  }
+
   logout() {
     sessionStorage.removeItem('user');
     this.currentUser = null;
