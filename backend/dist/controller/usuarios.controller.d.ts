@@ -17,5 +17,9 @@ export declare class UsuariosController extends GenericUsuariosController {
     crearUsuario(usuario: UsuariosDocument): Promise<{
         message: string;
     }>;
+    getUsuariosPaginated(page?: number, nombreCompleto?: string): Promise<UsuariosDocument[]>;
+    updateUsuarioBloqueado(id: string, bloqueado: boolean): Promise<{
+        message: string;
+    }>;
 }
 export {};

@@ -19,6 +19,7 @@ export class EventosDocument {
   }[];
   solicitud_cancelar?: boolean;
   reagendar?: boolean;
+  nvfecha?: Date;
   Motivo?: string;
   Respuesta?: string;
   constructor(partial: Partial<EventosDocument>) {

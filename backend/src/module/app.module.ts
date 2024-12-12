@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { AppService } from 'src/service/app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreModule } from 'src/firestore/firestore.module'; // Importa el módulo de Firestore
-
+import { GraficasModule } from './graficas.module';
 import { ServiciosModule } from './servicios.module';
 import { UsuariosModule } from './usuarios.module';
 import { EventosModule } from './eventos.module';
@@ -28,6 +28,7 @@ import { GenericService } from 'src/shared/generic.service';
     UsuariosModule,
     GaleriaModule,
     EventosModule,
+    GraficasModule,
   ],
   controllers: [], // Controladores de la aplicación
   providers: [AppService, GenericService], // Servicios de la aplicación

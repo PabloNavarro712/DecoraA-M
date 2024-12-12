@@ -211,6 +211,23 @@ let EventosService = EventosService_1 = class EventosService extends generic_ser
             throw error;
         }
     }
+    async reagendarEvento(id, nvfecha) {
+        try {
+            const eventoRef = this.firestore.collection(this.collectionName).doc(id);
+            const eventoSnapshot = await eventoRef.get();
+            if (!eventoSnapshot.exists) {
+                throw new Error(`Evento con ID ${id} no encontrado.`);
+            }
+            await eventoRef.update({
+                fechaEvento: firestore_1.Timestamp.fromDate(nvfecha),
+            });
+            this.logger.log(`Evento con ID ${id} reagendado a la fecha ${nvfecha.toISOString()}`);
+        }
+        catch (error) {
+            this.logger.error(`Error al reagendar evento: ${error.message}`);
+            throw error;
+        }
+    }
 };
 exports.EventosService = EventosService;
 exports.EventosService = EventosService = EventosService_1 = __decorate([

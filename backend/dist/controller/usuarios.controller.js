@@ -38,6 +38,32 @@ let UsuariosController = UsuariosController_1 = class UsuariosController extends
             throw error;
         }
     }
+    async getUsuariosPaginated(page = 1, nombreCompleto) {
+        try {
+            const usuarios = await this.usuariosService.getUsuariosPaginated(page, nombreCompleto);
+            return usuarios;
+        }
+        catch (error) {
+            throw new common_1.HttpException({ message: error.message }, error instanceof common_1.HttpException
+                ? error.getStatus()
+                : common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async updateUsuarioBloqueado(id, bloqueado) {
+        try {
+            if (typeof bloqueado !== 'boolean') {
+                throw new common_1.BadRequestException('El valor de "bloqueado" debe ser un booleano.');
+            }
+            return await this.usuariosService.updateUsuarioBloqueado(id, bloqueado);
+        }
+        catch (error) {
+            this.logger.error(`Error al actualizar la propiedad "bloqueado": ${error.message}`);
+            if (error instanceof common_1.BadRequestException) {
+                throw new common_1.HttpException({ message: error.message }, common_1.HttpStatus.BAD_REQUEST);
+            }
+            throw error;
+        }
+    }
 };
 exports.UsuariosController = UsuariosController;
 __decorate([
@@ -47,6 +73,22 @@ __decorate([
     __metadata("design:paramtypes", [usuarios_document_1.UsuariosDocument]),
     __metadata("design:returntype", Promise)
 ], UsuariosController.prototype, "crearUsuario", null);
+__decorate([
+    (0, common_1.Get)('/paginados'),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('nombreCompleto')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:returntype", Promise)
+], UsuariosController.prototype, "getUsuariosPaginated", null);
+__decorate([
+    (0, common_1.Patch)('/:id/bloqueado'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)('bloqueado')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Boolean]),
+    __metadata("design:returntype", Promise)
+], UsuariosController.prototype, "updateUsuarioBloqueado", null);
 exports.UsuariosController = UsuariosController = UsuariosController_1 = __decorate([
     (0, common_1.Controller)(endpoint),
     __metadata("design:paramtypes", [usuarios_service_1.UsuariosService])
