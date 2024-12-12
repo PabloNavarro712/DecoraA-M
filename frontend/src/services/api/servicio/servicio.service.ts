@@ -15,23 +15,33 @@ export class ServiciosService extends GenericServiceService<any> {
    super(http, 'servicios'); // Define el endpoint base
  }
 
-
-// Crear un nuevo servicio con imagen
-createServicioConImagen(servicio: Partial<IServicio>, file: File): Observable<IServicio> {
+ createServicioConImagen(servicio: IServicio, file: File): Observable<any> {
+ 
   const formData = new FormData();
-  formData.append('titulo', servicio.titulo || '');
-  formData.append('descripcion', servicio.descripcion || '');
-  formData.append('categoria', servicio.categoria || '');
-  formData.append('image', file);
+  formData.append('servicioData', JSON.stringify(servicio));  // Serializar el objeto
 
-  return this.http.post<IServicio>(`${this.url}${this.endpoint}/create`, formData);
+  formData.append('image', file);  
+  // Realizar la solicitud POST con FormData
+  return this.http.post<any>(`${this.url}${this.endpoint}/create`, formData).pipe(
+    map((response) => {
+      return response; // Devuelve la respuesta del backend
+    }),
+    catchError((error) => {
+      // Maneja errores del backend
+      const errorMessage = error.error?.message || 'Error al crear el servicio';
+      return of({
+        error: true,
+        msg: errorMessage,
+        data: null,
+      });
+    })
+  );
 }
+
  // Actualizar un servicio existente con nueva imagen
  updateServicioConImagen(id: string, servicio: Partial<IServicio>, file: File): Observable<IServicio> {
   const formData = new FormData();
-  formData.append('titulo', servicio.titulo || '');
-  formData.append('descripcion', servicio.descripcion || '');
-  formData.append('categoria', servicio.categoria || '');
+  formData.append('updateData', JSON.stringify(servicio)); 
   formData.append('newImage', file);
 
   return this.http.put<IServicio>(`${this.url}${this.endpoint}/update/${id}`, formData);

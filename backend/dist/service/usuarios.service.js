@@ -21,6 +21,29 @@ let UsuariosService = UsuariosService_1 = class UsuariosService extends generic_
         this.logger = new common_1.Logger(UsuariosService_1.name);
         this.firestore = new firestore_1.Firestore();
     }
+    async verificarYCrearUsuario(usuario) {
+        try {
+            const usuariosRef = this.firestore.collection(usuarios_document_1.UsuariosDocument.collectionName);
+            const usuarioSnapshot = await usuariosRef
+                .where('usuario', '==', usuario.usuario)
+                .get();
+            if (!usuarioSnapshot.empty) {
+                throw new common_1.BadRequestException('El usuario ya existe.');
+            }
+            const correoSnapshot = await usuariosRef
+                .where('correo', '==', usuario.correo)
+                .get();
+            if (!correoSnapshot.empty) {
+                throw new common_1.BadRequestException('El correo ya está registrado.');
+            }
+            await usuariosRef.add({ ...usuario });
+            return { message: 'Usuario creado exitosamente.' };
+        }
+        catch (error) {
+            this.logger.error(`Error al crear usuario: ${error.message}`);
+            throw error;
+        }
+    }
 };
 exports.UsuariosService = UsuariosService;
 exports.UsuariosService = UsuariosService = UsuariosService_1 = __decorate([

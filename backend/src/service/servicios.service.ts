@@ -23,9 +23,7 @@ export class ServiciosService extends GenericService<ServiciosDocument> {
 
   // Crear un nuevo documento con imagen
   async createService(
-    titulo: string,
-    descripcion: string,
-    categoria: string,
+    servicio: ServiciosDocument,
     imageBuffer: Buffer,
     imageName: string,
     contentType: string,
@@ -33,28 +31,27 @@ export class ServiciosService extends GenericService<ServiciosDocument> {
     const id = this.firestore
       .collection(ServiciosDocument.collectionName)
       .doc().id;
-    const fileName = `${id}_${imageName}`;
 
     try {
+      // Subir la imagen a Firebase Storage
       const imageUrl = await this.uploadImageToFirebase(
         imageBuffer,
-        fileName,
+        imageName,
         contentType,
       );
+      // Asegurarse de que servicio sea un objeto
+      if (typeof servicio !== 'object') {
+        throw new Error('El servicio debe ser un objeto');
+      }
+      // Crear el nuevo servicio con la URL de la imagen
+      const newService = { ...servicio, id, imageUrl };
 
-      const newService: ServiciosDocument = {
-        id,
-        titulo,
-        descripcion,
-        categoria,
-        elementos: [],
-        imagen: imageUrl,
-        opciones: [],
-        precioTotal: '0',
-        mostrarOpciones: false,
-        precio: 0,
-      };
-
+      this.logger.log(
+        'Nuevo servicio a guardar:',
+        JSON.stringify(newService, null, 2),
+      );
+      this.logger.log('Nuevo servicio a guardar:', newService);
+      // Guardar el nuevo servicio en Firestore
       await this.firestore
         .collection(ServiciosDocument.collectionName)
         .doc(id)
@@ -162,7 +159,7 @@ export class ServiciosService extends GenericService<ServiciosDocument> {
     imageName: string,
     contentType: string,
   ): Promise<string> {
-    const fileName = `${imageName}.${contentType}`;
+    const fileName = `${imageName}`;
     try {
       const bucket = this.storage.bucket(this.bucketName);
       const file = bucket.file(fileName);
@@ -214,7 +211,10 @@ export class ServiciosService extends GenericService<ServiciosDocument> {
     }
   }
 
-  async getServiciosPaginated(page: number, categoria?: string): Promise<ServiciosDocument[]> {
+  async getServiciosPaginated(
+    page: number,
+    categoria?: string,
+  ): Promise<ServiciosDocument[]> {
     try {
       const limit = 10;
       let query = this.firestore
@@ -222,29 +222,31 @@ export class ServiciosService extends GenericService<ServiciosDocument> {
         .orderBy('id', 'desc')
         .offset((page - 1) * limit)
         .limit(limit);
-  
+
       console.log('Categoría recibida:', categoria);
-  
+
       if (categoria) {
         query = query.where('categoria', '==', categoria);
       }
-  
+
       const snapshot = await query.get();
-  
+
       if (snapshot.empty) {
-        console.warn('No se encontraron servicios con la categoría:', categoria);
+        console.warn(
+          'No se encontraron servicios con la categoría:',
+          categoria,
+        );
         throw new NotFoundException('No se encontraron servicios.');
       }
-  
+
       const servicios: ServiciosDocument[] = [];
       snapshot.forEach((doc) => {
         const data = doc.data() as ServiciosDocument;
         console.log('Documento recuperado:', data);
         servicios.push(data);
       });
-  
+
       return servicios;
-  
     } catch (error) {
       console.error('Error en la consulta de servicios:', error);
       throw new InternalServerErrorException('Error al procesar la solicitud.');

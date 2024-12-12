@@ -1,79 +1,184 @@
 <div class="container mt-4">
-    <div class="container mt-4">
-        <h2>Gestión de Servicios</h2>
+  <!-- Filtro de categorías -->
+  <div class="mb-3 d-flex align-items-center justify-content-between">
+    <div>
+      <label for="categoria" class="me-2 fw-bold">Filtrar por categoría:</label>
+      <select
+        id="categoria"
+        class="form-select w-auto d-inline-block"
+        [(ngModel)]="categoriaSeleccionada"
+        (change)="onCategoriaChange()"
+      >
+        <option *ngFor="let categoria of categorias" [value]="categoria">
+          {{ categoria }}
+        </option>
+      </select>
       
-        <!-- Filtro de categorías -->
-        <div class="mb-3">
-            <label for="categoria">Filtrar por categoría:</label>
-            <select
-              id="categoria"
-              class="form-select"
-              [(ngModel)]="categoriaSeleccionada"
-              (change)="onCategoriaChange()"> <!-- Llama a onCategoriaChange() cuando se cambia la categoría -->
-              <option *ngFor="let categoria of categorias" [value]="categoria">
-                {{ categoria }}
-              </option>
-            </select>
-          </div>
-      
-        <!-- Tabla de servicios -->
-        <table class="table table-bordered table-hover">
-          <thead class="table-dark">
-            <tr>
-              <th>Imagen</th>
-              <th>Nombre del servicio</th>
-              <th>Descripción</th>
-              <th>Precio</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let servicio of servicios">
-              <td><img [src]="servicio.imagen" alt="Imagen del servicio" style="width: 100px; height: auto;"></td>
-              <td>{{ servicio.titulo }}</td>
-              <td>{{ servicio.descripcion }}</td>
-              <td>{{ servicio.precio | currency }}</td>
-              <td>
-                <app-botoneditar></app-botoneditar>
-                <button class="btn btn-danger btn-sm" (click)="eliminarServicio(servicio.id)">Eliminar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-              <li class="page-item" (click)="changePage(currentPage - 1)" [class.disabled]="currentPage === 1">
-                <span class="page-link"> &lt;&lt; </span>
-              </li>
-              <li class="page-item" *ngFor="let page of getPagesArray()" [class.active]="page === currentPage"
-                (click)="changePage(page)">
-                <span class="page-link">{{ currentPage }}</span>
-              </li>
-              <li class="page-item" (click)="changePage(currentPage + 1)"
-                [class.disabled]="currentPage === totalPages || totalPages === 0">
-                <span class="page-link"> &gt;&gt; </span>
-              </li>
-            </ul>
-          </nav>
-          
-        <!-- Paginación -->
-        <!-- <div class="d-flex justify-content-between align-items-center mt-3">
-          <button
-            class="btn btn-secondary"
-            [disabled]="paginaActual === 1"
-            (click)="cambiarPagina(-1)">
-            Anterior
-          </button>
-          <span>Página {{ paginaActual }}</span>
-          <button
-            class="btn btn-secondary"
-            [disabled]="(paginaActual * elementosPorPagina) >= servicios.length"
-            (click)="cambiarPagina(1)">
-            Siguiente
-          </button>
-        </div> -->
-      </div>
-      
-
+    </div>
   </div>
-  
+
+  <!-- Tabla de servicios -->
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-dark text-center">
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre del servicio</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let servicio of servicios">
+        <td class="text-center">
+          <img [src]="servicio.imageUrl" alt="Imagen del servicio" class="rounded" style="width: 100px; height: auto;">
+        </td>
+        <td>{{ servicio.titulo }}</td>
+        <td>{{ servicio.descripcion }}</td>
+        <td>{{ servicio.precio | currency }}</td>
+        <td class="text-center">
+          <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal"    data-bs-target="#productoModal"   (click)="servicio.id ? seleccionarServicio(servicio.id) : null" >
+            <i class="fas fa-pen"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarServicio(servicio.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" (click)="changePage(currentPage - 1)" [class.disabled]="currentPage === 1">
+        <span class="page-link">&laquo;</span>
+      </li>
+      <li class="page-item" *ngFor="let page of getPagesArray()" [class.active]="page === currentPage"
+        (click)="changePage(page)">
+        <span class="page-link">{{ page }}</span>
+      </li>
+      <li class="page-item" (click)="changePage(currentPage + 1)"
+        [class.disabled]="currentPage === totalPages || totalPages === 0">
+        <span class="page-link">&raquo;</span>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- Font Awesome para íconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+<!-- Modal -->
+<div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productoModalLabel">Agregar Servicio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input id="etitulo" type="text" class="form-control" formControlName="etitulo">
+         
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea id="edescripcion" class="form-control" formControlName="edescripcion" required></textarea>
+            <div *ngIf="editForm.get('edescripcion')?.invalid && editForm.get('descripcion')?.touched" class="text-danger">
+              La descripción es requerida
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <select id="ecategoria" class="form-select" formControlName="ecategoria" required>
+              <option value="">Selecciona una categoría</option>
+              <option value="XV años">XV años</option>
+              <option value="Boda">Boda</option>
+              <option value="Fiesta Infantil">Fiesta Infantil</option>
+              <option value="Baby Shower">Baby Shower</option>
+              <option value="Evento Corporativo">Evento Corporativo</option>
+            </select>
+            <div *ngIf="editForm.get('ecategoria')?.invalid && editForm.get('categoria')?.touched" class="text-danger">
+              Debes seleccionar una categoría
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen (Archivo)</label>
+            <input 
+              id="imagen" 
+              type="file" 
+              class="form-control" 
+              (change)="onFileSelect($event)" 
+              required
+            >
+            <div *ngIf="imagenInvalida" class="text-danger">
+              Debes seleccionar una imagen válida.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label>Elementos</label>
+            <div class="d-flex gap-2 mb-2">
+              <input #nuevoElementoInput type="text" class="form-control" placeholder="Nuevo elemento">
+              <button type="button" class="btn btn-outline-success" (click)="agregarElemento(nuevoElementoInput.value); nuevoElementoInput.value = ''">
+                <i class="fa fa-plus"></i> Añadir
+              </button>
+            </div>
+            <div formArrayName="eelementos" class="list-group">
+              <div *ngFor="let elemento of elementosArray.controls; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+                {{ elemento.value }}
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarElemento(i)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="precio" class="form-label">Precio Base</label>
+            <input id="eprecio" type="number" class="form-control" formControlName="eprecio" min="0" step="0.01" required>
+            <div *ngIf="editForm.get('precio')?.invalid && editForm.get('eprecio')?.touched" class="text-danger">
+              Ingresa un precio válido
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label>Opciones</label>
+            <div class="d-flex gap-2 mb-2">
+              <input #nombreOpcionInput type="text" class="form-control" placeholder="Nombre de opción">
+              <input #precioOpcionInput type="number" class="form-control" placeholder="Precio" min="0" step="0.01">
+              <button type="button" class="btn btn-outline-primary" 
+                (click)="agregarOpcion(nombreOpcionInput.value, precioOpcionInput.valueAsNumber); 
+                nombreOpcionInput.value = ''; precioOpcionInput.value = ''">
+                <i class="fa fa-plus"></i> Añadir Opción
+              </button>
+            </div>
+            <div formArrayName="eopciones" class="list-group">
+              <div *ngFor="let opcion of opcionesArray.controls; let i = index" [formGroupName]="i" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ opcion.get('nombre')?.value }} - ${{ opcion.get('precio')?.value }}</span>
+                <div class="d-flex align-items-center gap-2">
+                  <input type="checkbox" formControlName="seleccionada">
+                  <button type="button" class="btn btn-danger btn-sm" (click)="eliminarOpcion(i)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">Actualizar Servicio</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

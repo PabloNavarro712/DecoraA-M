@@ -21,7 +21,10 @@ export class IEvento implements IBaseModel {
     estado!:'aceptado' | 'reechazado' | 'pendiente' | 'cancelado';
     precio_final!:number;
     adiciones!:Adiciones[]; 
-
+    solicitud_cancelar!: boolean;
+    reagendar!: boolean;
+    Motivo!: string;
+    Respuesta!: string;
 
     constructor(partial: Partial<IEvento>) {
     Object.assign(this, partial);

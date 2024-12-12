@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Query, Logger } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  Logger,
+  Patch,
+  Body,
+} from '@nestjs/common';
 import { EventosService } from '../service/eventos.service';
 import { EventosDocument } from 'src/todos/document/eventos.document';
 import { createGenericController } from 'src/shared/generic.controller';
@@ -18,7 +26,20 @@ export class EventosController extends GenericEventosController {
   constructor(private readonly eventosService: EventosService) {
     super(); // Llama al constructor del controlador genérico
   }
-
+  @Get('/fecha')
+  async getEventosPorFecha(
+    @Query('fechaInicio') fechaInicio: string,
+  ): Promise<EventosDocument[]> {
+    try {
+      // Convertir la fecha proporcionada como string a un objeto Date
+      const fecha = new Date(fechaInicio);
+      // Llamar al servicio para obtener los eventos por fecha
+      return await this.eventosService.getEventosPorFecha(fecha);
+    } catch (error) {
+      this.logger.error(`Error al obtener eventos por fecha: ${error.message}`);
+      throw error;
+    }
+  }
   /**
    * Obtiene los eventos por estado
    * @param estado Estado del evento ('aceptado' | 'reechazado' | 'pendiente')
@@ -58,5 +79,43 @@ export class EventosController extends GenericEventosController {
       this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
       throw error;
     }
+  }
+  // Endpoint para obtener solo las fechas de los eventos con estado 'aceptado' o 'pendiente'
+  @Get('/aceptados')
+  async getFechasEventosAceptados(): Promise<string[]> {
+    try {
+      return await this.eventosService.getFechasEventosAceptados();
+    } catch (error) {
+      this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+      throw error;
+    }
+  }
+
+  // Endpoint para obtener solo las fechas de los eventos con estado 'aceptado' o 'pendiente'
+  @Get('/pendientes')
+  async getFechasEventosPendientes(): Promise<string[]> {
+    try {
+      return await this.eventosService.getFechasEventosPendientes();
+    } catch (error) {
+      this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+      throw error;
+    }
+  }
+
+  @Get('/ordenados')
+  async getEventosOrdenados() {
+    try {
+      return await this.eventosService.getEventosOrdenados();
+    } catch (error) {
+      this.logger.error(`Error al obtener eventos ordenados: ${error.message}`);
+      throw error;
+    }
+  }
+  @Patch(':id/estado')
+  async actualizarEstado(
+    @Param('id') id: string,
+    @Body('estado') estado: 'aceptado' | 'reechazado',
+  ): Promise<EventosDocument> {
+    return this.eventosService.actualizarEstadoEvento(id, estado);
   }
 }

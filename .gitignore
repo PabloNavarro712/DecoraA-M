@@ -4,6 +4,7 @@
 
 # compiled output
 /backend/dist
+/backend/dist/service
 /backend/node_modules
 
 # Logs

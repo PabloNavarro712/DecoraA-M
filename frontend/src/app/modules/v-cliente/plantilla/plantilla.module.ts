@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FloatingButtonComponent } from './floating-button/floating-button.component';
 import { FooterComponent } from './footer/footer.component';
-import { LoginComponent } from './login/login.component';
+
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PlantillaComponent } from './plantilla.component';
@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';  // Agrega FormsModule aquí
   PlantillaComponent,
     FloatingButtonComponent,
          FooterComponent,
-         LoginComponent,
          LoginModalComponent,
          NavbarComponent,
   ],

@@ -11,7 +11,8 @@ export class ServiciosDocument {
     precio: number;
     seleccionada: boolean;
   }[];
-  precioTotal: string;
+
+  precioTotal: number;
   mostrarOpciones: boolean; // Agregada propiedad mostrarOpciones
   precio: number;
 

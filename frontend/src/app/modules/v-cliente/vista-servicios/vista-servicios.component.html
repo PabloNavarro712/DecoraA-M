@@ -1,102 +1,85 @@
-<div *ngIf="!isUserAuthenticated()" class="text-center text-danger mt-2 alert alert-warning">
-    <strong class="fs-5">¡Inicia sesión para poder realizar una reserva!</strong>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center mb-4">
+      <h1 class="display-4 font-weight-bold text-primary">Nuestros Servicios</h1>
+      <hr class="my-4">
+    </div>
+
   </div>
-  
-  <div class="container">
-    <!-- Título llamativo para "Nuestros Servicios" -->
-    <div class="row">
-      <div class="col-12 text-center mb-4">
-        <h1 class="display-4 font-weight-bold text-primary">Nuestros Servicios</h1>
-        <hr class="my-4" style="border-top: 3px solid #007bff; width: 50%;">
+  <div *ngIf="!isUserAuthenticated()" class="alert alert-warning">
+    <strong class="fs-5"><i class="bi bi-exclamation-circle"></i> ¡Inicia sesión o <app-login></app-login>  para poder realizar una reserva!</strong> 
+  </div>
+  <div class="row">
+    <div *ngIf="mensajeError" class="col-12 text-center mb-4">
+      <div *ngIf="!isUserAuthenticated()" class="text-center text-danger">
+        <small><i class="bi bi-exclamation-triangle"></i> ¡Inicia sesión para poder realizar una reserva!</small>
       </div>
     </div>
-    <div class="row">
-      <!-- Mensaje de error si el usuario no está autenticado -->
-      <div *ngIf="mensajeError" class="col-12 text-center mb-4">
-        <div *ngIf="!isUserAuthenticated()" class="text-center text-danger mt-2">
-          <small>¡Inicia sesión para poder realizar una reserva!</small>
-          </div>
-      </div>
-  
-      <!-- Recorriendo los servicios -->
-      <div class="col-md-4" *ngFor="let servicio of servicios">
-        <div class="card mb-4">
-          <div class="card-img-container">
-            <img [src]="servicio.imagen" class="card-img-top" alt="{{ servicio.titulo }}">
-          </div>
-  
-          <div class="card-body">
-            <h5 class="card-title">{{ servicio.titulo }}</h5>
-            <p class="card-text">{{ servicio.descripcion }}</p>
-            <b>
-              <h5>Incluye:</h5>
-            </b>
+
+    <div class="col-md-4" *ngFor="let servicio of servicios">
+      <div class="card mb-4">
+        <div class="card-img-container">
+          <img [src]="servicio.imageUrl" class="card-img-top" alt="{{ servicio.titulo }}">
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title text-dark">{{ servicio.titulo }}</h5>
+          <p class="card-text text-muted">{{ servicio.descripcion }}</p>
+          <b><h5>Incluye:</h5></b>
+          <ul>
+            <li *ngFor="let elemento of servicio.elementos">{{ elemento }}</li>
+          </ul>
+          <p class="card-text">Precio base: {{ servicio.precio | currency }}</p>
+          <p class="card-text">Precio total: {{ servicio.precioTotal | currency }}</p>
+          
+          <button class="btn btn-primary" (click)="toggleOpciones(servicio)">
+            <i class="bi bi-list-check"></i> Agregar Opciones
+          </button>
+
+          <div *ngIf="servicio.mostrarOpciones">
+            <h6>Opciones Adicionales:</h6>
             <ul>
-              <li *ngFor="let elemento of servicio.elementos">{{ elemento }}</li>
+              <li *ngFor="let opcion of servicio.opciones">
+                <label>
+                  <input type="checkbox" [checked]="opcion.seleccionada" (change)="actualizarPrecio(servicio, opcion)">
+                  {{ opcion.nombre }} - {{ opcion.precio | currency }}
+                </label>
+              </li>
             </ul>
-  
-            <p class="card-text">Precio base: {{ servicio.precio | currency }}</p>
-            <p class="card-text">Precio total: {{ servicio.precioTotal | currency }}</p>
-  
-            <!-- Botón de Agregar Opciones con icono -->
-            <button class="btn btn-primary" (click)="toggleOpciones(servicio)">
-              <i class="bi bi-list-check"></i> Agregar Opciones
-            </button>
-  
-            <div *ngIf="servicio.mostrarOpciones">
-              <h6>Opciones Adicionales:</h6>
-              <ul>
-                <li *ngFor="let opcion of servicio.opciones">
-                  <label>
-                    <input type="checkbox" 
-                           [checked]="opcion.seleccionada" 
-                           (change)="actualizarPrecio(servicio, opcion)">
-                    {{ opcion.nombre }} - {{ opcion.precio | currency }}
-                  </label>
-                </li>
-              </ul>
-            </div>
-  
-            <!-- Botón de Reservar con icono -->
-           <!-- Botón de Reservar con mensaje de tooltip si no está autenticado -->
-  <button class="btn btn-success mt-2" 
-  [disabled]="!isUserAuthenticated()" 
-  (click)="abrirModalReserva(servicio)" 
-  data-bs-toggle="modal" 
-  data-bs-target="#reservaModal"
-  [title]="!isUserAuthenticated() ? 'Inicia sesión para completar la reserva' : ''">
-  <i class="bi bi-calendar-check"></i> Reservar
-  </button>
-  
-  <!-- Opcional: Mensaje debajo del botón si el usuario no está autenticado -->
-  
-  
-    
           </div>
+
+          <button class="btn btn-success mt-2" [disabled]="!isUserAuthenticated()" (click)="abrirModalReserva(servicio)" data-bs-toggle="modal" data-bs-target="#reservaModal" [title]="!isUserAuthenticated() ? 'Inicia sesión para completar la reserva' : ''">
+            <i class="bi bi-calendar-check"></i> Reservar
+          </button>
         </div>
       </div>
     </div>
-  
-    <!-- Mensaje adicional para contacto -->
-    <div class="row mt-4">
-      <div class="col-12 text-center">
-        <p class="text-muted">
-          ¿No encuentras lo que buscas? <br>
-          ¡Contáctanos directamente para un servicio personalizado! 
-          <a href="https://wa.me/1234567890" target="_blank" class="text-primary">
-            <i class="bi bi-whatsapp"></i> Haz clic aquí
-          </a> para enviarnos un mensaje por WhatsApp.
-        </p>
-      </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12 text-center">
+      <app-ayuda></app-ayuda>
+      <p class="text-muted">
+        ¿No encuentras lo que buscas? <br>
+        ¡Contáctanos para un servicio personalizado! 
+        <a href="https://wa.me/1234567890" target="_blank" class="text-primary">
+          <i class="bi bi-whatsapp"></i> Haz clic aquí
+        </a>.
+      </p>
     </div>
   </div>
+</div>
   
   <!-- Modal para Reservas -->
   <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg-custom">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="reservaModalLabel">Reservar {{ servicioSeleccionado?.titulo }}</h5>
+          <h5 class="modal-title" id="reservaModalLabel">
+            <i class="bi bi-calendar2-check"></i> Reservar {{ servicioSeleccionado?.titulo }}
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center">

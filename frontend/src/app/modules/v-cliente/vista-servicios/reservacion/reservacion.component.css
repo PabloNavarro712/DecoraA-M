@@ -9,6 +9,80 @@
     font-family: Arial, sans-serif;
     color: #333;
   }
+  .informacion-servicio {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .titulo-servicio {
+    color: #b41e46;  /* Color para el título */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .descripcion-servicio {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .opciones-servicio {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .opciones-servicio li {
+    margin: 10px 0;
+  }
+  
+  .opcion-seleccionada {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .precio-total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #2a9d8f;  /* Color para el precio total */
+  }
+  
+  /* Hover effect for option list items */
+  .opciones-servicio li:hover {
+    background-color: #f1f1f1;
+    padding-left: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .informacion-servicio {
+      padding: 15px;
+      margin: 10px;
+    }
+  
+    .titulo-servicio {
+      font-size: 1.2rem;
+    }
+  
+    .descripcion-servicio {
+      font-size: 0.9rem;
+    }
+  
+    .opcion-seleccionada {
+      font-size: 1rem;
+    }
+  
+    .precio-total {
+      font-size: 1rem;
+    }
+  }
   
   /* Calendario */
   .calendario {

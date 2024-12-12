@@ -14,9 +14,14 @@ export declare class EventosController extends GenericEventosController {
     private readonly eventosService;
     private readonly logger;
     constructor(eventosService: EventosService);
+    getEventosPorFecha(fechaInicio: string): Promise<EventosDocument[]>;
     getEventosByEstado(estado: 'aceptado' | 'reechazado' | 'pendiente'): Promise<EventosDocument[]>;
     getEventosProximos(fechaBase: string): Promise<EventosDocument[]>;
     getEventosByCliente(idCliente: string): Promise<EventosDocument[]>;
     getFechasEventosPendientesYAceptados(): Promise<string[]>;
+    getFechasEventosAceptados(): Promise<string[]>;
+    getFechasEventosPendientes(): Promise<string[]>;
+    getEventosOrdenados(): Promise<EventosDocument[]>;
+    actualizarEstado(id: string, estado: 'aceptado' | 'reechazado'): Promise<EventosDocument>;
 }
 export {};

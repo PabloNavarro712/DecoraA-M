@@ -25,19 +25,40 @@ let ServiciosController = class ServiciosController extends GenericServiciosCont
         super();
         this.serviciosService = serviciosService;
     }
-    async createService(body, image) {
-        if (!image) {
-            throw new common_1.BadRequestException('La imagen es obligatoria.');
+    async createServicio(servicioData, file) {
+        if (!file) {
+            throw new Error('No file uploaded');
         }
-        const { buffer, originalname, mimetype } = image;
-        return this.serviciosService.createService(body.titulo, body.descripcion, body.categoria, buffer, originalname, mimetype);
+        try {
+            const servicio = JSON.parse(servicioData.servicioData);
+            console.log(servicio);
+            console.log(file);
+            const imageBuffer = file.buffer;
+            const imageName = file.originalname;
+            const contentType = file.mimetype;
+            return await this.serviciosService.createService(servicio, imageBuffer, imageName, contentType);
+        }
+        catch (error) {
+            console.error('Error al parsear el JSON:', error);
+            throw new Error('Error al procesar los datos del servicio');
+        }
     }
     async updateImageDocument(id, updateData, newImage) {
         if (!newImage) {
             throw new common_1.BadRequestException('La nueva imagen es obligatoria.');
         }
-        const { buffer, originalname, mimetype } = newImage;
-        await this.serviciosService.updateImageDocument(id, updateData, buffer, originalname, mimetype);
+        try {
+            const servicioData = JSON.parse(updateData.servicioData);
+            console.log(servicioData);
+            console.log(newImage);
+            const { buffer, originalname, mimetype } = newImage;
+            await this.serviciosService.updateImageDocument(id, servicioData, buffer, originalname, mimetype);
+            return { message: 'Servicio actualizado exitosamente' };
+        }
+        catch (error) {
+            console.error('Error al procesar los datos del servicio:', error);
+            throw new Error('Error al procesar los datos del servicio o la imagen.');
+        }
     }
     async deleteService(id) {
         await this.serviciosService.deleteService(id);
@@ -56,14 +77,14 @@ let ServiciosController = class ServiciosController extends GenericServiciosCont
 };
 exports.ServiciosController = ServiciosController;
 __decorate([
-    (0, common_1.Post)('create'),
+    (0, common_1.Post)('/create'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image')),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], ServiciosController.prototype, "createService", null);
+], ServiciosController.prototype, "createServicio", null);
 __decorate([
     (0, common_1.Put)('update/:id'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('newImage')),

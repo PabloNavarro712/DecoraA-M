@@ -1,10 +1,27 @@
-.container {
-    max-width: 900px;
-  }
-  .table {
-    margin-top: 20px;
-  }
-  .pagination {
-    margin-top: 20px;
-  }
-  
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #1d3557, #457b9d);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  padding: 2rem;
+}
+
+.custom-btn-position {
+  margin-left: auto;
+}
+h3.mb-0 {
+  font-size: 1.8rem;
+}
+
+.card-body {
+  border-top: 5px solid #457b9d;
+}

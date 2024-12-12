@@ -11,7 +11,11 @@ declare const GenericUsuariosController: {
     };
 };
 export declare class UsuariosController extends GenericUsuariosController {
-    private readonly studentdocService;
-    constructor(studentdocService: UsuariosService);
+    private readonly usuariosService;
+    private readonly logger;
+    constructor(usuariosService: UsuariosService);
+    crearUsuario(usuario: UsuariosDocument): Promise<{
+        message: string;
+    }>;
 }
 export {};

@@ -1,7 +1,7 @@
 export class EventosDocument {
   static collectionName = 'eventos';
   id: string;
-  idServicio: string; // id del servicio 
+  idServicio: string; // id del servicio
   idCliente: string;
   nombre: string;
   contacto: string;
@@ -17,7 +17,10 @@ export class EventosDocument {
     nombre: string;
     precio: number;
   }[];
-
+  solicitud_cancelar?: boolean;
+  reagendar?: boolean;
+  Motivo?: string;
+  Respuesta?: string;
   constructor(partial: Partial<EventosDocument>) {
     Object.assign(this, partial);
   }

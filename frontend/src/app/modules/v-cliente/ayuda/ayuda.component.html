@@ -1,0 +1,31 @@
+<!-- Enlace para abrir el modal -->
+<a href="javascript:void(0)" class="faq-link" (click)="openModal()">¿Tienes Dudas ? Haz clic aquí</a>
+
+<!-- Modal -->
+<div *ngIf="showModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel">Más información</h5>
+        <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>Preguntas Frecuentes</h2>
+
+        <div class="faq-item" [ngClass]="{ 'active': activeAnswer === i }" *ngFor="let faq of faqs; let i = index">
+          <h3 class="faq-question" (click)="toggleAnswer(i)">
+            {{ faq.question }}
+          </h3>
+          <div class="faq-answer" #answer>
+            <p>{{ faq.answer }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

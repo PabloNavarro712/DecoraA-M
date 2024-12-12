@@ -17,5 +17,9 @@ export declare class EventosDocument {
         nombre: string;
         precio: number;
     }[];
+    solicitud_cancelar?: boolean;
+    reagendar?: boolean;
+    Motivo?: string;
+    Respuesta?: string;
     constructor(partial: Partial<EventosDocument>);
 }
