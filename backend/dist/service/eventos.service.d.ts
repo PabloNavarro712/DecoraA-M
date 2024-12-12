@@ -12,4 +12,5 @@ export declare class EventosService extends GenericService<EventosDocument> {
     getEventosByCliente(idCliente: string): Promise<EventosDocument[]>;
     getEventosPorFecha(fechaInicio: Date): Promise<EventosDocument[]>;
     actualizarEstadoEvento(idEvento: string, nuevoEstado: 'aceptado' | 'reechazado'): Promise<EventosDocument>;
+    reagendarEvento(id: string, nvfecha: Date): Promise<void>;
 }
