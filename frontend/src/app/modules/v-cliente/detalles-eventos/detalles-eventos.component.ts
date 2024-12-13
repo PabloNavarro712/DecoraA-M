@@ -22,6 +22,12 @@ export class DetallesEventosComponent implements OnInit {
   selectedEventoId: string | null = null;  // Evento seleccionado para cancelar
   deseaReagendar: boolean = false;
   cancelReason: string = '';
+  diasDeLaSemana: string[] = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  dias: number[] = [];
+  mes: number = new Date().getMonth();
+  anio: number = new Date().getFullYear();
+  fechaSeleccionada: Date = new Date(); // Inicializa con la fecha actual
+  fechasNoSeleccionables: Date[] = []; 
   constructor(
     private elRef: ElementRef,
     private eventoService: EventosService, // Inyección del servicio
@@ -46,8 +52,58 @@ export class DetallesEventosComponent implements OnInit {
       }
     });
   }
+  generarDias() {
+    this.dias = [];
+    const fecha = new Date(this.anio, this.mes + 1, 0);
+    const totalDias = fecha.getDate();
+    const primerDiaDelMes = new Date(this.anio, this.mes, 1).getDay();
 
- 
+    for (let i = 0; i < primerDiaDelMes; i++) {
+      this.dias.push(0);
+    }
+    for (let dia = 1; dia <= totalDias; dia++) {
+      this.dias.push(dia);
+    }
+  }
+  navegarMes(direccion: number) {
+    this.mes += direccion;
+    if (this.mes < 0) {
+      this.mes = 11;
+      this.anio--;
+    } else if (this.mes > 11) {
+      this.mes = 0;
+      this.anio++;
+    }
+    this.generarDias();
+  }
+  
+ seleccionarFecha(dia: number) {
+  if (this.isSelectable(dia)) {
+    this.fechaSeleccionada = new Date(this.anio, this.mes, dia);
+    console.log('Fecha seleccionada:', this.fechaSeleccionada);
+  }
+}
+
+isToday(dia: number): boolean {
+  const hoy = new Date();
+  return hoy.getFullYear() === this.anio && hoy.getMonth() === this.mes && hoy.getDate() === dia;
+}
+
+isSelectable(dia: number): boolean {
+  if (dia <= 0) return false;
+
+  const fechaSeleccionada = new Date(this.anio, this.mes, dia);
+  const hoy = new Date();
+  const maniana = new Date(hoy);
+  maniana.setDate(hoy.getDate() + 1);
+
+  const esPasado = fechaSeleccionada < maniana || fechaSeleccionada.toDateString() === hoy.toDateString();
+  const esDiaNoSeleccionable = this.fechasNoSeleccionables.some(
+    fecha => fecha.toDateString() === fechaSeleccionada.toDateString()
+  );
+
+  return !esPasado && !esDiaNoSeleccionable;
+}
     // Función para abrir el modal
     openCancelModal(eventoId: string) {
       this.selectedEventoId = eventoId;
@@ -123,11 +179,16 @@ cancelarReserva(eventoId: string): void {
   const evento = this.eventos.find(e => e.id === eventoId);
  
   if (evento) {
+    if (this.deseaReagendar && (!this.fechaSeleccionada || isNaN(new Date(this.fechaSeleccionada).getTime()))) {
+      Swal.fire('Error', 'Debes proporcionar una fecha válida para reagendar.', 'error');
+      return;
+    }
     // Crea un nuevo objeto con el estado actualizado
     const eventoActualizado: IEvento = { 
       ...evento, 
       solicitud_cancelar: true,
       reagendar: this.deseaReagendar,
+      nvfecha: this.deseaReagendar ? new Date(this.fechaSeleccionada!) : undefined,
       Motivo: this.motivoCancelacion,  // Asigna el motivo de la cancelación
     };
 

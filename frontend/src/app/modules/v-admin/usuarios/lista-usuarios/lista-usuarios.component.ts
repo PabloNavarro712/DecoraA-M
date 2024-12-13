@@ -25,7 +25,7 @@ export class ListaUsuariosComponent implements OnInit {
   showCancelModal = false;
   noMoreServicios = false; // No hay más servicios
   isLoading: boolean = false;
-
+  filterValue: string = ''; 
   servicioIdSeleccionado: string | null = null;
 
   constructor(
@@ -54,9 +54,9 @@ export class ListaUsuariosComponent implements OnInit {
     this.isLoading = true;
 
     // Si la categoría seleccionada es 'Todos', se envía un valor especial (por ejemplo, '' o 'todos')
-    const categoria = this.categoriaSeleccionada === 'Todos' ? '' : this.categoriaSeleccionada;
-
-    this.servicioService.getUsuariosPorNombre(this.currentPage, categoria).subscribe(
+    const nombre = this.filterValue.trim(); // Elimina espacios en blanco si existen
+console.log(nombre);
+    this.servicioService.getUsuariosPorNombre(1, nombre).subscribe(
       (response: any) => {
         if (!response.error) {
           this.servicios = response.data || [];
@@ -64,17 +64,17 @@ export class ListaUsuariosComponent implements OnInit {
           this.noMoreServicios = this.servicios.length === 0;
 
           // Mostrar alerta si no se encuentran servicios para la categoría seleccionada
-          if (this.servicios.length === 0 && this.categoriaSeleccionada !== 'Todos') {
+          if (this.servicios.length === 0 && this.filterValue !== '') {
             Swal.fire(
               'Aviso',
-              'Actualmente no hay más servicios disponibles.',
+              'Actualmente no hay más usuarios registrados.',
               'warning'
             );
           }
         } else {
           Swal.fire(
             'Aviso',
-            'No se encontraron servicios con la categoría seleccionada.',
+            'No se encontraron usuarios.',
             'warning'
           );
           this.currentPage = this.currentPage - 1; // Volver a la página anterior si no hay más
@@ -88,7 +88,11 @@ export class ListaUsuariosComponent implements OnInit {
       }
     );
   }
-
+  filtrarPorNombre(termino: string): void {
+    this.filteredSer = this.servicios.filter(servicio =>
+      servicio.nombreCompleto.toLowerCase().includes(termino.toLowerCase())
+    );
+  }
   // Cambiar de página
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
@@ -203,5 +207,38 @@ obtenerServicioPorId(id: string): void {
     }
   );
 }
+toggleBloqueo(id?: string, bloqueado?:boolean) {
+  if (!id) {
 
+
+  } else{
+    const nuevoEstado = !bloqueado;
+    this.servicioService.updateUsuarioBloqueado(id, nuevoEstado).subscribe({
+      next: (response) => {
+        console.log(response.message);
+        bloqueado = nuevoEstado; // Actualiza el estado localmente
+        this.loadServicios();
+        if (bloqueado == true){
+          Swal.fire(
+            'Aviso',
+            'Se ah bloqueado con exito al usuario',
+            'success'
+          );
+        } else{
+          Swal.fire(
+            'Aviso',
+            'Se ah desbloqueado con exito al usuario',
+            'success'
+          );
+        }
+   
+      },
+      error: (err) => {
+        console.error('Error al cambiar el estado:', err.message);
+      },
+    });
+
+  }
+ 
+}
 }

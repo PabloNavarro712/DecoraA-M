@@ -25,7 +25,7 @@ export class IEvento implements IBaseModel {
     reagendar!: boolean;
     Motivo!: string;
     Respuesta!: string;
-
+    nvfecha?: Date;
     constructor(partial: Partial<IEvento>) {
     Object.assign(this, partial);
   }

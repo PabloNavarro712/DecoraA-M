@@ -72,4 +72,26 @@ export class UsuarioService extends GenericServiceService<any> {
         }),
       );
   }
+  updateUsuarioBloqueado(id: string, bloqueado: boolean): Observable<{ message: string }> {
+    if (typeof bloqueado !== 'boolean') {
+      console.error('El valor de "bloqueado" debe ser un booleano.');
+      return throwError(() => new Error('El valor de "bloqueado" debe ser un booleano.'));
+    }
+  
+    return this.http
+      .patch<{ message: string }>(`${this.url}${this.endpoint}/${id}/bloqueado`, { bloqueado })
+      .pipe(
+        map((response) => {
+          console.log('Estado de "bloqueado" actualizado exitosamente:', response);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error al actualizar el estado de "bloqueado":', error);
+          const errorMessage =
+            error.error?.message || 'Error al actualizar el estado de "bloqueado".';
+          return throwError(() => new Error(errorMessage));
+        })
+      );
+  }
+  
 }

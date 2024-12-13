@@ -1,30 +1,43 @@
 table {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .btn i {
-    font-size: 1rem;
-  }
-  
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
-  }
-  
-  .btn-sm {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .pagination .page-link {
-    color: #b41e46;
-  }
-  
-  .pagination .page-item.active .page-link {
-    background-color: #b41e46;
-    border-color: #b41e46;
-    color: white;
-  }
-  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+.input-group .form-control {
+  border-radius: 5px 0 0 5px; /* Bordes redondeados solo para el input */
+}
+
+.input-group .btn {
+  border-radius: 0 5px 5px 0; /* Bordes redondeados solo para el botón */
+}
+
+.input-group .btn:hover {
+  background-color: #012a68d2; /* Cambia el color al pasar el mouse */
+}
+.modal-header{
+  background-color: #012a68d2;
+  color: #012a68d2;
+}
+.btn-sm {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination .page-link {
+  color: #1e21b4;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #1e21b4;
+  border-color: #000144;
+  color: white;
+}

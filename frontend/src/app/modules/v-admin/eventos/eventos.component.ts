@@ -17,14 +17,19 @@ export class EventosComponent implements OnInit {
   };
   reservaSeleccionada: IEvento | null = null;
   modoEdicion = false;
-
+  reservaCancelacion: any = null;
   constructor(private eventosService: EventosService) {}
 
   ngOnInit(): void {
     this.cargarReservas();
     
   }
-
+  mostrarSolicitudCancelacion(reserva: any) {
+    this.reservaCancelacion = reserva;
+  }
+  cerrarSolicitudCancelacion() {
+    this.reservaCancelacion = null;
+  }
   // Cargar todas las reservas desde el servicio
 // Cargar todas las reservas desde el servicio
 cargarReservas(): void {
@@ -77,6 +82,8 @@ cargarReservas(): void {
 // Guardar cambios en el evento
 guardarCambios(): void {
   if (this.reservaSeleccionada) {
+    this.reservaSeleccionada.solicitud_cancelar= false;
+    this.reservaSeleccionada.reagendar= false;
     this.eventosService.update(this.reservaSeleccionada.id!, this.reservaSeleccionada).subscribe({
       next: (response) => {
         if (!response.error && response.data) {
@@ -90,7 +97,8 @@ guardarCambios(): void {
           this.cerrarModal();
           Swal.fire('Actualizado', 'El evento se ha actualizado con éxito.', 'success');
         } else {
-          Swal.fire('Error', response.msg || 'Hubo un problema al actualizar el evento.', 'error');
+          Swal.fire('Actualizado', 'El evento se ha actualizado con éxito.', 'success');
+          this.cerrarModal();
         }
       },
       error: (error) => {
@@ -158,6 +166,35 @@ eliminarEvento(id: string): void {
   };
   this.aplicarFiltros();
   Swal.fire('Filtros limpiados', 'Se han eliminado los filtros.', 'info');
+}
+
+confirmarReagendacion(): void {
+  if (this.reservaSeleccionada) {  // Verifica que reservaSeleccionada no sea null
+    const fecha = this.reservaSeleccionada.nvfecha 
+      ? new Date(this.reservaSeleccionada.nvfecha) 
+      : null; // Asigna null si nvfecha es undefined
+
+    if (!fecha || isNaN(fecha.getTime())) {  // Verifica si la fecha es válida
+      Swal.fire('Error', 'La fecha proporcionada no es válida.', 'error');
+      return;
+    }
+
+    if (this.reservaSeleccionada.id) {
+      this.eventosService.reagendarEvento(this.reservaSeleccionada.id, fecha)
+        .toPromise()
+        .then(() => {
+          Swal.fire('Éxito', 'Evento reagendado con éxito', 'success');
+          this.cargarReservas();  // Recarga las reservas para mostrar la actualización
+        })
+        .catch((error) => {
+          Swal.fire('Error', error || 'No se pudo reagendar el evento. Intenta nuevamente.', 'error');
+        });
+    } else {
+      Swal.fire('Error', 'El evento seleccionado no tiene un ID válido.', 'error');
+    }
+  } else {
+    Swal.fire('Error', 'No se ha seleccionado ningún evento para reagendar.', 'error');
+  }
 }
 
 }

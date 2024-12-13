@@ -1,19 +1,24 @@
-<div class="container mt-5">
-    <div class="card shadow-lg border-0">
-      <!-- Encabezado de la tarjeta con mejoras visuales -->
-      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-        <h3 class="mb-0">Gestión de Usuarios</h3>
-        <div class="ms-auto">
-        </div>
-      </div>
-  
-      <!-- Cuerpo de la tarjeta -->
-      <div class="card-body bg-light">
-        <app-lista-usuarios></app-lista-usuarios>
-      </div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4" style="width: 110%; max-width: 2000px; border-radius: 15px;">
+    <!-- Encabezado -->
+    <div class="card-header bg-primary text-white text-center rounded">
+      <h3 class="mb-0">Gestión de Usuarios</h3>
+    </div>
+
+    <!-- Cuerpo de la tarjeta -->
+    <div class="card-body">
+      <app-lista-usuarios></app-lista-usuarios>
+    </div>
+
+    <!-- Footer Opcional -->
+    <div class="card-footer text-muted text-center">
+      <small>vista para <i class="fa fa-user"></i> Usuario Administrador</small>
     </div>
   </div>
-  
-  <!-- Incluye Font Awesome para iconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+</div>
+
+<!-- Incluye Font Awesome para iconos -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+/>

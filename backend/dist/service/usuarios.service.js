@@ -52,7 +52,7 @@ let UsuariosService = UsuariosService_1 = class UsuariosService extends generic_
                 .orderBy('id', 'desc')
                 .offset((page - 1) * limit)
                 .limit(limit)
-                .where('esAdministrador', '==', true);
+                .where('esAdministrador', '==', false);
             if (nombreCompleto) {
                 query = query.where('nombreCompleto', '==', nombreCompleto);
             }

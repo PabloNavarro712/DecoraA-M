@@ -62,7 +62,7 @@ export class UsuariosService extends GenericService<UsuariosDocument> {
         .orderBy('id', 'desc') // Asegúrate de tener un campo "id" o similar para ordenar
         .offset((page - 1) * limit)
         .limit(limit)
-        .where('esAdministrador', '==', true); // Filtrar por esAdministrador == false
+        .where('esAdministrador', '==', false); // Filtrar por esAdministrador == false
 
       if (nombreCompleto) {
         query = query.where('nombreCompleto', '==', nombreCompleto);

@@ -1,5 +1,5 @@
 .admin-calendar-container {
-  max-width: 800px;
+  max-width: 100%;
   margin: auto;
   background-color: #f4f4f4;
   border-radius: 10px;
@@ -16,30 +16,9 @@
   border-radius: 10px 10px 0 0;
 }
 /* Fondo oscuro para el modal */
-.modal.fade.show {
-  display: block; /* Muestra el modal */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con opacidad */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1050; /* Asegura que el modal esté por encima de otros elementos */
-  animation: fadeIn 0.3s ease-in-out; /* Animación de aparición */
-}
 
-/* Diseño de la caja del modal */
-.modal-dialog {
-  max-width: 800px;
-  margin: 10% auto;
-}
 
-/* Estilos para el contenido del modal */
-.modal-content {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
-}
+
 
 /* Cabecera del modal */
 .modal-header {
@@ -54,53 +33,9 @@
   align-items: center;
 }
 
-.modal-header .close {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 30px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
 
-.modal-header .close:hover {
-  color: #f8f9fa;
-}
 
-/* Cuerpo del modal */
-.modal-body {
-  padding: 20px;
-  font-size: 16px;
-  line-height: 1.6;
-  max-height: 400px; /* Limita la altura para permitir desplazamiento */
-  overflow-y: auto; /* Permite desplazamiento si el contenido es largo */
-}
 
-/* Pie del modal */
-.modal-footer {
-  background-color: #f1f1f1;
-  padding: 15px;
-  text-align: right;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-
-/* Estilos del botón "Cerrar" */
-.modal-footer .btn {
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.modal-footer .btn-secondary {
-  background-color: #6c757d;
-  color: #fff;
-}
-
-.modal-footer .btn-secondary:hover {
-  background-color: #5a6268;
-}
 
 @keyframes fadeIn {
   from {

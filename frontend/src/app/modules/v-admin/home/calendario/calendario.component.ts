@@ -106,7 +106,7 @@ export class CalendarioComponent implements OnInit {
   
   // Llamar al servicio para obtener los eventos de la fecha seleccionada
   this.getEventosPorFecha(fechaSeleccionadaISO);
-  this.openModal(); 
+
 }
 
  // Llamar al servicio para obtener los eventos por fecha
