@@ -1,0 +1,58 @@
+<div class="container mt-4">
+    <h1>Dashboard de Gráficas</h1>
+  
+    <div *ngIf="isLoading" class="text-center my-4">
+      <p>Cargando datos...</p>
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="!isLoading && !errorMessage">
+      <!-- Gráfica de Ganancia Total Acumulada -->
+      <div class="mb-4">
+        <apx-chart 
+          *ngIf="chartGananciasTotales" 
+          [series]="chartGananciasTotales.series" 
+          [chart]="chartGananciasTotales.chart" 
+          [title]="chartGananciasTotales.title" 
+          [xaxis]="chartGananciasTotales.xaxis">
+        </apx-chart>
+      </div>
+  
+      <!-- Gráfica de Ganancias Mensuales -->
+      <div class="mb-4">
+        <apx-chart 
+          *ngIf="chartGananciasMensuales" 
+          [series]="chartGananciasMensuales.series" 
+          [chart]="chartGananciasMensuales.chart" 
+          [title]="chartGananciasMensuales.title" 
+          [xaxis]="chartGananciasMensuales.xaxis">
+        </apx-chart>
+      </div>
+  
+      <!-- Gráfica de Eventos por Mes -->
+      <div class="mb-4">
+        <apx-chart 
+          *ngIf="chartEventosPorMes" 
+          [series]="chartEventosPorMes.series" 
+          [chart]="chartEventosPorMes.chart" 
+          [title]="chartEventosPorMes.title" 
+          [xaxis]="chartEventosPorMes.xaxis">
+        </apx-chart>
+      </div>
+  
+      <!-- Gráfica de Clientes (Pastel) -->
+      <div class="mb-4">
+        <apx-chart 
+          *ngIf="chartClientesPastel" 
+          [series]="chartClientesPastel.series" 
+          [chart]="chartClientesPastel.chart" 
+          [labels]="chartClientesPastel.labels" 
+          [title]="chartClientesPastel.title">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+  

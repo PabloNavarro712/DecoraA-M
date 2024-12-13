@@ -25,7 +25,8 @@ import { FormsModule } from '@angular/forms';
   VClienteModule,
   VAdminModule,
     RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
-    FormsModule
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

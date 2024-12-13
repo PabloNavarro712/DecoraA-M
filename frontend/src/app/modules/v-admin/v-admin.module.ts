@@ -15,7 +15,7 @@ import { ListaServiciosComponent } from './servicios/lista-servicios/lista-servi
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';  // Agrega FormsModule aquí
-
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios
     ReactiveFormsModule,
     RouterModule,
     FormsModule,
+    NgApexchartsModule
   ]
 })
 export class VAdminModule { }
