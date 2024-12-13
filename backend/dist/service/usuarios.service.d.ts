@@ -10,4 +10,5 @@ export declare class UsuariosService extends GenericService<UsuariosDocument> {
     updateUsuarioBloqueado(id: string, bloqueado: boolean): Promise<{
         message: string;
     }>;
+    login(usuario: string, contrasena: string): Promise<UsuariosDocument>;
 }

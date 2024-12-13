@@ -51,7 +51,8 @@ let UsuariosService = UsuariosService_1 = class UsuariosService extends generic_
                 .collection(usuarios_document_1.UsuariosDocument.collectionName)
                 .orderBy('id', 'desc')
                 .offset((page - 1) * limit)
-                .limit(limit);
+                .limit(limit)
+                .where('esAdministrador', '==', true);
             if (nombreCompleto) {
                 query = query.where('nombreCompleto', '==', nombreCompleto);
             }
@@ -89,6 +90,34 @@ let UsuariosService = UsuariosService_1 = class UsuariosService extends generic_
         catch (error) {
             this.logger.error(`Error al actualizar la propiedad "bloqueado": ${error.message}`);
             throw error;
+        }
+    }
+    async login(usuario, contrasena) {
+        try {
+            if (!usuario || !contrasena) {
+                throw new common_1.BadRequestException('Usuario y contraseña son requeridos.');
+            }
+            const usuariosRef = this.firestore.collection(usuarios_document_1.UsuariosDocument.collectionName);
+            const usuarioSnapshot = await usuariosRef
+                .where('usuario', '==', usuario)
+                .get();
+            if (usuarioSnapshot.empty) {
+                throw new common_1.NotFoundException('El usuario no existe.');
+            }
+            const usuarioData = usuarioSnapshot.docs[0].data();
+            if (usuarioData.contrasena !== contrasena) {
+                throw new common_1.UnauthorizedException('Contraseña incorrecta.');
+            }
+            return usuarioData;
+        }
+        catch (error) {
+            this.logger.error(`Error en login: ${error.message}`);
+            if (error instanceof common_1.BadRequestException ||
+                error instanceof common_1.NotFoundException ||
+                error instanceof common_1.UnauthorizedException) {
+                throw error;
+            }
+            throw new common_1.InternalServerErrorException('Error al procesar la solicitud.');
         }
     }
 };

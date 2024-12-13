@@ -64,6 +64,15 @@ let UsuariosController = UsuariosController_1 = class UsuariosController extends
             throw error;
         }
     }
+    async login(usuario, contrasena) {
+        try {
+            return await this.usuariosService.login(usuario, contrasena);
+        }
+        catch (error) {
+            this.logger.error(`Error en el endpoint login: ${error.message}`);
+            throw error;
+        }
+    }
 };
 exports.UsuariosController = UsuariosController;
 __decorate([
@@ -89,6 +98,15 @@ __decorate([
     __metadata("design:paramtypes", [String, Boolean]),
     __metadata("design:returntype", Promise)
 ], UsuariosController.prototype, "updateUsuarioBloqueado", null);
+__decorate([
+    (0, common_1.Post)('login'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Body)('usuario')),
+    __param(1, (0, common_1.Body)('contrasena')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], UsuariosController.prototype, "login", null);
 exports.UsuariosController = UsuariosController = UsuariosController_1 = __decorate([
     (0, common_1.Controller)(endpoint),
     __metadata("design:paramtypes", [usuarios_service_1.UsuariosService])

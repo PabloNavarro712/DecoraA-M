@@ -4,6 +4,7 @@ import {
   BadRequestException,
   NotFoundException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { GenericService } from '../shared/generic.service';
 import { UsuariosDocument } from '../todos/document/usuarios.document';
@@ -60,11 +61,13 @@ export class UsuariosService extends GenericService<UsuariosDocument> {
         .collection(UsuariosDocument.collectionName)
         .orderBy('id', 'desc') // Asegúrate de tener un campo "id" o similar para ordenar
         .offset((page - 1) * limit)
-        .limit(limit);
+        .limit(limit)
+        .where('esAdministrador', '==', true); // Filtrar por esAdministrador == false
 
       if (nombreCompleto) {
         query = query.where('nombreCompleto', '==', nombreCompleto);
       }
+
       const snapshot = await query.get();
 
       if (snapshot.empty) {
@@ -86,6 +89,7 @@ export class UsuariosService extends GenericService<UsuariosDocument> {
       throw new InternalServerErrorException('Error al procesar la solicitud.');
     }
   }
+
   async updateUsuarioBloqueado(
     id: string,
     bloqueado: boolean,
@@ -111,6 +115,51 @@ export class UsuariosService extends GenericService<UsuariosDocument> {
         `Error al actualizar la propiedad "bloqueado": ${error.message}`,
       );
       throw error;
+    }
+  }
+  async login(usuario: string, contrasena: string): Promise<UsuariosDocument> {
+    try {
+      // Validar que se haya proporcionado el usuario y la contraseña
+      if (!usuario || !contrasena) {
+        throw new BadRequestException('Usuario y contraseña son requeridos.');
+      }
+
+      const usuariosRef = this.firestore.collection(
+        UsuariosDocument.collectionName,
+      );
+
+      // Buscar el usuario por su nombre de usuario
+      const usuarioSnapshot = await usuariosRef
+        .where('usuario', '==', usuario)
+        .get();
+
+      if (usuarioSnapshot.empty) {
+        throw new NotFoundException('El usuario no existe.');
+      }
+
+      // Verificar la contraseña
+      const usuarioData = usuarioSnapshot.docs[0].data() as UsuariosDocument;
+
+      if (usuarioData.contrasena !== contrasena) {
+        throw new UnauthorizedException('Contraseña incorrecta.');
+      }
+
+      // Retornar el usuario encontrado
+      return usuarioData;
+    } catch (error) {
+      this.logger.error(`Error en login: ${error.message}`);
+
+      // Relanzar errores específicos para que el controlador los maneje
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+
+      // Manejo genérico para otros errores
+      throw new InternalServerErrorException('Error al procesar la solicitud.');
     }
   }
 }

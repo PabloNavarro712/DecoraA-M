@@ -11,7 +11,10 @@ import { CalendarioComponent } from './home/calendario/calendario.component';
 import { BotoneditarComponent } from './servicios/botoneditar/botoneditar.component';
 import { BotonagregarComponent } from './servicios/botonagregar/botonagregar.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ListaServiciosComponent } from './servicios/lista-servicios/lista-servicios.component';  // Agrega FormsModule aquí
+import { ListaServiciosComponent } from './servicios/lista-servicios/lista-servicios.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';  // Agrega FormsModule aquí
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { ListaServiciosComponent } from './servicios/lista-servicios/lista-servi
     CalendarioComponent,
     BotoneditarComponent,
     BotonagregarComponent,
-    ListaServiciosComponent
+    ListaServiciosComponent,
+    DashboardComponent,
+    UsuariosComponent,
+    ListaUsuariosComponent
   ],
   imports: [
     CommonModule,

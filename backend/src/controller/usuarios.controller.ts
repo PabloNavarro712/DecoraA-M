@@ -8,6 +8,7 @@ import {
   Query,
   Logger,
   BadRequestException,
+  HttpCode,
   HttpStatus,
   HttpException,
 } from '@nestjs/common';
@@ -90,6 +91,19 @@ export class UsuariosController extends GenericUsuariosController {
           HttpStatus.BAD_REQUEST,
         );
       }
+      throw error;
+    }
+  }
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  async login(
+    @Body('usuario') usuario: string,
+    @Body('contrasena') contrasena: string,
+  ): Promise<UsuariosDocument> {
+    try {
+      return await this.usuariosService.login(usuario, contrasena);
+    } catch (error) {
+      this.logger.error(`Error en el endpoint login: ${error.message}`);
       throw error;
     }
   }

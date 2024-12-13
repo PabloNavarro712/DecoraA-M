@@ -13,6 +13,16 @@
                         <i class="bi bi-house-door-fill"></i> <span class="link-text">Hogar</span>
                     </a>
                 </li> 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/graficas" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="bi bi-bar-chart-fill"></i> <span class="link-text">Graficas</span>
+                    </a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="bi bi-people-fill"></i> <span class="link-text">Usuarios</span>
+                    </a>
+                </li> 
                 <!-- Menú desplegable tipo acordeón -->
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#editMenu" role="button" aria-expanded="false" aria-controls="editMenu">
@@ -21,6 +31,8 @@
                     <!-- Menú desplegable con collapse -->
                     <div class="collapse" id="editMenu">
                         <ul class="list-unstyled">
+                         
+                    
                             <li class="nav-item">
                                 <a class="nav-link" routerLink="/admin/gestion-galeria" (click)="closeMenu()">Editar Galería</a>
                             </li>

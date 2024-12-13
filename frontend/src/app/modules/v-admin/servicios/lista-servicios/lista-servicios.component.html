@@ -37,13 +37,16 @@
         <td>{{ servicio.descripcion }}</td>
         <td>{{ servicio.precio | currency }}</td>
         <td class="text-center">
-          <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal"    data-bs-target="#productoModal"   (click)="servicio.id ? seleccionarServicio(servicio.id) : null" >
-            <i class="fas fa-pen"></i>
-          </button>
-          <button class="btn btn-danger btn-sm" (click)="eliminarServicio(servicio.id)">
-            <i class="fas fa-trash"></i>
-          </button>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#productoModal" (click)="servicio.id ? seleccionarServicio(servicio.id) : null">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="eliminarServicio(servicio.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
         </td>
+        
       </tr>
     </tbody>
   </table>

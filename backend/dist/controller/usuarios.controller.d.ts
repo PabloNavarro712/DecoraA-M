@@ -21,5 +21,6 @@ export declare class UsuariosController extends GenericUsuariosController {
     updateUsuarioBloqueado(id: string, bloqueado: boolean): Promise<{
         message: string;
     }>;
+    login(usuario: string, contrasena: string): Promise<UsuariosDocument>;
 }
 export {};
