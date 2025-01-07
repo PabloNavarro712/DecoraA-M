@@ -5,6 +5,7 @@ export class IUser implements IBaseModel {
     nombreCompleto!:  string;
     usuario!:  string;
     correo!:  string;
+    bloqueado?:  boolean;
     contrasena!:  string;
     esAdministrador!:  boolean;
   }

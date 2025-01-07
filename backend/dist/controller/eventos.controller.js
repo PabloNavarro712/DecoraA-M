@@ -85,6 +85,17 @@ let EventosController = EventosController_1 = class EventosController extends Ge
     async actualizarEstado(id, estado) {
         return this.eventosService.actualizarEstadoEvento(id, estado);
     }
+    async reagendarEvento(id, nvfecha) {
+        try {
+            const nuevaFecha = new Date(nvfecha);
+            await this.eventosService.reagendarEvento(id, nuevaFecha);
+            this.logger.log(`Evento con ID ${id} reagendado a la fecha ${nuevaFecha.toISOString()}`);
+        }
+        catch (error) {
+            this.logger.error(`Error al reagendar evento con ID ${id}: ${error.message}`);
+            throw error;
+        }
+    }
 };
 exports.EventosController = EventosController;
 __decorate([
@@ -147,6 +158,14 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], EventosController.prototype, "actualizarEstado", null);
+__decorate([
+    (0, common_1.Patch)(':id/reagendar'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)('nvfecha')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "reagendarEvento", null);
 exports.EventosController = EventosController = EventosController_1 = __decorate([
     (0, common_1.Controller)(endpoint),
     __metadata("design:paramtypes", [eventos_service_1.EventosService])

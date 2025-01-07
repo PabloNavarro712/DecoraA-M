@@ -126,6 +126,7 @@ eliminarServicio(id: string | undefined): void {
       next: () => {
         this.servicios = this.servicios.filter(s => s.id !== id); // Actualiza la lista en la UI
         console.log('Servicio eliminado con éxito.');
+        this.loadServicios();
       },
       error: (error) => {
         console.error('Error al eliminar el servicio:', error);
@@ -230,6 +231,7 @@ onSubmit() {
             icon: 'success',
             confirmButtonText: 'Aceptar',
           });
+          this.loadServicios();
           this.resetForm();
           this.closeCancelModal();
         },
@@ -253,7 +255,9 @@ onSubmit() {
               text: response.msg,
               icon: 'success',
               confirmButtonText: 'Aceptar',
+              
             });
+            this.loadServicios();
             this.resetForm();
             this.closeCancelModal();
           } else {

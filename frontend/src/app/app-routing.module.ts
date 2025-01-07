@@ -1,3 +1,4 @@
+  
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PlantillaComponent } from './modules/v-cliente/plantilla/plantilla.component';
@@ -7,9 +8,11 @@ import { NosotrosComponent } from './modules/v-cliente/nosotros/nosotros.compone
 import { DetallesEventosComponent } from './modules/v-cliente/detalles-eventos/detalles-eventos.component';
 import { PlantillaAdminComponent } from './modules/v-admin/plantilla-admin/plantilla-admin.component';
 import { ServiciosComponent } from './modules/v-admin/servicios/servicios.component';
+import { DashboardComponent } from './modules/v-admin/dashboard/dashboard.component';
 import { GaleriaComponent } from './modules/v-admin/galeria/galeria.component';
 import { EventosComponent } from './modules/v-admin/eventos/eventos.component';
 import { HomeComponent } from './modules/v-admin/home/home.component';
+import { UsuariosComponent } from './modules/v-admin/usuarios/usuarios.component';
 const routes: Routes = [
   {
     path: 'cliente',
@@ -32,6 +35,8 @@ const routes: Routes = [
       { path: 'gestion-galeria', component: GaleriaComponent }, // Vista de panel de edición
        { path: 'gestion_servicios', component: ServiciosComponent}, // Vista para editar servicios
       { path: 'gestion-eventos', component: EventosComponent }, // Vista de panel de edición
+      { path: 'graficas', component: DashboardComponent }, // Vista de panel de edición
+      { path: 'usuarios', component: UsuariosComponent }, // Vista de panel de edición
     ]
   },
 
@@ -47,3 +52,6 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+
+
+

@@ -13,27 +13,34 @@
                         <i class="bi bi-house-door-fill"></i> <span class="link-text">Hogar</span>
                     </a>
                 </li> 
-                <!-- Menú desplegable tipo acordeón -->
+                
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#editMenu" role="button" aria-expanded="false" aria-controls="editMenu">
-                        <i class="bi bi-speedometer2"></i> <span class="link-text">Panel de Edición</span>
+                    <a class="nav-link" routerLink="/admin/graficas" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="bi bi-bar-chart-fill"></i> <span class="link-text">Graficas</span>
                     </a>
-                    <!-- Menú desplegable con collapse -->
-                    <div class="collapse" id="editMenu">
-                        <ul class="list-unstyled">
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/admin/gestion-galeria" (click)="closeMenu()">Editar Galería</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/admin/gestion_servicios" (click)="closeMenu()">Editar Servicios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/admin/gestion-eventos" (click)="closeMenu()">Editar Eventos</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <!-- Otros enlaces -->
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/usuarios" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="bi bi-people-fill"></i> <span class="link-text">Usuarios</span>
+                    </a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/gestion-galeria" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="bi bi-images"></i> <span class="link-text">Galeria de Imagenes</span>
+                    </a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/gestion-eventos" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="bi bi-calendar-event-fill"></i> <span class="link-text">Eventos</span>
+                    </a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/gestion_servicios" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="bi bi-briefcase"></i> <span class="link-text">Servicios</span>
+                    </a>
+                </li> 
+           
+
             </ul>
         </div>
     </nav>

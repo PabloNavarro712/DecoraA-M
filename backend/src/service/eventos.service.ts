@@ -254,4 +254,28 @@ export class EventosService extends GenericService<EventosDocument> {
       throw error;
     }
   }
+  // Método de reagendación
+  async reagendarEvento(id: string, nvfecha: Date): Promise<void> {
+    try {
+      // Verifica si el evento existe
+      const eventoRef = this.firestore.collection(this.collectionName).doc(id);
+      const eventoSnapshot = await eventoRef.get();
+
+      if (!eventoSnapshot.exists) {
+        throw new Error(`Evento con ID ${id} no encontrado.`);
+      }
+
+      // Actualiza la fecha del evento
+      await eventoRef.update({
+        fechaEvento: Timestamp.fromDate(nvfecha),
+      });
+
+      this.logger.log(
+        `Evento con ID ${id} reagendado a la fecha ${nvfecha.toISOString()}`,
+      );
+    } catch (error) {
+      this.logger.error(`Error al reagendar evento: ${error.message}`);
+      throw error;
+    }
+  }
 }

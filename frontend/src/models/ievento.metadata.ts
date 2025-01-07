@@ -15,9 +15,11 @@ export class IEvento implements IBaseModel {
     correoElectronico!: string; // Correo electrónico
     fechaHoraReserva!: Date; // Fecha y hora de la reserva
     ubicacionEvento!: string; // Ubicación del evento
+    mes!: string;
+    anio!: string;
     tipoEvento!: string; // Tipo de evento
     horaEvento!: string; // Hora del evento
-    fechaEvento!: Date; // Fecha del evento
+    fechaEvento!: string; // Fecha del evento
     estado!:'aceptado' | 'reechazado' | 'pendiente' | 'cancelado';
     precio_final!:number;
     adiciones!:Adiciones[]; 
@@ -25,7 +27,7 @@ export class IEvento implements IBaseModel {
     reagendar!: boolean;
     Motivo!: string;
     Respuesta!: string;
-
+    nvfecha?: Date;
     constructor(partial: Partial<IEvento>) {
     Object.assign(this, partial);
   }

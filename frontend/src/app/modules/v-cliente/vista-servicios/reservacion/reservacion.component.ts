@@ -123,6 +123,8 @@ export class ReservacionComponent implements OnInit {
         ubicacionEvento: `Dirección: ${form.value.direccion}, Localidad: ${form.value.localidad}`,
         tipoEvento: this.servicioSeleccionado?.categoria,
         horaEvento: form.value.hora,
+        mes: this.fechaSeleccionada.getMonth() + 1, // El mes es 0-indexado, por lo que sumamos 1
+        anio: this.fechaSeleccionada.getFullYear(),
         fechaEvento: new Date(this.fechaSeleccionada), 
         estado: 'pendiente' as 'pendiente', // Asegurando el tipo literal
         precio_final: this.calcularPrecioTotal(),

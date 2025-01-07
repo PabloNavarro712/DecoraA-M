@@ -1,98 +1,150 @@
 <div class="container">
-    <!-- Banner con título y datos -->
-    <div class="banner d-flex justify-content-between align-items-center p-3 mb-4">
+  <!-- Banner con título y datos -->
+  <div class="banner d-flex justify-content-between align-items-center p-3 mb-4">
       <div>
-        <h1 class="text-white mb-0">Reservas</h1>
-        <p class="text-light mb-0">Administra tus reservas fácilmente</p>
+          <h1 class="text-white mb-0">Reservas</h1>
+          <p class="text-light mb-0">Administra tus reservas fácilmente</p>
       </div>
       <div class="text-light text-end">
-        <p class="mb-0" id="current-date"></p>
-        <p class="mb-0" id="current-time"></p>
+          <p class="mb-0" id="current-date"></p>
+          <p class="mb-0" id="current-time"></p>
       </div>
-    </div>
+  </div>
   <!-- Filtros -->
   <div class="filters">
-    <label for="fecha">Fecha:</label>
-    <input type="date" id="fecha" [(ngModel)]="filtros.fecha" (input)="aplicarFiltros()" />
-  
-    <label for="tipoEvento">Tipo de Evento:</label>
-    <select id="tipoEvento" [(ngModel)]="filtros.tipoEvento" (change)="aplicarFiltros()">
-      <option value="">Todos</option>
-      <option value="Boda">Boda</option>
-      <option value="XV Años">XV Años</option> 
-      <option value="Baby Shower">Baby Shower</option>
-      <option value="Evento Corporativo">Evento Corporativo</option>
-      <option value="Fiesta Infantil">Fiesta Infantil</option>
-    </select>
-  
-    <label for="estadoEvento">Estado:</label>
-    <select id="estadoEvento" [(ngModel)]="filtros.estadoEvento" (change)="aplicarFiltros()">
-      <option value="">Todos</option>
-      <option value="aceptado">Aceptado</option>
-      <option value="pendiente">Pendiente</option>
-      <option value="reechazado">Rechazado</option>
-      <option value="cancelado">Cancelado</option>
-    </select>
-  
-    <!-- Botón para limpiar filtros -->
-    <button class="btn btn-secondary" (click)="limpiarFiltros()">Limpiar Filtros</button>
+      <label for="fecha">Fecha:</label>
+      <input type="date" id="fecha" [(ngModel)]="filtros.fecha" (input)="aplicarFiltros()" />
+
+      <label for="tipoEvento">Tipo de Evento:</label>
+      <select id="tipoEvento" [(ngModel)]="filtros.tipoEvento" (change)="aplicarFiltros()">
+          <option value="">Todos</option>
+          <option value="Boda">Boda</option>
+          <option value="XV Años">XV Años</option>
+          <option value="Baby Shower">Baby Shower</option>
+          <option value="Evento Corporativo">Evento Corporativo</option>
+          <option value="Fiesta Infantil">Fiesta Infantil</option>
+      </select>
+
+      <label for="estadoEvento">Estado:</label>
+      <select id="estadoEvento" [(ngModel)]="filtros.estadoEvento" (change)="aplicarFiltros()">
+          <option value="">Todos</option>
+          <option value="aceptado">Aceptado</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="cancelado">Cancelado</option>
+      </select>
+
+      <!-- Botón para limpiar filtros -->
+      <button class="btn btn-secondary" (click)="limpiarFiltros()">Limpiar Filtros</button>
   </div>
-  
 
   <!-- Tabla -->
   <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th style="width: 20%;">Nombre</th>
-          <th style="width: 20%;">Contacto</th>
-          <th style="width: 15%;">Fecha</th>
-          <th style="width: 20%;">Tipo de Evento</th>
-          <th style="width: 15%;">Estado</th>
-          <th style="width: 10%;">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let reserva of reservasFiltradas">
-          <td>{{ reserva.nombre }}</td>
-          <td>{{ reserva.contacto }}</td>
-          <td>{{ reserva.fechaEvento| date: 'shortDate' }}</td>
-          <td>{{ reserva.tipoEvento }}</td>
-          <td>{{ reserva.estado }}</td>
-          <td>
-            <button (click)="verDetalles(reserva)">Ver Detalles</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="table">
+          <thead>
+              <tr>
+                  <th style="width: 20%;">Nombre</th>
+                  <th style="width: 20%;">Contacto</th>
+                  <th style="width: 15%;">Fecha</th>
+                  <th style="width: 20%;">Tipo de Evento</th>
+                  <th style="width: 15%;">Estado</th>
+                  <th style="width: 10%;">Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reserva of reservasFiltradas">
+              <td>{{ reserva.nombre }}</td>
+              <td>{{ reserva.contacto }}</td>
+              <td>{{ reserva.fechaEvento | date: 'shortDate' }}</td>
+              <td>{{ reserva.tipoEvento }}</td>
+              <td>
+                <div class="d-flex align-items-center">
+                      <!-- Estado de la reserva -->
+                      {{ reserva.estado }}
+                  <!-- Icono de alerta para solicitud de cancelación -->
+                  
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <button 
+                  class="btn btn-primary btn-sm" 
+                  (click)="verDetalles(reserva)">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button 
+                    *ngIf="reserva.solicitud_cancelar" 
+                    class="btn btn-outline-success btn-sm me-2" 
+                    style="background-color: #dc3545;"
+                    placement="top"
+                   >
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                  </button>
+                </div>
+               
+              
+              </td>
+            </tr>
+          </tbody>
+      </table>
   </div>
-
-  <!-- Modal de Detalles -->
-  <div class="modal" *ngIf="reservaSeleccionada">
+</div>
+<!-- Modal de Detalles -->
+<div class="modal" *ngIf="reservaSeleccionada">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <h2>Detalles de la Reserva</h2>
+      <div class="modal-header">
+        <h3>{{ reservaSeleccionada.nombre }}</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
       <form #editarForm="ngForm" (ngSubmit)="guardarCambios()" novalidate>
-        <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre }}</p>
-        <p><strong>Contacto:</strong> {{ reservaSeleccionada.contacto }}</p>
+        <div class="modal-body">
+      <!-- Información de la reserva -->
 
+  
         <div *ngIf="!modoEdicion">
+          <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre }}</p>
+          <p><strong>Contacto:</strong> {{ reservaSeleccionada.contacto }}</p>
           <p><strong>Dirección:</strong> {{ reservaSeleccionada.ubicacionEvento }}</p>
-          <p><strong>Fecha:</strong> {{ reservaSeleccionada.fechaEvento| date: 'shortDate' }}</p>
+          <p><strong>Fecha:</strong> {{ reservaSeleccionada.fechaEvento  }}</p>
           <p><strong>Hora:</strong> {{ reservaSeleccionada.horaEvento }}</p>
           <p><strong>Tipo de Evento:</strong> {{ reservaSeleccionada.tipoEvento }}</p>
           <p><strong>Estado:</strong> {{ reservaSeleccionada.estado }}</p>
+          <div *ngIf="reservaSeleccionada.solicitud_cancelar" class="alert alert-warning" role="alert">
+            <strong>El cliente solicitó cancelación.</strong>
+          </div>
+      
         </div>
-
+  
+  
+        
         <div *ngIf="modoEdicion">
-          <label for="direccion"><strong>Dirección:</strong></label>
-          <input type="text" id="direccion" [(ngModel)]="reservaSeleccionada.ubicacionEvento" name="direccion" required />
 
-          <label for="fecha"><strong>Fecha:</strong></label>
-          <input type="date" id="fecha" [(ngModel)]="reservaSeleccionada.fechaEvento" name="fecha" required />
-
+  
+   
+       
+          <label for="nuevaFecha">
+            <strong>Nueva fecha:</strong>
+          </label>
+          <p>
+            <strong>Fecha:</strong> {{ reservaSeleccionada.fechaEvento }}
+          </p>
+          <div class="icon-date-picker">
+            <input 
+              type="date" 
+              id="nuevaFecha" 
+              name="nuevaFecha" 
+              [(ngModel)]="reservaSeleccionada.fechaEvento" 
+              (change)="formatearFecha()" 
+              required 
+            />
+            <span class="icon" (click)="abrirSelectorFecha()">📅</span>
+          </div>
+          
+          <br>
+          
           <label for="hora"><strong>Hora:</strong></label>
           <input type="time" id="hora" [(ngModel)]="reservaSeleccionada.horaEvento" name="hora" required />
-
+  
           <label for="tipoEvento"><strong>Tipo de Evento:</strong></label>
           <select id="tipoEvento" [(ngModel)]="reservaSeleccionada.tipoEvento" name="tipoEvento" required>
             <option value="Boda">Boda</option>
@@ -101,27 +153,50 @@
             <option value="Evento Corporativo">Evento Corporativo</option>
             <option value="Fiesta Infantil">Fiesta Infantil</option>
           </select>
-
+  
           <label for="estado"><strong>Estado:</strong></label>
           <select id="estado" [(ngModel)]="reservaSeleccionada.estado" name="estado" required>
             <option value="aceptado">Aceptado</option>
             <option value="pendiente">Pendiente</option>
-            <option value="reechazado">Rechazado</option>
             <option value="cancelado">Cancelado</option>
           </select>
-<!-- 
-          <label for="descripcion"><strong>Descripción:</strong></label>
-          <textarea id="descripcion" [(ngModel)]="reservaSeleccionada." name="descripcion" rows="3" required></textarea> -->
-        </div>
+          <hr>
+          <!-- Sección de solicitud de cancelación -->
+          <div *ngIf="reservaSeleccionada.solicitud_cancelar">
+            <h5 class="modal-title">Solicitud de Cancelación</h5>
+  
+            <!-- Motivo de cancelación -->
+             <!-- Motivo de la cancelación (No editable) -->
+        <label for="motivoCancelacion"><strong>Motivo de la cancelación:</strong></label>
+        <textarea id="motivoCancelacion" [(ngModel)]="reservaSeleccionada.Motivo" name="motivoCancelacion" rows="3" required readonly></textarea>
+    <!-- Respuesta (Editable) -->
+    <label for="respuesta"><strong>Respuesta:</strong></label>
+    <textarea id="respuesta" [(ngModel)]="reservaSeleccionada.Respuesta" name="respuesta" rows="3" required></textarea>
 
+            <!-- Reagendar opción -->
+            <div *ngIf="reservaSeleccionada.reagendar">
+              <p><strong>Fecha de Reagendamiento:</strong> {{ reservaSeleccionada.nvfecha | date: 'shortDate' }}</p>
+              <button class="btn"  (click)="confirmarReagendacion()">Espera confirmacion de reagendación</button>
+            </div>
+  
+            <div *ngIf="!reservaSeleccionada.reagendar">
+              <p><strong>No desea reagendar la reserva.</strong></p>
+            </div>
+          </div>
+        </div>
+  
         <!-- Botones -->
         <div class="modal-actions">
           <button *ngIf="!modoEdicion" type="button" (click)="activarEdicion()">Editar</button>
           <button *ngIf="modoEdicion" type="submit" [disabled]="!editarForm.valid">Guardar Cambios</button>
-        
-           <button type="button" (click)="cerrarModal()">Cancelar</button>
+          <button type="button" (click)="cerrarModal()">Cancelar</button>
         </div>
+        </div>
+        
       </form> 
     </div>
   </div>
-</div>
+
+  </div>
+ 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

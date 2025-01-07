@@ -53,4 +53,9 @@ export class EventosService extends GenericServiceService<any> {
   actualizarEstado(id: string, estado: 'aceptado' | 'reechazado'): Observable<IEvento> {
     return this.http.patch<IEvento>(`${this.url}${this.endpoint}/${id}/estado`, { estado });
   }
+   // Método para reagendar un evento
+   reagendarEvento(id: string, nuevaFecha: Date): Observable<void> {
+    // Convertir la nueva fecha a formato string, ya que el backend espera una fecha como string
+    return this.http.patch<void>(`${this.url}${this.endpoint}/${id}/reagendar`, { nvfecha: nuevaFecha.toISOString() });
+  }
 }

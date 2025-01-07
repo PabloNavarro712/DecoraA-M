@@ -107,25 +107,59 @@
           <label class="form-label">¿Desea Reagendar?</label>
           <div class="form-check">
             <input
-            type="radio"
-            id="siReagendar"
-            name="reagendar"
-            [(ngModel)]="deseaReagendar"
-            value=true
-            class="form-check-input"
-          />
-          <label for="siReagendar" class="form-check-label">Sí</label>
+              type="radio"
+              id="siReagendar"
+              name="reagendar"
+              [(ngModel)]="deseaReagendar"
+              [value]="true"
+              class="form-check-input"
+            />
+            <label for="siReagendar" class="form-check-label">Sí</label>
           </div>
           <div class="form-check">
             <input
-            type="radio"
-            id="noReagendar"
-            name="reagendar"
-            [(ngModel)]="deseaReagendar"
-            value=false
-            class="form-check-input"
-          />
-          <label for="noReagendar" class="form-check-label">No</label>
+              type="radio"
+              id="noReagendar"
+              name="reagendar"
+              [(ngModel)]="deseaReagendar"
+              [value]="false"
+              class="form-check-input"
+            />
+            <label for="noReagendar" class="form-check-label">No</label>
+          </div>
+        </div>
+        <!-- Mostrar calendario solo si deseaReagendar es true -->
+        <div class="calendario-contenedor" *ngIf="deseaReagendar">
+          <div class="calendario text-center">
+            <!-- Navegación del calendario -->
+            <div class="cabecera">
+              <button type="button" (click)="navegarMes(-1)" aria-label="Mes anterior">&#10094;</button>
+              <h5>{{ mes + 1 }} / {{ anio }}</h5>
+              <button type="button" (click)="navegarMes(1)" aria-label="Mes siguiente">&#10095;</button>
+            </div>
+        
+            <!-- Días de la semana -->
+            <div class="dias-semana">
+              <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
+            </div>
+        
+            <!-- Días del mes -->
+            <div class="dias">
+              <div *ngFor="let dia of dias" 
+                   (click)="isSelectable(dia) ? seleccionarFecha(dia) : null" 
+                   [ngClass]="{
+                     'hoy': isToday(dia), 
+                     'seleccionado': fechaSeleccionada?.getDate() === dia, 
+                     'no-seleccionable': !isSelectable(dia) && dia > 0
+                   }">
+                {{ dia > 0 ? dia : '' }}
+              </div>  
+            </div>
+        
+            <!-- Fecha seleccionada -->
+            <div *ngIf="fechaSeleccionada" class="mt-2">
+              <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -135,4 +169,5 @@
       </div>
     </div>
   </div>
+
 </div>

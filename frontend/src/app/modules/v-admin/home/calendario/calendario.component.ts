@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventosService } from 'src/services/api/eventos/eventos.service';
 import { IEvento } from 'src/models/ievento.metadata';
+import { formatDate } from '@angular/common';
 declare var $: any; // Asegúrate de que jQuery esté disponible
 interface Event {
   date: Date;
@@ -23,8 +24,9 @@ export class CalendarioComponent implements OnInit {
   weekDays: string[] = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
   events: Event[] = [];
   isCollapsed: boolean = false;
-  acceptedDates: Set<number> = new Set();  // Fechas aceptadas
-  pendingDates: Set<number> = new Set();   // Fechas pendientes
+  acceptedDates: Set<string> = new Set();  // Fechas aceptadas como cadenas ISO (fecha completa)
+
+  pendingDates: Set<string> = new Set();
   eventos: IEvento[] = [];
   showCancelModal: boolean = false;  
   constructor(private yourService: EventosService) {}
@@ -36,9 +38,11 @@ export class CalendarioComponent implements OnInit {
   }
   loadAcceptedDates() {
     this.yourService.getFechasAceptadas().subscribe(dates => {
-      this.acceptedDates = new Set(dates.map(date => new Date(date).getDate()));
+      // Guardamos las fechas como objetos completos Date (no solo el día)
+      this.acceptedDates = new Set(dates.map(date => new Date(date).toISOString()));  // Guardamos la fecha completa
     });
   }
+  
     // Función para cerrar el modal
     closeCancelModal(): void {
       this.showCancelModal = false;
@@ -50,19 +54,19 @@ export class CalendarioComponent implements OnInit {
   }
   loadPendingDates() {
     this.yourService.getFechasPendientes().subscribe(dates => {
-      this.pendingDates = new Set(dates.map(date => new Date(date).getDate()));
+      this.pendingDates = new Set(dates.map(date => new Date(date).toISOString()));  // Gua
     });
   }
-
-  prevMonth() {
+  prevMonth(): void {
     if (this.currentMonth === 0) {
       this.currentMonth = 11;
       this.currentYear--;
     } else {
       this.currentMonth--;
     }
+    this.refreshCalendar();
   }
-
+  
   nextMonth() {
     if (this.currentMonth === 11) {
       this.currentMonth = 0;
@@ -70,17 +74,28 @@ export class CalendarioComponent implements OnInit {
     } else {
       this.currentMonth++;
     }
+    this.refreshCalendar();
+  }
+  refreshCalendar() {
+    this.clearDayStyles(); // Limpiar estilos anteriores
+    // Recalcula los días y los estados de las fechas al cambiar el mes
+    this.getDaysInMonth(this.currentMonth);
+    this.getFirstDayOffset(this.currentMonth);
   }
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  getDaysInMonth(monthIndex: number): number[] {
-    const daysInMonth = new Date(this.currentYear, monthIndex + 1, 0).getDate();
-    return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  getDaysInMonth(month: number): number[] {
+    const date = new Date(this.currentYear, month, 1);
+    const days = [];
+    while (date.getMonth() === month) {
+      days.push(date.getDate());
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
   }
-
   getFirstDayOffset(monthIndex: number): number[] {
     const firstDay = new Date(this.currentYear, monthIndex, 1).getDay();
     return Array(firstDay).fill(null);
@@ -90,11 +105,16 @@ export class CalendarioComponent implements OnInit {
     const today = new Date();
     return (
       day === today.getDate() &&
-      monthIndex === today.getMonth() &&
+      this.currentMonth === today.getMonth() &&
       this.currentYear === today.getFullYear()
     );
   }
-
+  formatFechaEvento(fecha: string | Date): string {
+    const opciones: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaObj = new Date(fecha);
+    return new Intl.DateTimeFormat('es-ES', opciones).format(fechaObj);
+  }
+  
  // Método para manejar la selección de la fecha
  selectDate(day: number, monthIndex: number) {
   // Crear la fecha seleccionada con el día y mes seleccionados
@@ -106,7 +126,7 @@ export class CalendarioComponent implements OnInit {
   
   // Llamar al servicio para obtener los eventos de la fecha seleccionada
   this.getEventosPorFecha(fechaSeleccionadaISO);
-  this.openModal(); 
+
 }
 
  // Llamar al servicio para obtener los eventos por fecha
@@ -124,19 +144,34 @@ export class CalendarioComponent implements OnInit {
     this.events = this.events.filter(e => e !== event);
   }
 
-  hasEventOnDay(day: number, monthIndex: number): boolean {
-    return this.events.some(event =>
-      event.date.getFullYear() === this.currentYear &&
-      event.date.getMonth() === monthIndex &&
-      event.date.getDate() === day
-    );
+  hasEventOnDay(day: number, month: number): boolean {
+    // Filtrar eventos del mes actual
+    return this.eventos.some(evento => {
+      const eventoFecha = new Date(evento.fechaEvento);
+      return (
+        eventoFecha.getDate() === day &&
+        eventoFecha.getMonth() === month &&
+        eventoFecha.getFullYear() === this.currentYear
+      );
+    });
   }
-  isAccepted(day: number): boolean {
-    return this.acceptedDates.has(day);
+  clearDayStyles(): void {
+    const days = document.querySelectorAll('.day.has-event');
+    days.forEach(day => day.classList.remove('has-event'));
+  }
+  isAccepted(day: number, month: number, year: number): boolean {
+    // Recorremos las fechas aceptadas y comparamos el día, mes y año
+    return Array.from(this.acceptedDates).some(date => {
+      const acceptedDate = new Date(date);
+      return acceptedDate.getDate() === day && acceptedDate.getMonth() === month && acceptedDate.getFullYear() === year;
+    });
   }
 
-  isPending(day: number): boolean {
-    return this.pendingDates.has(day);
+  isPending(day: number, month: number, year: number): boolean {
+    return Array.from(this.pendingDates).some(date => {
+      const pendingDates = new Date(date);
+      return pendingDates.getDate() === day && pendingDates.getMonth() === month && pendingDates.getFullYear() === year;
+    });
   }
 // Función para actualizar el estado del evento
 updateEstado(evento: IEvento, nuevoEstado: 'aceptado' | 'reechazado'): void {

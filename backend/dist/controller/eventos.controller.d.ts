@@ -23,5 +23,6 @@ export declare class EventosController extends GenericEventosController {
     getFechasEventosPendientes(): Promise<string[]>;
     getEventosOrdenados(): Promise<EventosDocument[]>;
     actualizarEstado(id: string, estado: 'aceptado' | 'reechazado'): Promise<EventosDocument>;
+    reagendarEvento(id: string, nvfecha: string): Promise<void>;
 }
 export {};

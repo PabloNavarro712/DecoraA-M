@@ -2,8 +2,13 @@ import {
   Controller,
   Post,
   Body,
+  Get,
+  Patch,
+  Param,
+  Query,
   Logger,
   BadRequestException,
+  HttpCode,
   HttpStatus,
   HttpException,
 } from '@nestjs/common';
@@ -41,6 +46,64 @@ export class UsuariosController extends GenericUsuariosController {
         );
       }
       // Rethrow other errors
+      throw error;
+    }
+  }
+  @Get('/paginados')
+  async getUsuariosPaginated(
+    @Query('page') page: number = 1,
+    @Query('nombreCompleto') nombreCompleto?: string,
+  ) {
+    try {
+      const usuarios = await this.usuariosService.getUsuariosPaginated(
+        page,
+        nombreCompleto,
+      );
+      return usuarios;
+    } catch (error) {
+      throw new HttpException(
+        { message: error.message },
+        error instanceof HttpException
+          ? error.getStatus()
+          : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  @Patch('/:id/bloqueado')
+  async updateUsuarioBloqueado(
+    @Param('id') id: string,
+    @Body('bloqueado') bloqueado: boolean,
+  ) {
+    try {
+      if (typeof bloqueado !== 'boolean') {
+        throw new BadRequestException(
+          'El valor de "bloqueado" debe ser un booleano.',
+        );
+      }
+      return await this.usuariosService.updateUsuarioBloqueado(id, bloqueado);
+    } catch (error) {
+      this.logger.error(
+        `Error al actualizar la propiedad "bloqueado": ${error.message}`,
+      );
+      if (error instanceof BadRequestException) {
+        throw new HttpException(
+          { message: error.message },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw error;
+    }
+  }
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  async login(
+    @Body('usuario') usuario: string,
+    @Body('contrasena') contrasena: string,
+  ): Promise<UsuariosDocument> {
+    try {
+      return await this.usuariosService.login(usuario, contrasena);
+    } catch (error) {
+      this.logger.error(`Error en el endpoint login: ${error.message}`);
       throw error;
     }
   }

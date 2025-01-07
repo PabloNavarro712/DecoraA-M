@@ -118,4 +118,23 @@ export class EventosController extends GenericEventosController {
   ): Promise<EventosDocument> {
     return this.eventosService.actualizarEstadoEvento(id, estado);
   }
+
+  @Patch(':id/reagendar')
+  async reagendarEvento(
+    @Param('id') id: string,
+    @Body('nvfecha') nvfecha: string, // Espera una fecha en formato string
+  ): Promise<void> {
+    try {
+      const nuevaFecha = new Date(nvfecha);
+      await this.eventosService.reagendarEvento(id, nuevaFecha);
+      this.logger.log(
+        `Evento con ID ${id} reagendado a la fecha ${nuevaFecha.toISOString()}`,
+      );
+    } catch (error) {
+      this.logger.error(
+        `Error al reagendar evento con ID ${id}: ${error.message}`,
+      );
+      throw error;
+    }
+  }
 }

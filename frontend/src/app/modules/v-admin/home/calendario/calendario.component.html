@@ -1,85 +1,109 @@
 <!-- Calendario y eventos -->
-<div class="admin-calendar-container">
-  <div class="calendar-header">
-    <button (click)="prevMonth()" class="nav-button">&#9664;</button>
-    <h2>{{ months[currentMonth] }} {{ currentYear }}</h2>
-    <button (click)="nextMonth()" class="nav-button">&#9654;</button>
-    <button (click)="toggleCollapse()" class="collapse-button" [innerHTML]="isCollapsed ? '&#x2192;' : '&#x2193;'"></button>
-  </div>
-
-  <div *ngIf="!isCollapsed" class="calendar-grid">
-    <div class="week-days">
-      <div *ngFor="let day of weekDays">{{ day }}</div>
+<div class="row admin-calendar-container">
+  <!-- Columna del calendario -->
+   
+  <div class="col-md-6">
+    <div class="calendar-header">
+      <button (click)="prevMonth()" class="nav-button">&#9664;</button>
+      <h2>{{ months[currentMonth] }} {{ currentYear }}</h2>
+      <button (click)="nextMonth()" class="nav-button">&#9654;</button>
+      <button (click)="toggleCollapse()" class="collapse-button" [innerHTML]="isCollapsed ? '&#x2192;' : '&#x2193;'"></button>
     </div>
 
-    <div class="days">
-      <div *ngFor="let day of getFirstDayOffset(currentMonth).concat(getDaysInMonth(currentMonth))" class="day-box">
-        <div *ngIf="day"
-             class="day"
-             [ngClass]="{
-               today: isToday(day, currentMonth),
-               'has-event': hasEventOnDay(day, currentMonth),
-               'accepted': isAccepted(day),
-               'pending': isPending(day)
-             }"
-             (click)="selectDate(day, currentMonth)">
-          {{ day }}
-        </div>
+    <div *ngIf="!isCollapsed" class="calendar-grid">
+      <div class="week-days">
+        <div *ngFor="let day of weekDays">{{ day }}</div>
       </div>
-    </div>
-  </div>
-</div>
 
-<!-- Modal para mostrar eventos -->
-<div *ngIf="showCancelModal" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel">Eventos para la fecha seleccionada</h5>
-        <button type="button" class="close" (click)="closeCancelModal()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <!-- Recorrer los eventos y mostrarlos en tarjetas -->
-          <div *ngFor="let evento of eventos" class="col-md-12 mb-4">
-            <div class="card shadow-sm">
-              <div class="card-header bg-primary text-white">
-                <h5 class="card-title">{{ evento.nombre }}</h5>
-              </div>
-              <div class="card-body">
-                <p><strong>Ubicación:</strong> {{ evento.ubicacionEvento }}</p>
-                <p><strong>Fecha:</strong> {{ evento.fechaEvento | date: 'fullDate' }}</p>
-                <p><strong>Hora:</strong> {{ evento.horaEvento }}</p>
-                <p><strong>Estado:</strong>
-                  <span [ngClass]="{
-                    'text-success': evento.estado === 'aceptado',
-                    'text-danger': evento.estado === 'reechazado',
-                    'text-warning': evento.estado === 'pendiente'
-                  }">{{ evento.estado }}</span>
-                </p>
-                <p><strong>Precio:</strong> ${{ evento.precio_final }}</p>
-                <p *ngIf="evento.adiciones.length > 0"><strong>Adiciones:</strong>
-                  <ul>
-                    <li *ngFor="let adic of evento.adiciones">
-                      {{ adic.nombre }} - ${{ adic.precio }}
-                    </li>
-                  </ul>
-             
-                <button *ngIf="evento.estado === 'pendiente'" (click)="updateEstado(evento, 'aceptado')" class="btn btn-success btn-sm">Aceptar</button>
-                <button *ngIf="evento.estado === 'pendiente'" (click)="updateEstado(evento, 'reechazado')" class="btn btn-danger btn-sm">Rechazar</button>
-              </div>
-              <div class="card-footer text-muted">
-                <p><strong>Contacto:</strong> {{ evento.contacto }}</p>
-                <p><strong>Email:</strong> <a href="mailto:{{ evento.correoElectronico }}">{{ evento.correoElectronico }}</a></p>
-              </div>
-            </div>
+      <div class="days">
+        <div *ngFor="let day of getFirstDayOffset(currentMonth).concat(getDaysInMonth(currentMonth))" class="day-box">
+          <div *ngIf="day"
+               class="day"
+               [ngClass]="{
+                 today: isToday(day, currentMonth),
+                 'has-event': hasEventOnDay(day, currentMonth),
+                 'accepted': isAccepted(day, currentMonth, currentYear), 
+                 'pending': isPending(day, currentMonth, currentYear)
+               }"
+               (click)="selectDate(day, currentMonth)">
+            {{ day }}
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeCancelModal()">Cerrar</button>
+    </div>
+  </div>
+<!-- Columna de eventos -->
+<div class="col-md-6">
+  <div class="row">
+    <!-- Mostrar mensaje si no hay eventos -->
+    <div *ngIf="eventos.length === 0" class="col-md-12 text-center mt-5">
+      <div class="alert alert-warning">
+        <h4 class="alert-heading">No hay eventos disponibles</h4>
+        <p>Por favor, selecciona una fecha marcada en el calendario.</p>
+      </div>
+    </div>
+
+    <!-- Mostrar eventos si existen -->
+    <div *ngFor="let evento of eventos" class="col-md-12 mb-4">
+      <div class="card shadow-lg">
+        <!-- Cabecera de la tarjeta -->
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title m-0">{{ evento.nombre }}</h5>
+        </div>
+
+        <!-- Cuerpo de la tarjeta -->
+        <div class="card-body">
+          <!-- Datos del cliente -->
+          <h6 class="text-primary">Datos del Cliente</h6>
+          <p><strong>Contacto:</strong> {{ evento.contacto }}</p>
+          <p><strong>Email:</strong> <a href="mailto:{{ evento.correoElectronico }}">{{ evento.correoElectronico }}</a></p>
+
+          <hr>
+
+          <!-- Datos del evento -->
+          <h6 class="text-primary">Datos del Evento</h6>
+          <p><strong>Ubicación:</strong> {{ evento.ubicacionEvento }}</p>
+          <p><strong>Fecha:</strong> {{ formatFechaEvento(evento.fechaEvento) }}</p>
+          <p><strong>Hora:</strong> {{ evento.horaEvento }}</p>
+          <p><strong>Estado:</strong>
+            <span [ngClass]="{
+              'text-success': evento.estado === 'aceptado',
+              'text-danger': evento.estado === 'reechazado',
+              'text-warning': evento.estado === 'pendiente'
+            }">{{ evento.estado | titlecase }}</span>
+          </p>
+
+          <hr>
+
+          <!-- Detalles del evento -->
+          <h6 class="text-primary">Detalles del Evento</h6>
+          <p><strong>Tipo Evento:</strong> ${{ evento.tipoEvento}}</p>
+          <p><strong>Precio:</strong> ${{ evento.precio_final }}</p>
+          <p *ngIf="evento.adiciones.length > 0"><strong>Adiciones:</strong>
+            <ul class="list-group">
+              <li *ngFor="let adic of evento.adiciones" class="list-group-item d-flex justify-content-between align-items-center">
+                {{ adic.nombre }}
+                <span class="badge bg-secondary">${{ adic.precio }}</span>
+              </li>
+            </ul>
+   
+          <p><strong>Precio Total:</strong> ${{ evento.precio_final }}</p>
+
+          <!-- Botones de acción -->
+          <div *ngIf="evento.estado === 'pendiente'" class="mt-3">
+            <button (click)="updateEstado(evento, 'aceptado')" class="btn btn-success btn-sm me-2">
+              Aceptar
+            </button>
+            <button (click)="updateEstado(evento, 'reechazado')" class="btn btn-danger btn-sm">
+              Rechazar
+            </button>
+          </div>
+        </div>
+
+        <!-- Pie de la tarjeta -->
+        <div class="card-footer text-muted">
+          <small>Evento creado el: {{ formatFechaEvento(evento.fechaHoraReserva) }}</small>
+        </div>
       </div>
     </div>
   </div>

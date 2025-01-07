@@ -1,0 +1,81 @@
+<div class="dashboard-container" *ngIf="!isLoading; else loading">
+  <div class="row">
+    <!-- Total Ganancias -->
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Ganancia Total Acumulada</h4>
+        </div>
+        <div class="card-body">
+          <apx-chart
+            [series]="chartGananciasTotales.series"
+            [chart]="chartGananciasTotales.chart"
+            [title]="chartGananciasTotales.title"
+            [xaxis]="chartGananciasTotales.xaxis"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ganancias Mensuales -->
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Ganancias Mensuales</h4>
+        </div>
+        <div class="card-body">
+          <apx-chart
+            [series]="chartGananciasMensuales.series"
+            [chart]="chartGananciasMensuales.chart"
+            [title]="chartGananciasMensuales.title"
+            [xaxis]="chartGananciasMensuales.xaxis"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Eventos por Mes -->
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Eventos por Mes</h4>
+        </div>
+        <div class="card-body">
+          <apx-chart
+            [series]="chartEventosPorMes.series"
+            [chart]="chartEventosPorMes.chart"
+            [title]="chartEventosPorMes.title"
+            [xaxis]="chartEventosPorMes.xaxis"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clientes Pastel -->
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Clientes Activos e Inactivos</h4>
+        </div>
+        <div class="card-body">
+          <apx-chart
+            [series]="chartClientesPastel.series"
+            [chart]="chartClientesPastel.chart"
+            [labels]="chartClientesPastel.labels"
+            [title]="chartClientesPastel.title"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </div>
+</ng-template>

@@ -6,4 +6,9 @@ export declare class UsuariosService extends GenericService<UsuariosDocument> {
     verificarYCrearUsuario(usuario: UsuariosDocument): Promise<{
         message: string;
     }>;
+    getUsuariosPaginated(page: number, nombreCompleto?: string): Promise<UsuariosDocument[]>;
+    updateUsuarioBloqueado(id: string, bloqueado: boolean): Promise<{
+        message: string;
+    }>;
+    login(usuario: string, contrasena: string): Promise<UsuariosDocument>;
 }
