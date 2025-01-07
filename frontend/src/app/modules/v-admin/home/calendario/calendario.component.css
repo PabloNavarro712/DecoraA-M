@@ -77,7 +77,7 @@
 }
 
 .day.pending {
-  background-color: yellow;
+  background-color: #ffc107;
   color: black;
 }
 .day {

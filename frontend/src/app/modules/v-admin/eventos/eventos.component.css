@@ -244,4 +244,28 @@ body {
     margin: 0;
   }
   
-  
+  /* Oculta visualmente el input, pero permite interactuar con él mediante el icono */
+.icon-date-picker {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-date-picker input[type="date"] {
+  width: 32px; /* Reduce el tamaño visual */
+  height: 32px;
+  opacity: 0; /* Oculta el input */
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer; /* Permite clics a través del icono */
+}
+
+.icon-date-picker .icon {
+  font-size: 24px;
+  color: #b41e46;
+  cursor: pointer;
+}
+
+.icon-date-picker .icon:hover {
+  color: #d23b5e;
+}

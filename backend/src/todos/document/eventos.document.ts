@@ -11,6 +11,8 @@ export class EventosDocument {
   tipoEvento: string; // Tipo de evento
   horaEvento: string; // Hora del evento
   fechaEvento: Date; // Fecha del evento
+  mes!: string;
+  anio!: string;
   estado: 'aceptado' | 'reechazado' | 'pendiente' | 'cancelado';
   precio_final: number;
   adiciones: {

@@ -6,30 +6,28 @@ import { GenericServiceService } from 'src/app/shared/generic.service.service';
 @Injectable({
   providedIn: 'root'
 })
-export class GraficasService  extends GenericServiceService<any> {
-
+export class GraficasService extends GenericServiceService<any> {
   constructor(protected override http: HttpClient) {
     super(http, 'graficas'); // Define el endpoint base
   }
 
-
-  getEventosPorMes(): Observable<any> {
-    return this.http.get(`${this.url}graficas/eventos-por-mes`);
+  // Método para obtener eventos por mes
+  getEventosPorMes(mes: string): Observable<any> {
+    return this.http.get(`${this.url}graficas/eventos/${mes}`);
   }
 
-  getGananciasMensuales(): Observable<any> {
-    return this.http.get(`${this.url}graficas/ganancias-mensuales`);
+  // Método para obtener ganancias por mes
+  getGananciasPorMes(mes: string): Observable<any> {
+    return this.http.get(`${this.url}graficas/ganancias/${mes}`);
   }
 
-  getTotalClientes(): Observable<any> {
-    return this.http.get(`${this.url}graficas/total-clientes`);
+  // Método para obtener estadísticas por año
+  getEstadisticasPorAnio(anio: string): Observable<any> {
+    return this.http.get(`${this.url}graficas/estadisticas/${anio}`);
   }
 
-  getTotalEventosCancelados(): Observable<any> {
-    return this.http.get(`${this.url}graficas/total-eventos-cancelados`);
-  }
-
-  getGananciaAcumuladaAnual(): Observable<any> {
-    return this.http.get(`${this.url}graficas/ganancia-acumulada-anual`);
+  // Método para obtener estadísticas de clientes atendidos
+  getClientesEstadisticas(): Observable<any> {
+    return this.http.get(`${this.url}graficas/clientes/estadisticas`);
   }
 }

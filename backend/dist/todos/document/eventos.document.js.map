@@ -1,1 +1,1 @@
-{"version":3,"file":"eventos.document.js","sourceRoot":"","sources":["../../../src/todos/document/eventos.document.ts"],"names":[],"mappings":";;;AAAA,MAAa,eAAe;IAwB1B,YAAY,OAAiC;QAC3C,MAAM,CAAC,MAAM,CAAC,IAAI,EAAE,OAAO,CAAC,CAAC;IAC/B,CAAC;;AA1BH,0CA2BC;AA1BQ,8BAAc,GAAG,SAAS,CAAC"}
+{"version":3,"file":"eventos.document.js","sourceRoot":"","sources":["../../../src/todos/document/eventos.document.ts"],"names":[],"mappings":";;;AAAA,MAAa,eAAe;IA0B1B,YAAY,OAAiC;QAC3C,MAAM,CAAC,MAAM,CAAC,IAAI,EAAE,OAAO,CAAC,CAAC;IAC/B,CAAC;;AA5BH,0CA6BC;AA5BQ,8BAAc,GAAG,SAAS,CAAC"}

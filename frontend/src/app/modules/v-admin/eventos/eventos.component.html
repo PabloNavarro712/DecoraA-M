@@ -30,7 +30,6 @@
           <option value="">Todos</option>
           <option value="aceptado">Aceptado</option>
           <option value="pendiente">Pendiente</option>
-          <option value="rechazado">Rechazado</option>
           <option value="cancelado">Cancelado</option>
       </select>
 
@@ -94,18 +93,19 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="productoModalLabel">Detalles de la Reserva</h5>
+        <h3>{{ reservaSeleccionada.nombre }}</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <form #editarForm="ngForm" (ngSubmit)="guardarCambios()" novalidate>
         <div class="modal-body">
       <!-- Información de la reserva -->
-      <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre }}</p>
-      <p><strong>Contacto:</strong> {{ reservaSeleccionada.contacto }}</p>
+
   
         <div *ngIf="!modoEdicion">
+          <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre }}</p>
+          <p><strong>Contacto:</strong> {{ reservaSeleccionada.contacto }}</p>
           <p><strong>Dirección:</strong> {{ reservaSeleccionada.ubicacionEvento }}</p>
-          <p><strong>Fecha:</strong> {{ reservaSeleccionada.fechaEvento | date: 'shortDate' }}</p>
+          <p><strong>Fecha:</strong> {{ reservaSeleccionada.fechaEvento  }}</p>
           <p><strong>Hora:</strong> {{ reservaSeleccionada.horaEvento }}</p>
           <p><strong>Tipo de Evento:</strong> {{ reservaSeleccionada.tipoEvento }}</p>
           <p><strong>Estado:</strong> {{ reservaSeleccionada.estado }}</p>
@@ -118,17 +118,30 @@
   
         
         <div *ngIf="modoEdicion">
+
+  
+   
+       
+          <label for="nuevaFecha">
+            <strong>Nueva fecha:</strong>
+          </label>
+          <p>
+            <strong>Fecha:</strong> {{ reservaSeleccionada.fechaEvento }}
+          </p>
+          <div class="icon-date-picker">
+            <input 
+              type="date" 
+              id="nuevaFecha" 
+              name="nuevaFecha" 
+              [(ngModel)]="reservaSeleccionada.fechaEvento" 
+              (change)="formatearFecha()" 
+              required 
+            />
+            <span class="icon" (click)="abrirSelectorFecha()">📅</span>
+          </div>
+          
           <br>
-          <hr>
-          <h2>Detalles de la Reserva</h2>
-          <p><strong>Nombre:</strong> {{ reservaSeleccionada.nombre }}</p>
-          <p><strong>Contacto:</strong> {{ reservaSeleccionada.contacto }}</p>
-          <label for="direccion"><strong>Dirección:</strong></label>
-          <input type="text" id="direccion" [(ngModel)]="reservaSeleccionada.ubicacionEvento" name="direccion" required />
-  
-          <label for="fecha"><strong>Fecha:</strong></label>
-          <input type="date" id="fecha" [(ngModel)]="reservaSeleccionada.fechaEvento" name="fecha" required />
-  
+          
           <label for="hora"><strong>Hora:</strong></label>
           <input type="time" id="hora" [(ngModel)]="reservaSeleccionada.horaEvento" name="hora" required />
   
@@ -145,7 +158,6 @@
           <select id="estado" [(ngModel)]="reservaSeleccionada.estado" name="estado" required>
             <option value="aceptado">Aceptado</option>
             <option value="pendiente">Pendiente</option>
-            <option value="rechazado">Rechazado</option>
             <option value="cancelado">Cancelado</option>
           </select>
           <hr>
@@ -164,7 +176,7 @@
             <!-- Reagendar opción -->
             <div *ngIf="reservaSeleccionada.reagendar">
               <p><strong>Fecha de Reagendamiento:</strong> {{ reservaSeleccionada.nvfecha | date: 'shortDate' }}</p>
-              <button class="btn" (click)="confirmarReagendacion()">Confirmar Reagendación</button>
+              <button class="btn"  (click)="confirmarReagendacion()">Espera confirmacion de reagendación</button>
             </div>
   
             <div *ngIf="!reservaSeleccionada.reagendar">

@@ -8,7 +8,7 @@ import {
   ApexXAxis,
   ApexDataLabels,
   ApexAxisChartSeries,
-  ApexTitleSubtitle
+  ApexTitleSubtitle,
 } from 'ng-apexcharts';
 
 export type ChartOptions = {
@@ -25,7 +25,7 @@ export type ChartOptions = {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   totalClientes: number = 0;
@@ -50,59 +50,52 @@ export class DashboardComponent implements OnInit {
   cargarDatosGraficas() {
     this.isLoading = true;
 
-    this.graficasService.getTotalClientes().subscribe(
-      response => {
-        this.totalClientes = response.data;
+    // Obtener estadísticas de clientes
+    this.graficasService.getClientesEstadisticas().subscribe(
+      (response) => {
+        this.totalClientes = response.data.totalClientes;
         this.configurarGraficaClientesPastel();
       },
-      error => {
-        this.errorMessage = 'Error al cargar total de clientes';
+      (error) => {
+        this.errorMessage = 'Error al cargar estadísticas de clientes';
         console.error(this.errorMessage, error);
-      }
+      },
     );
 
-    this.graficasService.getGananciasMensuales().subscribe(
-      response => {
+    // Obtener ganancias mensuales
+    this.graficasService.getGananciasPorMes("2").subscribe(
+      (response) => {
         this.gananciasMensuales = response.data;
         this.configurarGraficaGananciasMensuales();
       },
-      error => {
+      (error) => {
         this.errorMessage = 'Error al cargar ganancias mensuales';
         console.error(this.errorMessage, error);
-      }
+      },
     );
 
-    this.graficasService.getEventosPorMes().subscribe(
-      response => {
+    // Obtener eventos por mes
+    this.graficasService.getEventosPorMes("2").subscribe(
+      (response) => {
         this.eventosPorMes = response.data;
         this.configurarGraficaEventosPorMes();
       },
-      error => {
+      (error) => {
         this.errorMessage = 'Error al cargar eventos por mes';
         console.error(this.errorMessage, error);
-      }
+      },
     );
 
-    this.graficasService.getGananciaAcumuladaAnual().subscribe(
-      response => {
-        this.gananciasTotales = response.data;
+    // Obtener estadísticas anuales
+    this.graficasService.getEstadisticasPorAnio("2025").subscribe(
+      (response) => {
+        this.gananciasTotales = response.data.totalGanancias;
         this.configurarGraficaGananciasTotales();
       },
-      error => {
-        this.errorMessage = 'Error al cargar ganancia acumulada';
+      (error) => {
+        this.errorMessage = 'Error al cargar estadísticas anuales';
         console.error(this.errorMessage, error);
-      }
-    );
-
-    this.graficasService.getTotalEventosCancelados().subscribe(
-      response => {
-        this.eventosCancelados = response.data;
-        this.configurarGraficaEventosPorMes();
       },
-      error => {
-        this.errorMessage = 'Error al cargar eventos cancelados';
-        console.error(this.errorMessage, error);
-      }
     );
 
     this.isLoading = false;
@@ -113,95 +106,114 @@ export class DashboardComponent implements OnInit {
       series: [this.gananciasTotales],
       chart: {
         type: 'bar',
-        height: 350
+        height: 350,
       },
       title: {
-        text: 'Ganancia Total Acumulada'
+        text: 'Ganancia Total Acumulada',
       },
       xaxis: {
-        categories: ['Ganancias']
-      }
+        categories: ['Ganancias'],
+      },
     };
   }
 
   configurarGraficaGananciasMensuales() {
     const nombresMeses = [
-      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
     ];
-  
+
     const mesesNumericos = Object.keys(this.gananciasMensuales);
-    const meses = mesesNumericos.map(num => nombresMeses[parseInt(num) - 1] || num); // Convierte números a nombres
+    const meses = mesesNumericos.map(
+      (num) => nombresMeses[parseInt(num) - 1] || num,
+    );
     const valores = Object.values(this.gananciasMensuales);
-  
+
     this.chartGananciasMensuales = {
-      series: [{
-        name: 'Ganancias',
-        data: valores
-      }],
+      series: [
+        {
+          name: 'Ganancias',
+          data: valores,
+        },
+      ],
       chart: {
         type: 'bar',
-        height: 350
+        height: 350,
       },
       title: {
-        text: 'Ganancias Mensuales'
+        text: 'Ganancias Mensuales',
       },
       xaxis: {
-        categories: meses // Ahora usa los nombres de los meses
-      }
+        categories: meses,
+      },
     };
   }
-  
 
   configurarGraficaEventosPorMes() {
     const nombresMeses = [
-      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
     ];
-  
+
     const mesesNumericos = Object.keys(this.eventosPorMes);
-    const meses = mesesNumericos.map(num => nombresMeses[parseInt(num) - 1] || num); // Convierte números a nombres
-    const eventosTotales = mesesNumericos.map(num => 
-      Object.values(this.eventosPorMes[num]).reduce((a, b) => a + b, 0)
+    const meses = mesesNumericos.map(
+      (num) => nombresMeses[parseInt(num) - 1] || num,
     );
-    const eventosCancelados = Array(meses.length).fill(this.eventosCancelados);
-  
+    const eventosTotales = mesesNumericos.map((num) =>
+      Object.values(this.eventosPorMes[num]).reduce((a, b) => a + b, 0),
+    );
+
     this.chartEventosPorMes = {
       series: [
         {
           name: 'Totales',
-          data: eventosTotales
+          data: eventosTotales,
         },
-        {
-          name: 'Cancelados',
-          data: eventosCancelados
-        }
       ],
       chart: {
         type: 'bar',
-        height: 350
+        height: 350,
       },
       title: {
-        text: 'Eventos por Mes'
+        text: 'Eventos por Mes',
       },
       xaxis: {
-        categories: meses // Ahora usa los nombres de los meses
-      }
+        categories: meses,
+      },
     };
   }
-  
 
   configurarGraficaClientesPastel() {
     this.chartClientesPastel = {
-      series: [this.totalClientes, 10 - this.totalClientes], // Asume 100 como total ejemplo
+      series: [this.totalClientes, 100 - this.totalClientes],
       chart: {
         type: 'pie',
-        height: 350
+        height: 350,
       },
-      labels: ['Clientes con Pedido', 'Otros'],
+      labels: ['Clientes Activos', 'Inactivos'],
       title: {
-        text: 'Total de Clientes con Pedido'
-      }
+        text: 'Clientes',
+      },
     };
   }
 }
