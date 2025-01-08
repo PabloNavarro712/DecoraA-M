@@ -18,10 +18,10 @@ table {
 }
 
 .input-group .btn:hover {
-  background-color: #012a68d2; /* Cambia el color al pasar el mouse */
+  background-color: #c9a600; /* Cambia el color al pasar el mouse */
 }
 .modal-header{
-  background-color: #012a68d2;
+  background-color: #1c1c1c;
   color: #012a68d2;
 }
 .btn-sm {
@@ -33,11 +33,11 @@ table {
 }
 
 .pagination .page-link {
-  color: #1e21b4;
+  color: #000000;
 }
 
 .pagination .page-item.active .page-link {
-  background-color: #1e21b4;
-  border-color: #000144;
+  background-color: #c9a600;
+  border-color: #c9a600;
   color: white;
 }

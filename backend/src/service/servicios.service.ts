@@ -14,7 +14,7 @@ import { Storage } from '@google-cloud/storage';
 export class ServiciosService extends GenericService<ServiciosDocument> {
   private readonly logger = new Logger(ServiciosService.name);
   private storage: Storage;
-  private readonly bucketName = 'equipo-4-f104b.appspot.com';
+  private readonly bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
   constructor() {
     super(ServiciosDocument.collectionName);
     this.firestore = new Firestore();

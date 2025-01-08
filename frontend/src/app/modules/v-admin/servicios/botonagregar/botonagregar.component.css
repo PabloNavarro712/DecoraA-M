@@ -6,15 +6,15 @@
   padding: 20px;
 }
 .btn-success {
-  background-color: #28a745;
-  border-color: #28a745;
+  background-color: #efb810;
+  border-color: #efb810;
   color: white;
   transition: all 0.3s ease;
 }
 
 .btn-success:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
+  background-color: #efb810;
+  border-color: #efb810;
 }
 
 .btn i {
@@ -116,7 +116,7 @@ button i {
   }
   
   .modal-header {
-    background-color: #1ea3b4;
+    background-color: #1c1c1c;
     color: #fff;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;

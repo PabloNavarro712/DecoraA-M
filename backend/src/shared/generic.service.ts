@@ -12,6 +12,7 @@ export class GenericService<T> implements IGenericService<T> {
 
   async findAll(): Promise<T[]> {
     try {
+      
       const snapshot = await this.firestore.collection(this.collectionName).get();
       const items: T[] = [];
       snapshot.forEach(doc => items.push(doc.data() as T));

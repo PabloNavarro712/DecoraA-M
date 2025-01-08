@@ -9,7 +9,7 @@
     top: 0;
     z-index: 1000; /* Asegura que esté por encima del contenido */
     padding-top: 20px; /* Espaciado superior */
-    background-color: #343a40; /* Fondo oscuro */
+    background-color: #1c1c1c; /* Fondo oscuro */
   }
   
   /* Títulos en la barra lateral */
@@ -44,7 +44,7 @@
   
   /* Estilo del link cuando está activo */
   .sidebar .nav-link.active {
-    background-color: #0d6efd; /* Fondo azul */
+    background-color: #d6ae01; /* Fondo azul */
     color: white; /* Texto blanco */
   }
   
@@ -147,7 +147,7 @@
   
   /* Estilo del menú desplegable */
   .dropdown-menu {
-    background-color: #343a40; /* Fondo oscuro */
+    background-color: #1c1c1c; /* Fondo oscuro */
     border-color: rgba(255, 255, 255, 0.1); /* Borde ligero */
   }
   
@@ -157,7 +157,7 @@
   }
   
   .dropdown-item:hover {
-    background-color: #495057; /* Fondo más oscuro en hover */
+    background-color: #1c1c1c; /* Fondo más oscuro en hover */
     color: white; /* Texto blanco al pasar el mouse */
   }
   

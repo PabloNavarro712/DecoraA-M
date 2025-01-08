@@ -20,7 +20,7 @@ let ServiciosService = ServiciosService_1 = class ServiciosService extends gener
     constructor() {
         super(servicios_document_1.ServiciosDocument.collectionName);
         this.logger = new common_1.Logger(ServiciosService_1.name);
-        this.bucketName = 'equipo-4-f104b.appspot.com';
+        this.bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
         this.firestore = new firestore_1.Firestore();
         this.storage = new storage_1.Storage();
     }

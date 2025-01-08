@@ -47,21 +47,21 @@
     <div *ngFor="let evento of eventos" class="col-md-12 mb-4">
       <div class="card shadow-lg">
         <!-- Cabecera de la tarjeta -->
-        <div class="card-header bg-primary text-white">
+        <div class="card-header  text-white">
           <h5 class="card-title m-0">{{ evento.nombre }}</h5>
         </div>
 
         <!-- Cuerpo de la tarjeta -->
         <div class="card-body">
           <!-- Datos del cliente -->
-          <h6 class="text-primary">Datos del Cliente</h6>
+          <h6 >Datos del Cliente</h6>
           <p><strong>Contacto:</strong> {{ evento.contacto }}</p>
           <p><strong>Email:</strong> <a href="mailto:{{ evento.correoElectronico }}">{{ evento.correoElectronico }}</a></p>
 
           <hr>
 
           <!-- Datos del evento -->
-          <h6 class="text-primary">Datos del Evento</h6>
+          <h6 >Datos del Evento</h6>
           <p><strong>Ubicación:</strong> {{ evento.ubicacionEvento }}</p>
           <p><strong>Fecha:</strong> {{ formatFechaEvento(evento.fechaEvento) }}</p>
           <p><strong>Hora:</strong> {{ evento.horaEvento }}</p>
@@ -76,7 +76,7 @@
           <hr>
 
           <!-- Detalles del evento -->
-          <h6 class="text-primary">Detalles del Evento</h6>
+          <h6 >Detalles del Evento</h6>
           <p><strong>Tipo Evento:</strong> ${{ evento.tipoEvento}}</p>
           <p><strong>Precio:</strong> ${{ evento.precio_final }}</p>
           <p *ngIf="evento.adiciones.length > 0"><strong>Adiciones:</strong>
