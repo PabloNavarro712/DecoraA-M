@@ -1,20 +1,20 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase } from "firebase/database";
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getDatabase } from 'firebase/database';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
-  apiKey: "AIzaSyDsMka1kQMKOdxXdimJUSdQzEjeTr-k2_w",
-  authDomain: "albergue-57e14.firebaseapp.com",
-  projectId: "albergue-57e14",
-  storageBucket: "albergue-57e14.appspot.com",
-  messagingSenderId: "302261908325",
-  appId: "1:302261908325:web:5b9d239b0abb6f3cbb278c",
-  measurementId: "G-JB8QBN37KK"
+  apiKey: 'AIzaSyB2Ml1abSSrFPkjffXldWFb1uyRJfuWPUU',
+  authDomain: 'equipo-4---decoram-ef008.firebaseapp.com',
+  projectId: 'equipo-4---decoram-ef008',
+  storageBucket: 'equipo-4---decoram-ef008.firebasestorage.app',
+  messagingSenderId: '1050852957898',
+  appId: '1:1050852957898:web:e8785f55a5adb607aede33',
+  measurementId: 'G-YD64PNDM9X',
 };
 
 // Initialize Firebase

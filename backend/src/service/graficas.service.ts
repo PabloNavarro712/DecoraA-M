@@ -176,6 +176,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         2: {
           Boda: 0,
@@ -185,6 +186,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         3: {
           Boda: 0,
@@ -194,6 +196,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         4: {
           Boda: 0,
@@ -203,6 +206,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         5: {
           Boda: 0,
@@ -212,6 +216,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         6: {
           Boda: 0,
@@ -221,6 +226,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         7: {
           Boda: 0,
@@ -230,6 +236,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         8: {
           Boda: 0,
@@ -239,6 +246,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         9: {
           Boda: 0,
@@ -248,6 +256,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         10: {
           Boda: 0,
@@ -257,6 +266,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         11: {
           Boda: 0,
@@ -266,6 +276,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
         12: {
           Boda: 0,
@@ -275,6 +286,7 @@ export class GraficasService {
           fiestaInfantil: 0,
           ganancias: 0,
           cancelados: 0,
+          totalmes: 0,
         },
       };
 
@@ -290,7 +302,7 @@ export class GraficasService {
         const tipoEvento = evento.tipoEvento;
         const precioFinal = evento.precio_final;
         const estado = evento.estado;
-
+        const totalmes = 0;
         // Contabilizar eventos por mes y tipo de evento
         if (eventosPorMes[mes]) {
           if (tipoEvento === 'Boda') eventosPorMes[mes].Boda++;
@@ -305,6 +317,7 @@ export class GraficasService {
           if (estado === 'aceptado') {
             eventosPorMes[mes].ganancias += precioFinal;
             totalGananciasAnio += precioFinal;
+            eventosPorMes[mes].totalmes++;
           }
 
           // Contabilizar eventos cancelados por mes
