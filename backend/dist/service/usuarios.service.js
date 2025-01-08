@@ -36,7 +36,9 @@ let UsuariosService = UsuariosService_1 = class UsuariosService extends generic_
             if (!correoSnapshot.empty) {
                 throw new common_1.BadRequestException('El correo ya está registrado.');
             }
-            await usuariosRef.add({ ...usuario });
+            const newDocRef = usuariosRef.doc();
+            const id = newDocRef.id;
+            await newDocRef.set({ id, ...usuario });
             return { message: 'Usuario creado exitosamente.' };
         }
         catch (error) {

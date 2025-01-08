@@ -70,7 +70,7 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
         }
     }
     async uploadImageToFirebase(imageBuffer, categoria, imageName, contentType) {
-        const bucketName = 'equipo-4-f104b.appspot.com';
+        const bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
         const fileName = `${categoria}_${imageName}.${contentType}`;
         try {
             const bucket = this.storage.bucket(bucketName);
@@ -89,7 +89,7 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
         }
     }
     async deleteImageFromFirebase(imageUrl) {
-        const bucketName = 'equipo-4-f104b.appspot.com';
+        const bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
         try {
             const fileName = imageUrl.split(`https://storage.googleapis.com/${bucketName}/`)[1];
             if (!fileName) {

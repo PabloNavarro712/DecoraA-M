@@ -89,7 +89,7 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
     imageName: string,
     contentType: string,
   ): Promise<string> {
-    const bucketName = 'equipo-4-f104b.appspot.com';
+    const bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
     const fileName = `${categoria}_${imageName}.${contentType}`;
 
     try {
@@ -115,7 +115,7 @@ export class GaleriaService extends GenericService<GaleriaDocument> {
   }
 
   private async deleteImageFromFirebase(imageUrl: string): Promise<void> {
-    const bucketName = 'equipo-4-f104b.appspot.com';
+    const bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
 
     try {
       // Extraer el nombre del archivo de la URL
