@@ -15,12 +15,15 @@ import { GenericService } from 'src/shared/generic.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Configura el módulo de configuración como global
+      envFilePath: '.env',
     }),
     FirestoreModule.forRoot({
       imports: [ConfigModule], // Asegúrate de importar el módulo de configuración aquí
-      useFactory: (configService: ConfigService) => ({
-        keyFilename: configService.get<string>('SA_KEY'), // Usa la clave del archivo de configuración
-      }),
+      useFactory: (configService: ConfigService) => {
+        const keyFile = configService.get<string>('SA_KEY');
+        console.log('Using Firebase key file:', keyFile); // Para verificar la ruta del archivo
+        return { keyFilename: keyFile };
+      },
       inject: [ConfigService], // Inyecta el servicio de configuración
     }),
     // Importa todos los módulos necesarios
