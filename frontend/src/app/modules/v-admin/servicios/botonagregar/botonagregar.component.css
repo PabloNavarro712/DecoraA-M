@@ -6,15 +6,15 @@
   padding: 20px;
 }
 .btn-success {
-  background-color: #efb810;
-  border-color: #efb810;
+  background-color: #D4AF37;
+  border-color: #D4AF3710;
   color: white;
   transition: all 0.3s ease;
 }
 
 .btn-success:hover {
-  background-color: #efb810;
-  border-color: #efb810;
+  background-color: #D4AF37;
+  border-color: #D4AF37;
 }
 
 .btn i {
@@ -45,7 +45,7 @@ textarea,
 select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #E8DCC3;
   border-radius: 4px;
 }
 button.btn-outline-light {
@@ -62,7 +62,7 @@ button.btn-outline-light {
 
 button.btn-outline-light:hover {
   background-color: white;
-  color: #1d3557;
+  color: #D4AF37;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .dynamic-input {
@@ -82,7 +82,7 @@ button.btn-outline-light:hover {
 }
 
 .list-item button {
-  background-color: #ff4d4d;
+  background-color: #D4AF37;
   color: white;
   border: none;
   padding: 4px 8px;
@@ -104,7 +104,7 @@ button i {
 
 
 .error {
-  color: red;
+  color: #D4AF37;
   font-size: 0.8em;
   margin-top: 5px;
 }
@@ -145,7 +145,7 @@ button i {
   }
 
   .form-control:focus, .form-select:focus {
-    border-color: #b41e46;
+    border-color: #D4AF37;
     box-shadow: 0 0 5px rgba(180, 30, 70, 0.4);
   }
 
@@ -156,12 +156,12 @@ button i {
   }
 
   .btn-primary {
-    background-color:  #1ea3b4;
+    background-color:  #0C0C0C;
     border: none;
   }
 
   .btn-primary:hover {
-    background-color:  #1ea3b4;
+    background-color:  #2F2F2F;
   }
 
   .btn-outline-success, .btn-outline-primary {
@@ -171,11 +171,11 @@ button i {
   }
 
   .btn-danger {
-    background-color:  #1ea3b4;
+    background-color:  #0C0C0C;
   }
 
   .btn-danger:hover {
-    background-color:  #1ea3b4;
+    background-color:  #0C0C0C;
   }
 
   /* List Group Styling */
@@ -193,7 +193,7 @@ button i {
   input[type="checkbox"] {
     width: 20px;
     height: 20px;
-    accent-color:  #1ea3b4;
+    accent-color:  #0C0C0C;
   }
 
   /* Error Message Styling */

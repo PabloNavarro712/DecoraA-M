@@ -9,7 +9,28 @@
     top: 0;
     z-index: 1000; /* Asegura que esté por encima del contenido */
     padding-top: 20px; /* Espaciado superior */
-    background-color: #1c1c1c; /* Fondo oscuro */
+    background-color: #0C0C0C; /* Fondo oscuro */
+  }/* Estilo para "Bienvenido" */
+.welcome-highlight {
+  color: #D4AF37; /* Color dorado elegante */
+  font-size: 1.5rem; /* Tamaño más grande */
+  font-weight: bold; /* Resalta el texto */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  animation: fade-in 1s ease-in-out; /* Animación para entrada */
+}
+  .user-highlight {
+    color: #E8DCC3; /* Color del texto */
+    font-weight: bold; /* Hace el texto más llamativo */
+    font-size: 1.2em; /* Incrementa ligeramente el tamaño */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+    transition: transform 0.3s ease; /* Transición para el efecto de hover */
+  }
+  
+  .user-highlight:hover {
+    transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Aumenta la sombra */
   }
   
   /* Títulos en la barra lateral */
@@ -44,7 +65,7 @@
   
   /* Estilo del link cuando está activo */
   .sidebar .nav-link.active {
-    background-color: #d6ae01; /* Fondo azul */
+    background-color: #D4AF37; /* Fondo azul */
     color: white; /* Texto blanco */
   }
   
@@ -147,7 +168,7 @@
   
   /* Estilo del menú desplegable */
   .dropdown-menu {
-    background-color: #1c1c1c; /* Fondo oscuro */
+    background-color: #0C0C0C; /* Fondo oscuro */
     border-color: rgba(255, 255, 255, 0.1); /* Borde ligero */
   }
   
@@ -157,7 +178,7 @@
   }
   
   .dropdown-item:hover {
-    background-color: #1c1c1c; /* Fondo más oscuro en hover */
+    background-color: #0C0C0C; /* Fondo más oscuro en hover */
     color: white; /* Texto blanco al pasar el mouse */
   }
   

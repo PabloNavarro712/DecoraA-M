@@ -4,7 +4,7 @@
   }
   
   .card-header {
-    background: linear-gradient(135deg, #d4b503, #d4b503);
+    background: linear-gradient(135deg, #D4AF37, #D4AF37);
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
@@ -23,6 +23,6 @@
   }
   
   .card-body {
-    border-top: 5px solid #c9a600;
+    border-top: 5px solid #2F2F2F;
   }
   

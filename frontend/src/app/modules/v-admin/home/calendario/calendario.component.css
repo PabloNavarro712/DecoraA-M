@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1c1c1c;
+  background-color: #0C0C0C;
   color: white;
   padding: 10px;
   border-radius: 10px 10px 0 0;
@@ -22,8 +22,8 @@
 
 /* Cabecera del modal */
 .modal-header {
-  background-color: #1c1c1c; /* Color similar al del navbar */
-  color: #1c1c1c;
+  background-color: #0C0C0C; /* Color similar al del navbar */
+  color: #0C0C0C;
   padding: 15px 20px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -49,7 +49,7 @@
 .week-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  background-color: #d6ae01;
+  background-color: #D4AF37;
   color: white;
   text-align: center;
   padding: 5px 0;
@@ -72,12 +72,12 @@
   border-radius: 5px;
 }
 .day.accepted {
-  background-color: green;
+  background-color: rgba(33, 104, 0, 0.76);
   color: white;
 }
 
 .day.pending {
-  background-color: #f3cb1f;
+  background-color: #D4AF37;
   color: black;
 }
 .day {
@@ -108,7 +108,7 @@
   color: white;
   cursor: pointer;
 }.card-header {
-  background-color: #1c1c1c; /* Cambiar a un color personalizado */
+  background-color: #0C0C0C; /* Cambiar a un color personalizado */
   color: #ffffff; /* Texto blanco */
   font-size: 18px; /* Tamaño del texto */
   font-weight: bold; /* Negrita */
@@ -116,7 +116,7 @@
   border-bottom: 2px solid #e6e6e6; /* Línea decorativa */
 }
 .card-body h6 {
-  color: #c1a442; /* Cambiar a un color personalizado */
+  color: #D4AF37; /* Cambiar a un color personalizado */
   font-size: 16px; /* Tamaño del texto */
   font-weight: bold; /* Negrita */
   margin-bottom: 10px; /* Espaciado inferior */

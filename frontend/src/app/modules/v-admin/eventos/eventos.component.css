@@ -115,7 +115,7 @@ body {
   .table td:nth-child(6) { width: 15%; }
   
   .table th {
-    background-color: #1c1c1c;
+    background-color: #0C0C0C;
     color: white;
     font-weight: bold;
   }
@@ -202,37 +202,37 @@ body {
   }
   
   .modal-actions button:first-child {
-    background-color: #d7b200;
+    background-color: #D4AF37;
     color: white;
   }
   
   .modal-actions button:first-child:hover {
-    background-color: #d7b200;
+    background-color: #D4AF37;
   }
   
   .modal-actions button:last-child {
-    background-color: #dc3545;
+    background-color: #0C0C0C;
     color: white;
   }
   
   .modal-actions button:last-child:hover {
-    background-color: #b02a37;
+    background-color: #0C0C0C;
   }
   .filters .btn {
     padding: 8px 12px;
     border: none;
     border-radius: 5px;
-    background-color: #1c1c1c;
+    background-color: #0C0C0C;
     color: white;
     cursor: pointer;
   }
   
   .filters .btn:hover {
-    background-color: #6c757d;
+    background-color: #2F2F2F;
   }
   /* Estilo del banner */
   .banner {
-    background: linear-gradient(90deg, #d7b200, #d7b200);
+    background: linear-gradient(90deg, #D4AF37, #D4AF37);
     border-radius: 10px;
     color: white;
   }
