@@ -1,6 +1,6 @@
 /* Estilos para la barra de navegación */
 .navbar-custom {
-    background: linear-gradient(to right, #003366, #00bfff); /* Degradado de azul marino a azul turquesa */
+    background: linear-gradient(to right, #000000, #000000); /* Degradado de azul marino a azul turquesa */
     box-shadow: 0 4px 6px rgba(240, 235, 235, 0.911);
   }
   
@@ -11,7 +11,7 @@
   }
   
   .navbar-custom .nav-link:hover {
-    color: #4547b6; /* Cambio de color al pasar el mouse */
+    color: #E8DCC3; /* Cambio de color al pasar el mouse */
   }
   
   /* Botón de hamburguesa */

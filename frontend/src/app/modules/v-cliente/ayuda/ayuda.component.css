@@ -1,6 +1,6 @@
 /* Estilo para el enlace */
 .faq-link {
-    color: #00bfff;                  /* Color azul brillante */
+    color: #000000;                  /* Color azul brillante */
     font-size: 20px;                 /* Tamaño de la fuente */
     text-decoration: none;           /* Sin subrayado */
     font-weight: bold;               /* Texto en negrita */
@@ -9,7 +9,7 @@
   }
   
   .faq-link:hover {
-    color: #003366;                  /* Cambio de color a azul oscuro al pasar el ratón */
+    color: #E8DCC3;                  /* Cambio de color a azul oscuro al pasar el ratón */
     text-decoration: underline;      /* Subrayado en el hover */
     transform: scale(1.1);           /* Efecto de agrandado */
   }
