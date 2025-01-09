@@ -76,7 +76,7 @@ export class LoginComponent {
               this.router.navigate(['/admin']);
             } else {
               this.router.navigate(['/cliente/inicio']);
-              window.location.reload();
+              
             }
             
           } else {

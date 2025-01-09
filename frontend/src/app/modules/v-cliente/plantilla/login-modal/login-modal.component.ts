@@ -65,18 +65,19 @@ export class LoginModalComponent implements OnInit {
             // Emitir el evento de inicio de sesión exitoso
             this.loginSuccess.emit();
             Swal.fire({
-              title: 'Bienvenido',
-              text: "Ha iniciado Sesión Correctamente",
-              icon: 'success',
-              confirmButtonText: 'Ok'
-            });
+                         title: 'Bienvenido',
+                         text: "Ha iniciado Sesión Correctamente",
+                         icon: 'success',
+                         confirmButtonText: 'Ok'
+                       });
             this.currentUser = user;
 
             if (user.esAdministrador) {
-              this.router.navigate(['/admin']);
+              this.router.navigate(['/admin/home']);
+             
             } else {
-              this.router.navigate(['/cliente/inicio']);
-              window.location.reload();
+              this.router.navigate(['/cliente']);
+             
             }
             
           } else {

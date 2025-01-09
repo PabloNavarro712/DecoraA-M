@@ -2,9 +2,17 @@ h1 {
     font-weight: bold;
   }
   
-  p.text-info {
+  p.text-infos {
     font-size: 1.2rem;
     font-weight: bold;
+  }
+  .event-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .text-infos {
+    color: #FF6347;  /* Cambia a tu color deseado */
   }
   .masonry {
     display: flex;

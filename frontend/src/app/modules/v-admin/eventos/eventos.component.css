@@ -115,7 +115,7 @@ body {
   .table td:nth-child(6) { width: 15%; }
   
   .table th {
-    background-color: #007bff;
+    background-color: #1c1c1c;
     color: white;
     font-weight: bold;
   }
@@ -129,7 +129,7 @@ body {
   }
   
   .table button {
-    background-color: #007bff;
+    background-color: #1c1c1c;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -138,7 +138,7 @@ body {
   }
   
   .table button:hover {
-    background-color: #0056b3;
+    background-color: #d7b200
   }
   
   /* Estilos para el modal */
@@ -202,12 +202,12 @@ body {
   }
   
   .modal-actions button:first-child {
-    background-color: #007bff;
+    background-color: #d7b200;
     color: white;
   }
   
   .modal-actions button:first-child:hover {
-    background-color: #0056b3;
+    background-color: #d7b200;
   }
   
   .modal-actions button:last-child {
@@ -222,17 +222,17 @@ body {
     padding: 8px 12px;
     border: none;
     border-radius: 5px;
-    background-color: #6c757d;
+    background-color: #1c1c1c;
     color: white;
     cursor: pointer;
   }
   
   .filters .btn:hover {
-    background-color: #5a6268;
+    background-color: #6c757d;
   }
   /* Estilo del banner */
   .banner {
-    background: linear-gradient(90deg, #007bff, #0056b3);
+    background: linear-gradient(90deg, #d7b200, #d7b200);
     border-radius: 10px;
     color: white;
   }
