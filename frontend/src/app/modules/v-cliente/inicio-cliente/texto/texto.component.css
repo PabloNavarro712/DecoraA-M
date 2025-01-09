@@ -1,19 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
 h1 {
-    font-weight: bold;
+    color:#D4AF37;
+    font-family: 'Playfair Display', serif;
   }
   
   p.text-infos {
     font-size: 1.2rem;
     font-weight: bold;
-  }
-  .event-image {
-    max-width: 100%;
-    height: auto;
+    font-style: italic;
   }
 
-  .text-infos {
-    color: #FF6347;  /* Cambia a tu color deseado */
-  }
   .masonry {
     display: flex;
     flex-wrap: wrap;

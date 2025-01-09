@@ -49,7 +49,7 @@ body {
 
 /* Header estilizado */
 .modal-header {
-  background-color: #00bef8;
+  background-color: #000000;
   color: white;
   border-bottom: none;
   font-size: 1.5rem;
@@ -189,14 +189,14 @@ body {
 
 .formulario__login input:focus,
 .formulario__register input:focus {
-  border: 1px solid #00bef8;
+  border: 1px solid #E8DCC3;
 }
 
 .formulario__login button,
 .formulario__register button {
   width: 100%;
   height: 45px;
-  background-color: #00bef8;
+  background-color: #E8DCC3;
   color: white;
   border: none;
   border-radius: 8px;
@@ -208,7 +208,7 @@ body {
 
 .formulario__login button:hover,
 .formulario__register button:hover {
-  background-color: #0097c6;
+  background-color: #E8DCC3;
 }
 
 .enlace-registro {
@@ -219,7 +219,7 @@ body {
 
 .enlace-registro a {
   text-decoration: none;
-  color: #00bef8;
+  color: #E8DCC3;
   font-weight: bold;
 }
 
