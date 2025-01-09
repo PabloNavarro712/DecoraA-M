@@ -96,12 +96,12 @@ body {
 }
 
 .welcome-message i {
-  color: #00bef8;
+  color: #000000;
   size: 10cap;
 }
 
 .guest-message i {
-  color: #00c3ff;
+  color: #000000;
   size: 10cap;
 }
 
@@ -189,14 +189,14 @@ body {
 
 .formulario__login input:focus,
 .formulario__register input:focus {
-  border: 1px solid #00bef8;
+  border: 1px solid #000000;
 }
 
 .formulario__login button,
 .formulario__register button {
   width: 100%;
   height: 45px;
-  background-color: #00bef8;
+  background-color:##D4AF37;
   color: white;
   border: none;
   border-radius: 8px;
@@ -208,7 +208,7 @@ body {
 
 .formulario__login button:hover,
 .formulario__register button:hover {
-  background-color: #0097c6;
+  background-color: #e9ca89;
 }
 
 .enlace-registro {
@@ -219,7 +219,7 @@ body {
 
 .enlace-registro a {
   text-decoration: none;
-  color: #00bef8;
+  color:#000000;
   font-weight: bold;
 }
 

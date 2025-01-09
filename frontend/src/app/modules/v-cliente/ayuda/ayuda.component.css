@@ -37,14 +37,14 @@
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
-    border: 2px solid #003366;       /* Borde azul oscuro */
+    border: 2px solid #000000;       /* Borde azul oscuro */
   }
   
   .modal-header {
-    background-color: #003366;       /* Fondo azul oscuro */
+    background-color: #000000;       /* Fondo azul oscuro */
     color: white;                    /* Texto blanco */
     padding: 20px;
-    border-bottom: 2px solid #00bfff; /* Borde azul brillante */
+    border-bottom: 2px solid #000000; /* Borde azul brillante */
   }
   
   .modal-title {
@@ -61,7 +61,7 @@
   }
   
   .close:hover {
-    color: #00bfff;                  /* Color azul brillante al pasar el ratón */
+    color: #E8DCC3;                  /* Color azul brillante al pasar el ratón */
   }
   
   .modal-body {
@@ -86,12 +86,12 @@
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    color: #003366;
+    color: #000000;
     transition: color 0.3s ease;
   }
   
   .faq-question:hover {
-    color: #00bfff;                  /* Cambio de color al pasar el ratón */
+    color: #D4AF37;                  /* Cambio de color al pasar el ratón */
   }
   
   .faq-answer {
@@ -114,7 +114,7 @@
   }
   
   .modal-footer .btn-secondary {
-    background-color: #00bfff;       /* Color azul brillante */
+    background-color: #D4AF37;       /* Color azul brillante */
     border: none;
     color: white;
     padding: 8px 15px;
@@ -123,6 +123,6 @@
   }
   
   .modal-footer .btn-secondary:hover {
-    background-color: #003366;       /* Cambio de color al pasar el ratón */
+    background-color: #d2c8b2;       /* Cambio de color al pasar el ratón */
   }
   
