@@ -1,128 +1,127 @@
 /* Estilo para el enlace */
 .faq-link {
-    color: #00bfff;                  /* Color azul brillante */
-    font-size: 20px;                 /* Tamaño de la fuente */
-    text-decoration: none;           /* Sin subrayado */
-    font-weight: bold;               /* Texto en negrita */
-    cursor: pointer;                /* Aparece como mano al pasar por encima */
-    transition: color 0.3s ease, transform 0.3s ease; /* Transición suave */
-  }
-  
-  .faq-link:hover {
-    color: #003366;                  /* Cambio de color a azul oscuro al pasar el ratón */
-    text-decoration: underline;      /* Subrayado en el hover */
-    transform: scale(1.1);           /* Efecto de agrandado */
-  }
-  
-  /* Estilo para el modal */
-  .modal {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro con opacidad */
-    z-index: 1050;
-  }
-  
-  .modal-dialog {
-    position: relative;
-    margin: 10% auto;
-    max-width: 800px;
-    width: 90%;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid #003366;       /* Borde azul oscuro */
-  }
-  
-  .modal-header {
-    background-color: #003366;       /* Fondo azul oscuro */
-    color: white;                    /* Texto blanco */
-    padding: 20px;
-    border-bottom: 2px solid #00bfff; /* Borde azul brillante */
-  }
-  
-  .modal-title {
-    font-size: 22px;
-    font-weight: bold;
-  }
-  
-  .close {
-    font-size: 24px;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .close:hover {
-    color: #00bfff;                  /* Color azul brillante al pasar el ratón */
-  }
-  
-  .modal-body {
-    padding: 20px;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  /* Estilos para las preguntas frecuentes */
-  .faq-item {
-    margin-bottom: 20px;
-    border-bottom: 2px solid #dee2e6;
-    padding-bottom: 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .faq-item:hover {
-    background-color: #f0f8ff;      /* Color de fondo al pasar el ratón */
-  }
-  
-  .faq-question {
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #003366;
-    transition: color 0.3s ease;
-  }
-  
-  .faq-question:hover {
-    color: #00bfff;                  /* Cambio de color al pasar el ratón */
-  }
-  
-  .faq-answer {
-    display: none;
-    padding-left: 20px;
-    margin-top: 10px;
-    font-size: 16px;
-    color: #555;
-    transition: all 0.3s ease;
-  }
-  
-  .faq-item.active .faq-answer {
-    display: block;
-  }
-  
-  .modal-footer {
-    background-color: #f8f9fa;
-    padding: 10px 20px;
-    text-align: right;
-  }
-  
-  .modal-footer .btn-secondary {
-    background-color: #00bfff;       /* Color azul brillante */
-    border: none;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-  
-  .modal-footer .btn-secondary:hover {
-    background-color: #003366;       /* Cambio de color al pasar el ratón */
-  }
-  
+  color: #000000;                  /* Color azul brillante */
+  font-size: 20px;                 /* Tamaño de la fuente */
+  text-decoration: none;           /* Sin subrayado */
+  font-weight: bold;               /* Texto en negrita */
+  cursor: pointer;                /* Aparece como mano al pasar por encima */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+.faq-link:hover {
+  color: #E8DCC3;                  /* Cambio de color a azul oscuro al pasar el ratón */
+  text-decoration: underline;      /* Subrayado en el hover */
+  transform: scale(1.1);           /* Efecto de agrandado */
+}
+
+/* Estilo para el modal */
+.modal {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro con opacidad */
+  z-index: 1050;
+}
+
+.modal-dialog {
+  position: relative;
+  margin: 10% auto;
+  max-width: 800px;
+  width: 90%;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #000000;       /* Borde azul oscuro */
+}
+
+.modal-header {
+  background-color: #000000;       /* Fondo azul oscuro */
+  color: white;                    /* Texto blanco */
+  padding: 20px;
+  border-bottom: 2px solid #000000; /* Borde azul brillante */
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.close {
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #E8DCC3;                  /* Color azul brillante al pasar el ratón */
+}
+
+.modal-body {
+  padding: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Estilos para las preguntas frecuentes */
+.faq-item {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.faq-item:hover {
+  background-color: #f0f8ff;      /* Color de fondo al pasar el ratón */
+}
+
+.faq-question {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+  color: #D4AF37;                  /* Cambio de color al pasar el ratón */
+}
+
+.faq-answer {
+  display: none;
+  padding-left: 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+.modal-footer {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  text-align: right;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #D4AF37;       /* Color azul brillante */
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #d2c8b2;       /* Cambio de color al pasar el ratón */
+}

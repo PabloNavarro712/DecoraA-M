@@ -6,7 +6,13 @@ body {
 
 h1, h5 {
   font-family: 'Playfair Display', serif;
+
 }
+
+.text-custom {
+  color: #D4AF37; /* Tono burdeos */
+}
+
 
 .card {
   border: none;
@@ -39,8 +45,8 @@ h1, h5 {
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #D4AF37; 
+  border-color: #D4AF37; 
 }
 
 .btn-success {
@@ -226,7 +232,7 @@ hr {
   
   }
   app-login {
-    color: blue;
+    color: #000000;
     text-decoration: underline;
     cursor: pointer;  /* Cambia el cursor a una mano de selección */
   }

@@ -1,17 +1,16 @@
 /* Estilos para el botón flotante */
 .floating-button {
-    position: fixed;        /* Fijo en la ventana */
-    bottom: 20px;          /* Distancia del fondo */
-    right: 20px;           /* Distancia del lado derecho */
-    z-index: 1000;         /* Asegura que esté encima de otros elementos */
-    color: #25d366;        /* Color del ícono */
-    font-size: 2rem;       /* Tamaño del ícono */
-    opacity: 0.5;          /* Opacidad inicial */
-    transition: opacity 0.3s ease; /* Efecto de transición para la opacidad */
-  }
-  
-  /* Efecto al pasar el mouse */
-  .floating-button:hover {
-    opacity: 1;            /* Opacidad completa al pasar el mouse */
-  }
-  
+  position: fixed;        /* Fijo en la ventana */
+  bottom: 20px;          /* Distancia del fondo */
+  right: 20px;           /* Distancia del lado derecho */
+  z-index: 1000;         /* Asegura que esté encima de otros elementos */
+  color: #25d366;        /* Color del ícono */
+  font-size: 2rem;       /* Tamaño del ícono */
+  opacity: 0.5;          /* Opacidad inicial */
+  transition: opacity 0.3s ease; /* Efecto de transición para la opacidad */
+}
+
+/* Efecto al pasar el mouse */
+.floating-button:hover {
+  opacity: 1;            /* Opacidad completa al pasar el mouse */
+}

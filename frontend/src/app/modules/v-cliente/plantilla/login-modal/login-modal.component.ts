@@ -77,6 +77,7 @@ export class LoginModalComponent implements OnInit {
              
             } else {
               this.router.navigate(['/cliente']);
+              window.location.reload();
              
             }
             
