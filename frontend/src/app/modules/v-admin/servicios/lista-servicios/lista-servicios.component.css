@@ -10,20 +10,48 @@ table {
   background-color: #f9f9f9;
 }
 
-.btn-sm {
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .pagination .page-link {
-  color: #b41e46;
+  color: #2F2F2F;
 }
 
 .pagination .page-item.active .page-link {
-  background-color: #b41e46;
-  border-color: #b41e46;
+  background-color: #2F2F2F;
+  border-color: #2F2F2F;
   color: white;
+}
+.custom-add-btn {
+  background-color: #D4AF37;
+  color: white;
+  border: none;
+}
+
+.custom-add-btn:hover {
+  background-color: #E8DCC3;
+}
+
+.custom-delete-btn {
+  background-color: #0C0C0C;
+  color: white;
+}
+
+.custom-delete-btn:hover {
+  background-color: #2F2F2F;
+}
+
+.custom-close-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.custom-close-btn:hover {
+  background-color: #138496;
+}
+
+.custom-update-btn {
+  background-color: #ffc107;
+  color: black;
+}
+
+.custom-update-btn:hover {
+  background-color: #e0a800;
 }

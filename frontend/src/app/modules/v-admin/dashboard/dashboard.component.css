@@ -35,9 +35,9 @@ body {
     align-items: center;
     margin-bottom: 2rem;
     padding: 1rem 2rem;
-    background-color:  #d4b503;
+    background-color:  #D4AF37;
     color: #ffffff;
-    border-bottom: 2px solid #ffd700;
+    border-bottom: 2px solid #D4AF37;
     border-radius: 8px;
 }
 
@@ -48,7 +48,7 @@ body {
 }
 
 .btn {
-    background-color: #ffd700;
+    background-color: #E8DCC3;
     color: #333333;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -71,7 +71,7 @@ body {
 }
 
 .month-display {
-    background-color: #ffd700;
+    background-color: #E8DCC3;
      color: #000000;
     font-size: 1.25rem;
     font-weight: bold;
@@ -108,7 +108,7 @@ body {
   .progress-value {
     font-size: 2.5rem; /* Texto grande */
     font-weight: bold;
-    color: #d4b503; /* Color destacado */
+    color: #D4AF37; /* Color destacado */
   }
 
 .progress-bar {
@@ -119,7 +119,7 @@ body {
 }
 
 .progress-fill {
-    background-color:#d4b503;
+    background-color:#E8DCC3;
     height: 100%;
     width: 75%;
     transition: width 0.3s ease;
@@ -146,7 +146,7 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .chart-title {
-    color: #d4b503;
+    color: #E8DCC3;
     font-size: 1.3rem;
     margin-bottom: 1rem;
     display: flex;
@@ -163,7 +163,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #d4b503;
+    color: #E8DCC3;
     font-size: 1rem;
     font-weight: bold;
 }
@@ -180,7 +180,7 @@ body {
     width: 50px;
     height: 50px;
     border: 5px solid #e0e0e0;
-    border-top: 5px solid #d4b503;
+    border-top: 5px solid #E8DCC3;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }

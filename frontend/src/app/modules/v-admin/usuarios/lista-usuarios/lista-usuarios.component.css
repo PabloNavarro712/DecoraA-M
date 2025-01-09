@@ -18,7 +18,7 @@ table {
 }
 
 .input-group .btn:hover {
-  background-color: #c9a600; /* Cambia el color al pasar el mouse */
+  background-color: #D4AF37; /* Cambia el color al pasar el mouse */
 }
 .modal-header{
   background-color: #1c1c1c;
@@ -37,7 +37,51 @@ table {
 }
 
 .pagination .page-item.active .page-link {
-  background-color: #c9a600;
-  border-color: #c9a600;
+  background-color: #D4AF37;
+  border-color: #D4AF37;
   color: white;
+}
+/* Botón de bloqueo/desbloqueo */
+.btn-bloqueado {
+  background-color: #0C0C0C;
+  color: white;
+  border: none;
+}
+
+.btn-activo {
+  background-color: #D4AF37;
+  color: black;
+  border: none;
+}
+
+/* Badge de estado */
+.bg-bloqueado {
+  background-color: #0C0C0C !important;
+  color: white !important;
+}
+
+.bg-activo {
+  background-color: #D4AF37 !important;
+  color: black !important;
+}
+
+/* Otros botones */
+.custom-view-btn {
+  background-color: #e0e0e0;
+  color: black;
+}
+
+.custom-toggle-btn {
+  border-radius: 5px;
+}
+.custom-search-btn {
+  background-color: #D4AF37;
+  color: black; /* Texto en negro para contraste */
+  border: none;
+  transition: background-color 0.3s ease; /* Suaviza la transición al hover */
+}
+
+.custom-search-btn:hover {
+  background-color: #E8DCC3;
+  color: black;
 }
