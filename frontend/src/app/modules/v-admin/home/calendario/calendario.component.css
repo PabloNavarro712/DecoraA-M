@@ -1,0 +1,123 @@
+.admin-calendar-container {
+  max-width: 100%;
+  margin: auto;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c1c1c;
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+/* Fondo oscuro para el modal */
+
+
+
+
+/* Cabecera del modal */
+.modal-header {
+  background-color: #1c1c1c; /* Color similar al del navbar */
+  color: #1c1c1c;
+  padding: 15px 20px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.week-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #d6ae01;
+  color: white;
+  text-align: center;
+  padding: 5px 0;
+  font-weight: bold;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  padding: 10px;
+}
+
+.day-box {
+  background-color: white;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.day.accepted {
+  background-color: green;
+  color: white;
+}
+
+.day.pending {
+  background-color: #f3cb1f;
+  color: black;
+}
+.day {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.day.today {
+  background-color: #897f69;
+  color: white;
+  border-radius: 50%;
+}
+
+.day.has-event {
+  background-color: #b0b98b;
+  color: black;
+  border-radius: 50%;
+}
+
+.nav-button, .collapse-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}.card-header {
+  background-color: #1c1c1c; /* Cambiar a un color personalizado */
+  color: #ffffff; /* Texto blanco */
+  font-size: 18px; /* Tamaño del texto */
+  font-weight: bold; /* Negrita */
+  text-align: center; /* Centrar texto */
+  border-bottom: 2px solid #e6e6e6; /* Línea decorativa */
+}
+.card-body h6 {
+  color: #c1a442; /* Cambiar a un color personalizado */
+  font-size: 16px; /* Tamaño del texto */
+  font-weight: bold; /* Negrita */
+  margin-bottom: 10px; /* Espaciado inferior */
+}

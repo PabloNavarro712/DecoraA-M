@@ -21,6 +21,118 @@ let EventosService = EventosService_1 = class EventosService extends generic_ser
         this.logger = new common_1.Logger(EventosService_1.name);
         this.firestore = new firestore_1.Firestore();
     }
+    async getEventosOrdenados() {
+        try {
+            const snapshot = await this.firestore
+                .collection(this.collectionName)
+                .where('estado', 'in', ['pendiente', 'rechazado', 'cancelado'])
+                .get();
+            const eventos = snapshot.docs.map((doc) => new eventos_document_1.EventosDocument(doc.data()));
+            const eventosOrdenados = eventos.sort((a, b) => {
+                if (a.estado === b.estado) {
+                    if (a.estado === 'pendiente') {
+                        if (a.solicitud_cancelar && a.reagendar)
+                            return -1;
+                        if (a.solicitud_cancelar && !a.reagendar)
+                            return -1;
+                        return 1;
+                    }
+                    return 0;
+                }
+                return (['pendiente', 'rechazado', 'cancelado'].indexOf(a.estado) -
+                    ['pendiente', 'rechazado', 'cancelado'].indexOf(b.estado));
+            });
+            return eventosOrdenados;
+        }
+        catch (error) {
+            console.error(`Error al obtener los eventos ordenados: ${error.message}`);
+            throw error;
+        }
+    }
+    async getFechasEventosPendientesYAceptados() {
+        try {
+            const snapshot = await this.firestore
+                .collection(this.collectionName)
+                .where('estado', 'in', ['aceptado', 'pendiente'])
+                .get();
+            return snapshot.docs.map((doc) => {
+                const data = doc.data();
+                let fechaEvento = data.fechaEvento;
+                if (!(fechaEvento instanceof firestore_1.Timestamp)) {
+                    if (typeof fechaEvento === 'string') {
+                        fechaEvento = firestore_1.Timestamp.fromDate(new Date(fechaEvento));
+                    }
+                    else if (typeof fechaEvento === 'number') {
+                        fechaEvento = firestore_1.Timestamp.fromMillis(fechaEvento);
+                    }
+                    else {
+                        throw new Error(`Formato de fecha no compatible: ${fechaEvento}`);
+                    }
+                }
+                return fechaEvento.toDate().toISOString();
+            });
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+            throw error;
+        }
+    }
+    async getFechasEventosAceptados() {
+        try {
+            const snapshot = await this.firestore
+                .collection(this.collectionName)
+                .where('estado', 'in', ['aceptado'])
+                .get();
+            return snapshot.docs.map((doc) => {
+                const data = doc.data();
+                let fechaEvento = data.fechaEvento;
+                if (!(fechaEvento instanceof firestore_1.Timestamp)) {
+                    if (typeof fechaEvento === 'string') {
+                        fechaEvento = firestore_1.Timestamp.fromDate(new Date(fechaEvento));
+                    }
+                    else if (typeof fechaEvento === 'number') {
+                        fechaEvento = firestore_1.Timestamp.fromMillis(fechaEvento);
+                    }
+                    else {
+                        throw new Error(`Formato de fecha no compatible: ${fechaEvento}`);
+                    }
+                }
+                return fechaEvento.toDate().toISOString();
+            });
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+            throw error;
+        }
+    }
+    async getFechasEventosPendientes() {
+        try {
+            const snapshot = await this.firestore
+                .collection(this.collectionName)
+                .where('estado', 'in', ['pendiente'])
+                .get();
+            return snapshot.docs.map((doc) => {
+                const data = doc.data();
+                let fechaEvento = data.fechaEvento;
+                if (!(fechaEvento instanceof firestore_1.Timestamp)) {
+                    if (typeof fechaEvento === 'string') {
+                        fechaEvento = firestore_1.Timestamp.fromDate(new Date(fechaEvento));
+                    }
+                    else if (typeof fechaEvento === 'number') {
+                        fechaEvento = firestore_1.Timestamp.fromMillis(fechaEvento);
+                    }
+                    else {
+                        throw new Error(`Formato de fecha no compatible: ${fechaEvento}`);
+                    }
+                }
+                return fechaEvento.toDate().toISOString();
+            });
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener fechas de eventos: ${error.message}`);
+            throw error;
+        }
+    }
     async getEventosByEstado(estado) {
         try {
             const snapshot = await this.firestore
@@ -61,6 +173,58 @@ let EventosService = EventosService_1 = class EventosService extends generic_ser
         }
         catch (error) {
             this.logger.error(`Error al obtener eventos por ID del cliente: ${error.message}`);
+            throw error;
+        }
+    }
+    async getEventosPorFecha(fechaInicio) {
+        try {
+            const fechaInicioStr = fechaInicio.toISOString();
+            const snapshot = await this.firestore
+                .collection(this.collectionName)
+                .where('fechaEvento', '==', fechaInicioStr)
+                .get();
+            return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        }
+        catch (error) {
+            this.logger.error(`Error al obtener eventos por fecha: ${error.message}`);
+            throw error;
+        }
+    }
+    async actualizarEstadoEvento(idEvento, nuevoEstado) {
+        try {
+            const eventoRef = this.firestore
+                .collection(this.collectionName)
+                .doc(idEvento);
+            const eventoDoc = await eventoRef.get();
+            if (!eventoDoc.exists) {
+                throw new Error('Evento no encontrado');
+            }
+            await eventoRef.update({
+                estado: nuevoEstado,
+                fechaActualizacion: firestore_1.Timestamp.now(),
+            });
+            const eventoActualizado = await eventoRef.get();
+            return new eventos_document_1.EventosDocument(eventoActualizado.data());
+        }
+        catch (error) {
+            this.logger.error(`Error al actualizar el estado del evento: ${error.message}`);
+            throw error;
+        }
+    }
+    async reagendarEvento(id, nvfecha) {
+        try {
+            const eventoRef = this.firestore.collection(this.collectionName).doc(id);
+            const eventoSnapshot = await eventoRef.get();
+            if (!eventoSnapshot.exists) {
+                throw new Error(`Evento con ID ${id} no encontrado.`);
+            }
+            await eventoRef.update({
+                fechaEvento: firestore_1.Timestamp.fromDate(nvfecha),
+            });
+            this.logger.log(`Evento con ID ${id} reagendado a la fecha ${nvfecha.toISOString()}`);
+        }
+        catch (error) {
+            this.logger.error(`Error al reagendar evento: ${error.message}`);
             throw error;
         }
     }

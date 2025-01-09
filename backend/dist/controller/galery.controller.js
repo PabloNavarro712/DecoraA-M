@@ -15,10 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GaleriaController = void 0;
 const common_1 = require("@nestjs/common");
 const galery_service_1 = require("../service/galery.service");
+const galery_document_1 = require("../todos/document/galery.document");
 const platform_express_1 = require("@nestjs/platform-express");
+const generic_controller_1 = require("../shared/generic.controller");
 const endpoint = 'api/galeria-prueba';
-let GaleriaController = class GaleriaController {
+const GenericGController = (0, generic_controller_1.createGenericController)(galery_document_1.GaleriaDocument.collectionName, endpoint);
+let GaleriaController = class GaleriaController extends GenericGController {
     constructor(galeriaService) {
+        super();
         this.galeriaService = galeriaService;
     }
     async createGallery(file, categoria, descripcion) {
@@ -43,11 +47,21 @@ let GaleriaController = class GaleriaController {
         }
         return await this.galeriaService.getImagesByCategory(categoria);
     }
-    async updateImageDocument(id, updateData) {
+    async updateImageDocument(id, updateData, file) {
         if (!id || !id.trim()) {
             throw new common_1.BadRequestException('El ID es obligatorio en la ruta.');
         }
-        await this.galeriaService.updateImageDocument(id, updateData);
+        if (!file) {
+            throw new common_1.BadRequestException('El archivo de imagen es necesario.');
+        }
+        const validMimeTypes = ['image/jpeg', 'image/png'];
+        if (!validMimeTypes.includes(file.mimetype)) {
+            throw new common_1.BadRequestException('El tipo de archivo debe ser JPEG o PNG.');
+        }
+        const imageBuffer = file.buffer;
+        const imageName = file.originalname;
+        const contentType = file.mimetype;
+        await this.galeriaService.updateImageDocument(id, updateData, imageBuffer, imageName, contentType);
     }
     async deleteImage(id) {
         if (!id || !id.trim()) {
@@ -75,15 +89,17 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GaleriaController.prototype, "getByCategory", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Patch)('/update/:id'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], GaleriaController.prototype, "updateImageDocument", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('/delete/:id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.NO_CONTENT),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

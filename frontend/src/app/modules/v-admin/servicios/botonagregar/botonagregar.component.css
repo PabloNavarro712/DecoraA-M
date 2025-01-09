@@ -1,0 +1,208 @@
+/* producto-form.component.css */
+:host {
+  display: block;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.btn-success {
+  background-color: #efb810;
+  border-color: #efb810;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #efb810;
+  border-color: #efb810;
+}
+
+.btn i {
+  font-size: 1.2rem;
+}
+
+.btn span {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn-success.shadow-sm {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, 
+textarea, 
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button.btn-outline-light {
+  display: flex;
+  justify-content:end;
+
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 1.4rem;
+  border-width: 2px;
+  transition: all 0.3s ease;
+}
+
+button.btn-outline-light:hover {
+  background-color: white;
+  color: #1d3557;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.dynamic-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: #f4f4f4;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.list-item button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+/* Ajuste para los botones */
+button i {
+  font-size: 1.2rem;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+}
+
+  /* General Modal Styling */
+  .modal-content {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-header {
+    background-color: #1c1c1c;
+    color: #fff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .btn-close {
+    filter: brightness(0) invert(1);
+  }
+
+  /* Form Labels */
+  .form-label {
+    font-weight: 600;
+    color: #444;
+  }
+
+  /* Form Fields */
+  .form-control, .form-select {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #b41e46;
+    box-shadow: 0 0 5px rgba(180, 30, 70, 0.4);
+  }
+
+  /* Buttons */
+  .btn {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background-color:  #1ea3b4;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color:  #1ea3b4;
+  }
+
+  .btn-outline-success, .btn-outline-primary {
+    border: 2px solid;
+    padding: 8px 15px;
+    border-radius: 8px;
+  }
+
+  .btn-danger {
+    background-color:  #1ea3b4;
+  }
+
+  .btn-danger:hover {
+    background-color:  #1ea3b4;
+  }
+
+  /* List Group Styling */
+  .list-group-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  .list-group-item .btn {
+    padding: 5px 10px;
+  }
+
+  /* Custom Checkbox */
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color:  #1ea3b4;
+  }
+
+  /* Error Message Styling */
+  .text-danger {
+    font-size: 0.9rem;
+  }
+
+  /* Modal Footer */
+  .modal-footer {
+    border-top: none;
+    padding-top: 10px;
+  }

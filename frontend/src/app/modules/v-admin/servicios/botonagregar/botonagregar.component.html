@@ -1,0 +1,125 @@
+<div class="d-flex justify-content-center mt-4">
+  <button 
+    type="button" 
+    class="btn btn-outline-light rounded-circle" 
+    data-bs-toggle="modal" 
+    data-bs-target="#productoModal2"
+  >
+    <i class="fa fa-plus me-2"></i><span></span>
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="productoModal2" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productoModalLabel">Agregar Servicio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input id="titulo" type="text" class="form-control" formControlName="titulo" required>
+            <div *ngIf="productoForm.get('titulo')?.invalid && productoForm.get('titulo')?.touched" class="text-danger">
+              El título es requerido
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea id="descripcion" class="form-control" formControlName="descripcion" required></textarea>
+            <div *ngIf="productoForm.get('descripcion')?.invalid && productoForm.get('descripcion')?.touched" class="text-danger">
+              La descripción es requerida
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <select id="categoria" class="form-select" formControlName="categoria" required>
+              <option value="">Selecciona una categoría</option>
+              <option value="XV años">XV años</option>
+              <option value="Boda">Boda</option>
+              <option value="Fiesta Infantil">Fiesta Infantil</option>
+              <option value="Baby Shower">Baby Shower</option>
+              <option value="Evento Corporativo">Evento Corporativo</option>
+            </select>
+            <div *ngIf="productoForm.get('categoria')?.invalid && productoForm.get('categoria')?.touched" class="text-danger">
+              Debes seleccionar una categoría
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen (Archivo)</label>
+            <input 
+              id="imagen" 
+              type="file" 
+              class="form-control" 
+              (change)="onFileSelect($event)" 
+              required
+            >
+            <div *ngIf="imagenInvalida" class="text-danger">
+              Debes seleccionar una imagen válida.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label>Elementos</label>
+            <div class="d-flex gap-2 mb-2">
+              <input #nuevoElementoInput type="text" class="form-control" placeholder="Nuevo elemento">
+              <button type="button" class="btn btn-outline-success" (click)="agregarElemento(nuevoElementoInput.value); nuevoElementoInput.value = ''">
+                <i class="fa fa-plus"></i> Añadir
+              </button>
+            </div>
+            <div formArrayName="elementos" class="list-group">
+              <div *ngFor="let elemento of elementosArray.controls; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+                {{ elemento.value }}
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarElemento(i)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="precio" class="form-label">Precio Base</label>
+            <input id="precio" type="number" class="form-control" formControlName="precio" min="0" step="0.01" required>
+            <div *ngIf="productoForm.get('precio')?.invalid && productoForm.get('precio')?.touched" class="text-danger">
+              Ingresa un precio válido
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label>Opciones</label>
+            <div class="d-flex gap-2 mb-2">
+              <input #nombreOpcionInput type="text" class="form-control" placeholder="Nombre de opción">
+              <input #precioOpcionInput type="number" class="form-control" placeholder="Precio" min="0" step="0.01">
+              <button type="button" class="btn btn-outline-primary" 
+                (click)="agregarOpcion(nombreOpcionInput.value, precioOpcionInput.valueAsNumber); 
+                nombreOpcionInput.value = ''; precioOpcionInput.value = ''">
+                <i class="fa fa-plus"></i> Añadir Opción
+              </button>
+            </div>
+            <div formArrayName="opciones" class="list-group">
+              <div *ngFor="let opcion of opcionesArray.controls; let i = index" [formGroupName]="i" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ opcion.get('nombre')?.value }} - ${{ opcion.get('precio')?.value }}</span>
+                <div class="d-flex align-items-center gap-2">
+                  <input type="checkbox" formControlName="seleccionada">
+                  <button type="button" class="btn btn-danger btn-sm" (click)="eliminarOpcion(i)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" [disabled]="productoForm.invalid">Guardar Servicio</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,16 @@ declare const GenericUsuariosController: {
     };
 };
 export declare class UsuariosController extends GenericUsuariosController {
-    private readonly studentdocService;
-    constructor(studentdocService: UsuariosService);
+    private readonly usuariosService;
+    private readonly logger;
+    constructor(usuariosService: UsuariosService);
+    crearUsuario(usuario: UsuariosDocument): Promise<{
+        message: string;
+    }>;
+    getUsuariosPaginated(page?: number, nombreCompleto?: string): Promise<UsuariosDocument[]>;
+    updateUsuarioBloqueado(id: string, bloqueado: boolean): Promise<{
+        message: string;
+    }>;
+    login(usuario: string, contrasena: string): Promise<UsuariosDocument>;
 }
 export {};

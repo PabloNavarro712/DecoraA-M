@@ -1,0 +1,120 @@
+/* Estilos para la barra de navegación */
+.navbar-custom {
+    background: linear-gradient(to right, #003366, #00bfff); /* Degradado de azul marino a azul turquesa */
+    box-shadow: 0 4px 6px rgba(240, 235, 235, 0.911);
+  }
+  
+  .navbar-custom .nav-link {
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+  }
+  
+  .navbar-custom .nav-link:hover {
+    color: #4547b6; /* Cambio de color al pasar el mouse */
+  }
+  
+  /* Botón de hamburguesa */
+  .navbar-toggler {
+    border: none;
+  }
+  
+  .navbar-toggler:focus {
+    outline: none;
+  }
+  
+  /* Estilo para ícono y texto del botón de inicio de sesión */
+  .navbar-custom .btn-link i {
+    color: white;
+    font-size: 2.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-custom .btn-link:hover i {
+    transform: scale(1.2);
+  }
+  /* Botón Servicios Pedidos: diseño plano */
+  .btn-servicios-pedidos {
+    font-weight: bold;
+    color: white;
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+  }
+  
+  /* Estilos para el modal: diseño plano */
+  .modal-content {
+    background-color: #f0f3f7e8; /* Azul marino plano */
+    color: rgb(31, 28, 28); /* Texto blanco para contraste */
+    border: none; /* Sin borde */
+    border-radius: 0; /* Sin esquinas redondeadas */
+  }
+  
+  /* Estilos de estados de servicios dentro del modal */
+  .list-group-item .activo {
+    color: #00bfff; /* Azul turquesa para activo */
+    font-weight: bold;
+  }
+  .list-group-item .cancelado {
+    color: #dc3545; /* Rojo para cancelado */
+    font-weight: bold;
+  }
+  .list-group-item .por-confirmar {
+    color: #ffc107; /* Amarillo para por confirmar */
+    font-weight: bold;
+  }
+  
+  /* Botón Cancelar: estilo plano */
+  .btn-danger.btn-sm {
+    background-color: #dc3545; /* Rojo plano */
+    border: none; /* Sin borde */
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+  }
+  /* Efecto de reflejo para el botón Servicios Pedidos */
+  @keyframes reflejo {
+    0% {
+      background: linear-gradient(120deg, transparent, transparent, transparent);
+    }
+    50% {
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      background-size: 200%;
+      background-position: -100%;
+    }
+    100% {
+      background: linear-gradient(120deg, transparent, transparent, transparent);
+    }
+  }
+  
+  .btn-servicios-pedidos {
+    font-weight: bold;
+    color: white;
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    position: relative;
+    overflow: hidden; /* Para que el reflejo no sobresalga */
+  }
+  
+  .btn-servicios-pedidos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-30deg);
+    transition: 0.5s;
+  }
+  
+  .btn-servicios-pedidos:hover::before {
+    left: 100%;
+  }
+  
+  .btn-servicios-pedidos {
+    animation: reflejo 5s ease-in-out infinite;
+  }
+  
+  

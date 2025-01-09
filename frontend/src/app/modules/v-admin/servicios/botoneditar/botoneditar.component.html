@@ -1,0 +1,91 @@
+<button class="btn btn-primary btn-sm" (click)="abrirModal()">Editar</button>
+
+<!-- Modal para editar servicio -->
+<div *ngIf="modalVisible" class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- Botón de cerrar (tachita) -->
+      <button type="button" class="close modal-close-btn" (click)="cerrarModal()">&times;</button>
+
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Servicio</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
+          <!-- Título -->
+          <div class="form-group">
+            <label for="nombreServicio">Título</label>
+            <input formControlName="titulo" id="nombreServicio" class="form-control" placeholder="Título" required />
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group">
+            <label for="descripcionServicio">Descripción</label>
+            <textarea formControlName="descripcion" id="descripcionServicio" class="form-control" rows="3" placeholder="Descripción" required></textarea>
+          </div>
+
+          <!-- Precio -->
+          <div class="form-group">
+            <label for="precioServicio">Precio</label>
+            <input formControlName="precio" id="precioServicio" type="number" class="form-control" placeholder="Precio" required />
+          </div>
+
+          <!-- Categoría -->
+          <div class="form-group">
+            <label for="categoriaServicio">Categoría</label>
+            <select formControlName="categoria" id="categoriaServicio" class="form-control" required>
+              <option value="XV">XV</option>
+              <option value="Boda">Boda</option>
+              <option value="Bautizo">Bautizo</option>
+              <option value="Fiesta Infantil">Fiesta Infantil</option>
+            </select>
+          </div>
+
+          <!-- Elementos adicionales -->
+          <div class="form-group">
+            <label>Elementos adicionales</label>
+            <div *ngFor="let control of elementos.controls; let i = index" [formGroupName]="i">
+              <div class="input-group mb-2">
+                <input type="text" class="form-control" formControlName="nombre" placeholder="Elemento" />
+                <input type="number" class="form-control" formControlName="precio" placeholder="Precio" />
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-danger" (click)="eliminarElemento(i)">Eliminar</button>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm agregar-elemento" (click)="agregarElemento()">Agregar Elemento</button>
+          </div>
+
+          <!-- Elementos adicionales -->
+          <div class="form-group">
+            <label>Elementos del paquete</label>
+            <div *ngFor="let control of elementos.controls; let i = index" [formGroupName]="i">
+              <div class="input-group mb-2">
+                <input type="text" class="form-control" formControlName="nombre" placeholder="Elemento" />
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-danger" (click)="eliminarElemento(i)">Eliminar</button>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm agregar-elemento" (click)="agregarElemento()">Agregar Elemento</button>
+          </div>
+
+          <!-- Imagen -->
+          <div class="form-group separar-imagen">
+            <label for="imagenServicio">Imagen</label>
+            <input type="file" id="imagenServicio" class="form-control-file" (change)="cargarImagen($event)" />
+          </div>
+
+          <!-- Botones -->
+          <div class="text-right">
+            <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop del modal -->
+<div *ngIf="modalVisible" class="modal-backdrop fade show"></div>

@@ -1,0 +1,43 @@
+table {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+.input-group .form-control {
+  border-radius: 5px 0 0 5px; /* Bordes redondeados solo para el input */
+}
+
+.input-group .btn {
+  border-radius: 0 5px 5px 0; /* Bordes redondeados solo para el botón */
+}
+
+.input-group .btn:hover {
+  background-color: #c9a600; /* Cambia el color al pasar el mouse */
+}
+.modal-header{
+  background-color: #1c1c1c;
+  color: #012a68d2;
+}
+.btn-sm {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination .page-link {
+  color: #000000;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #c9a600;
+  border-color: #c9a600;
+  color: white;
+}

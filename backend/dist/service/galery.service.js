@@ -24,7 +24,9 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
         this.storage = new storage_1.Storage();
     }
     async createGallery(categoria, descripcion, imageBuffer, imageName, contentType) {
-        const id = crypto.randomUUID();
+        const id = this.firestore
+            .collection(galery_document_1.GaleriaDocument.collectionName)
+            .doc().id;
         const fileName = `${id}_${imageName}`;
         try {
             const imageUrl = await this.uploadImageToFirebase(imageBuffer, categoria, fileName, contentType);
@@ -68,7 +70,7 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
         }
     }
     async uploadImageToFirebase(imageBuffer, categoria, imageName, contentType) {
-        const bucketName = 'equipo-4-f104b.appspot.com';
+        const bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
         const fileName = `${categoria}_${imageName}.${contentType}`;
         try {
             const bucket = this.storage.bucket(bucketName);
@@ -87,7 +89,7 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
         }
     }
     async deleteImageFromFirebase(imageUrl) {
-        const bucketName = 'equipo-4-f104b.appspot.com';
+        const bucketName = 'equipo-4---decoram-ef008.firebasestorage.app';
         try {
             const fileName = imageUrl.split(`https://storage.googleapis.com/${bucketName}/`)[1];
             if (!fileName) {
@@ -103,7 +105,7 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
             throw new Error('No se pudo eliminar la imagen de Firebase Storage.');
         }
     }
-    async updateImageDocument(id, updateData) {
+    async updateImageDocument(id, updateData, newImageBuffer, newImageName, newImageContentType) {
         try {
             if (!id.trim()) {
                 throw new common_1.BadRequestException('Falta el ID requerido para actualizar el documento.');
@@ -117,27 +119,23 @@ let GaleriaService = GaleriaService_1 = class GaleriaService extends generic_ser
             }
             const currentData = imageDoc.data();
             const currentImageUrl = currentData.Imagen;
-            if (updateData.Imagen && updateData.Imagen !== currentImageUrl) {
-                if (currentImageUrl) {
-                    await this.deleteImageFromFirebase(currentImageUrl);
-                }
-                console.log(`Nueva imagen cargada: ${updateData.Imagen}`);
+            if (!currentImageUrl) {
+                throw new Error('No se encontró la URL de la imagen actual.');
             }
-            else {
-                console.log('El enlace de la imagen es el mismo. No se realizó ningún cambio en el archivo.');
-            }
-            await imageDocRef.update(updateData);
-            console.log(`Documento con ID ${id} actualizado correctamente.`);
+            await this.deleteImageFromFirebase(currentImageUrl);
+            console.log(`Imagen eliminada de Firebase Storage: ${currentImageUrl}`);
+            const fileName = `${id}_${newImageName}`;
+            const newImageUrl = await this.uploadImageToFirebase(newImageBuffer, newImageName, fileName, newImageContentType);
+            console.log(`Nueva imagen cargada a Firebase Storage: ${newImageUrl}`);
+            await imageDocRef.update({
+                ...updateData,
+                Imagen: newImageUrl,
+            });
+            console.log(`Documento con ID: ${id} actualizado exitosamente.`);
         }
         catch (error) {
-            console.error('Error al actualizar el documento:', error);
-            if (error instanceof common_1.NotFoundException ||
-                error instanceof common_1.BadRequestException) {
-                throw error;
-            }
-            else {
-                throw new common_1.InternalServerErrorException('Error interno al intentar actualizar el documento. Por favor, inténtelo de nuevo más tarde.');
-            }
+            console.error(`Error al actualizar la imagen del documento: ${error.message}`);
+            throw new Error('Error al actualizar la imagen y el documento.');
         }
     }
     async deleteImageById(id) {

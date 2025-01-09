@@ -1,0 +1,173 @@
+<div *ngIf="eventos.length > 0; else noEventos" class="eventos-container">
+  <h2 class="mb-4 text-primary">
+    <i class="bi bi-calendar-event"></i> Mis Eventos 
+  </h2>
+
+  <div *ngFor="let evento of eventos; let i = index" class="card mb-4 shadow-lg border-0">
+    <!-- Header -->
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">
+        <i class="bi bi-star-fill text-warning"></i> {{ evento.nombre }}
+      </h3>
+      <button class="btn btn-light btn-sm fw-bold" (click)="toggleDetalles(i)">
+        <i class="bi" [class.bi-eye-slash-fill]="detallesAbiertos[i]" [class.bi-eye-fill]="!detallesAbiertos[i]"></i>
+        {{ detallesAbiertos[i] ? 'Ocultar Detalles' : 'Ver Detalles' }}
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body" *ngIf="detallesAbiertos[i]">
+      <div class="row">
+        <!-- Información General -->
+        <div class="col-md-6 mb-3">
+          <h4><i class="bi bi-info-circle-fill text-info"></i> Información General</h4>
+          <p><strong>Nombre del Evento:</strong> {{ evento.nombre }}</p>
+          <p><strong>Fecha:</strong> {{ evento.fechaEvento | date }}</p>
+          <p><strong>Hora:</strong> {{ evento.horaEvento }}</p>
+          <p><strong>Ubicación:</strong> {{ evento.ubicacionEvento }}</p>
+        </div>
+        <!-- Paquete Básico -->
+        <div class="col-md-6 mb-3" *ngIf="evento.idServicio">
+          <h4><i class="bi bi-box-seam-fill text-success"></i> Paquete Seleccionado</h4>
+          <div *ngIf="servicio">
+            <hr>
+            <p><strong>Servicio:</strong> {{ servicio.titulo }}</p>
+            <p><strong>Descripción:</strong> {{ servicio.descripcion }}</p>
+            <p><strong>Precio:</strong> <span class="text-success">{{ servicio.precio | currency }}</span></p>
+            <p><strong>Precio Total:</strong> <span class="text-success">{{ evento.precio_final | currency }}</span></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Estado de la Reserva -->
+      <div class="row mt-3">
+        <div class="col-12">
+          <h4><i class="bi bi-check-circle-fill text-success"></i> Estado de la Reserva</h4>
+          <p><strong>Estado:</strong>
+            <span class="badge" [class.bg-success]="evento.estado === 'aceptado'" [class.bg-danger]="evento.estado === 'reechazado'" [class.bg-warning]="evento.estado === 'pendiente'">
+              {{ evento.estado }}
+            </span>
+          </p>
+          <!-- Sección de Reagendar -->
+          <div *ngIf="evento.solicitud_cancelar">
+            <h5><i class="bi bi-hourglass-split text-warning"></i> Solicitud de Cancelación</h5>
+            <p *ngIf="!evento.Respuesta">La solicitud está en proceso de revisión. Por favor, sea paciente.</p>
+            <p *ngIf="evento.Respuesta"><strong>Respuesta:</strong> {{ evento.Respuesta }}</p>
+            <div *ngIf="evento.reagendar">
+              <p class="text-warning mt-3">
+                <i class="bi bi-info-circle"></i> La solicitud de reagendación está siendo evaluada. Se revisará la disponibilidad y viabilidad para procesar su petición. Le agradecemos su paciencia.
+              </p>
+            </div>
+          </div>
+
+          <button
+            *ngIf="(evento.estado === 'aceptado' || evento.estado === 'pendiente')&& evento.id && !evento.reagendar"
+            class="btn btn-danger mt-3"
+            (click)="openCancelModal(evento.id!)"
+          >
+            <i class="bi bi-x-circle"></i> Cancelar Reserva
+          </button>
+          <p *ngIf="evento.estado === 'cancelado'" class="text-danger mt-3">
+            Has cancelado este evento 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noEventos>
+  <div class="alert alert-warning text-center">
+    <i class="bi bi-emoji-frown-fill"></i> No se encontraron eventos para este cliente.
+  </div>
+</ng-template>
+
+<!-- Modal -->
+<!-- Modal -->
+<!-- Modal -->
+<div *ngIf="showCancelModal" class="modal fade show" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true" style="display: block;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="cancelModalLabel"><strong>Solicitar Cancelación</strong></h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeCancelModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="motivo" class="form-label">Motivo de la Cancelación:</label>
+          <textarea
+            [(ngModel)]="motivoCancelacion"
+            id="motivo"
+            class="form-control styled-textarea"
+            rows="3"
+            placeholder="Describe el motivo..."
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">¿Desea Reagendar?</label>
+          <div class="form-check">
+            <input
+              type="radio"
+              id="siReagendar"
+              name="reagendar"
+              [(ngModel)]="deseaReagendar"
+              [value]="true"
+              class="form-check-input"
+            />
+            <label for="siReagendar" class="form-check-label">Sí</label>
+          </div>
+          <div class="form-check">
+            <input
+              type="radio"
+              id="noReagendar"
+              name="reagendar"
+              [(ngModel)]="deseaReagendar"
+              [value]="false"
+              class="form-check-input"
+            />
+            <label for="noReagendar" class="form-check-label">No</label>
+          </div>
+        </div>
+        <!-- Mostrar calendario solo si deseaReagendar es true -->
+        <div class="calendario-contenedor" *ngIf="deseaReagendar">
+          <div class="calendario text-center">
+            <!-- Navegación del calendario -->
+            <div class="cabecera">
+              <button type="button" (click)="navegarMes(-1)" aria-label="Mes anterior">&#10094;</button>
+              <h5>{{ mes + 1 }} / {{ anio }}</h5>
+              <button type="button" (click)="navegarMes(1)" aria-label="Mes siguiente">&#10095;</button>
+            </div>
+        
+            <!-- Días de la semana -->
+            <div class="dias-semana">
+              <div *ngFor="let dia of diasDeLaSemana" class="dia-semana">{{ dia }}</div>
+            </div>
+        
+            <!-- Días del mes -->
+            <div class="dias">
+              <div *ngFor="let dia of dias" 
+                   (click)="isSelectable(dia) ? seleccionarFecha(dia) : null" 
+                   [ngClass]="{
+                     'hoy': isToday(dia), 
+                     'seleccionado': fechaSeleccionada?.getDate() === dia, 
+                     'no-seleccionable': !isSelectable(dia) && dia > 0
+                   }">
+                {{ dia > 0 ? dia : '' }}
+              </div>  
+            </div>
+        
+            <!-- Fecha seleccionada -->
+            <div *ngIf="fechaSeleccionada" class="mt-2">
+              <p>Fecha seleccionada: {{ fechaSeleccionada | date:'fullDate' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-styled" (click)="closeCancelModal()">Cerrar</button>
+        <button type="button" class="btn btn-danger btn-styled" (click)="cancelarReserva(selectedEventoId!)">Confirmar Cancelación</button>
+      </div>
+    </div>
+  </div>
+
+</div>

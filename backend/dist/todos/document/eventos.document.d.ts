@@ -11,11 +11,18 @@ export declare class EventosDocument {
     tipoEvento: string;
     horaEvento: string;
     fechaEvento: Date;
-    estado: 'aceptado' | 'reechazado' | 'pendiente';
+    mes: string;
+    anio: string;
+    estado: 'aceptado' | 'reechazado' | 'pendiente' | 'cancelado';
     precio_final: number;
     adiciones: {
         nombre: string;
         precio: number;
     }[];
+    solicitud_cancelar?: boolean;
+    reagendar?: boolean;
+    nvfecha?: Date;
+    Motivo?: string;
+    Respuesta?: string;
     constructor(partial: Partial<EventosDocument>);
 }

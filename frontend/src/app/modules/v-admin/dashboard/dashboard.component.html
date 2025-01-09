@@ -1,0 +1,194 @@
+
+<body>
+
+  <div class="dashboard-container" *ngIf="!isLoading; else loading">
+    <header class="header">
+      <h1 class="title">Dashboard de Eventos</h1>
+              <!-- Botón para cambiar vista de mes a año -->
+              <button class="btn btn-primary ml-3" (click)="toggleView()">
+                {{ isMonthView ? 'Ver Resumen del Año' : 'Ver por Mes' }}
+              </button>
+  </header>
+
+    <!-- Layout de vista mensual -->
+    <div *ngIf="isMonthView">
+
+      <div class="month-navigation">
+        <button class="btn" (click)="mesAnterior()"><i class="fas fa-chevron-left"></i>Anterior</button>
+        <span class="month-display"> {{ monthNames[currentMonth] }} {{ currentYear }}</span>
+        <button class="btn" (click)="mesSiguiente()">Siguiente<i class="fas fa-chevron-right "></i></button>
+    </div>
+
+      <div class="progress-container">
+        <div class="progress-column">
+          <h3 class="progress-title"><strong>Eventos totales este mes:</strong></h3>
+          <p class="progress-value">{{ totalEventosMes }}</p>
+        </div>
+        <div class="progress-column">
+          <h3 class="progress-title"><strong>Ganancias de este mes:</strong></h3>
+          <p class="progress-value">{{ totalGananciaMes | currency:'USD':'symbol' }}</p>
+        </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+      
+        <div class="chart-container">
+          <apx-chart
+            [series]="chartEventosPorMes.series"
+            [chart]="chartEventosPorMes.chart"
+            [xaxis]="chartEventosPorMes.xaxis"
+            [yaxis]="chartEventosPorMes.yaxis"
+            [colors]="chartEventosPorMes.colors"
+            [dataLabels]="chartEventosPorMes.dataLabels"
+            [tooltip]="chartEventosPorMes.tooltip"
+            [plotOptions]="chartEventosPorMes.plotOptions"
+            [title]="chartEventosPorMes.title"
+          ></apx-chart>
+        </div>
+      </div>
+      
+        <div class="chart-card">
+       
+          <div class="chart-container">
+            <apx-chart
+              [series]="chartEventosPorEstado.series"
+              [chart]="chartEventosPorEstado.chart"
+              [labels]="chartEventosPorEstado.labels"
+              [colors]="chartEventosPorEstado.colors"
+              [legend]="chartEventosPorEstado.legend"
+              [dataLabels]="chartEventosPorEstado.dataLabels"
+              [tooltip]="chartEventosPorEstado.tooltip"
+              [plotOptions]="chartEventosPorEstado.plotOptions"
+              [title]="chartEventosPorEstado.title"
+            ></apx-chart>
+          </div>
+        </div>
+        
+    </div>
+    <br>
+    <div class="chart-card">
+
+      <div class="chart-container">
+        <apx-chart
+          [series]="chartGananciasMensuales.series"
+          [chart]="chartGananciasMensuales.chart"
+          [xaxis]="chartGananciasMensuales.xaxis"
+          [yaxis]="chartGananciasMensuales.yaxis"
+          [plotOptions]="chartGananciasMensuales.plotOptions"
+          [dataLabels]="chartGananciasMensuales.dataLabels"
+          [tooltip]="chartGananciasMensuales.tooltip"
+          [colors]="chartGananciasMensuales.colors"
+          [title]="chartGananciasMensuales.title"
+        ></apx-chart>
+      </div>
+    </div>
+    
+
+      
+
+    </div>
+  
+    <!-- Layout de vista anual (solo visible cuando isMonthView es false) -->
+    <div *ngIf="!isMonthView">
+        <div class="month-navigation">
+        <button class="btn" (click)="anioAnterior()"><i class="fas fa-chevron-left"></i>Anterior</button>
+        <span class="month-display">  {{ currentYear }}</span>
+        <button class="btn" (click)="anioSiguiente()">Siguiente<i class="fas fa-chevron-right "></i></button>
+    </div>
+
+      <div class="progress-container">
+        <div class="progress-column">
+          <h3 class="progress-title"><strong>Eventos totales este Año:</strong></h3>
+          <p class="progress-value">{{  totalEventosAnio }}</p>
+        </div>
+        <div class="progress-column">
+          <h3 class="progress-title"><strong>Ganancias de este Año:</strong></h3>
+          <p class="progress-value">{{  totalGananciaAnio | currency:'USD':'symbol' }}</p>
+        </div>
+    </div>
+    <br>
+
+    <div class="chart-card">
+
+      <div class="chart-container">
+        <apx-chart
+          [series]="chartEventosPorAnio.series"
+          [chart]="chartEventosPorAnio.chart"
+          [xaxis]="chartEventosPorAnio.xaxis"
+          [yaxis]="chartEventosPorAnio.yaxis"
+          [plotOptions]="chartEventosPorAnio.plotOptions"
+          [colors]="chartEventosPorAnio.colors"
+          [tooltip]="chartEventosPorAnio.tooltip"
+          [title]="chartEventosPorAnio.title"
+        ></apx-chart>
+      </div>
+    </div>
+    <br>
+    <div class="chart-card">
+   
+      <div class="chart-container">
+        <apx-chart
+          [series]="chartGananciasAnuales.series"
+          [chart]="chartGananciasAnuales.chart"
+          [xaxis]="chartGananciasAnuales.xaxis"
+          [yaxis]="chartGananciasAnuales.yaxis"
+          [plotOptions]="chartGananciasAnuales.plotOptions"
+          [colors]="chartGananciasAnuales.colors"
+          [tooltip]="chartGananciasAnuales.tooltip"
+          [title]="chartGananciasAnuales.title"
+        ></apx-chart>
+      </div>
+    </div>
+    
+    <br>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h2 class="chart-title">Distribución de Eventos</h2>
+        <div class="chart-container">
+          <apx-chart
+            [series]="chartEvtnosPorTipo.series"
+            [chart]="chartEvtnosPorTipo.chart"
+            [labels]="chartEvtnosPorTipo.labels"
+            [colors]="chartEvtnosPorTipo.colors"
+            [plotOptions]="chartEvtnosPorTipo.plotOptions"
+            [tooltip]="chartEvtnosPorTipo.tooltip"
+            [title]="chartEvtnosPorTipo.title"
+          ></apx-chart>
+        </div>
+      </div>
+      
+        <div class="chart-card">
+          <h2 class="chart-title">Clientes atendidos</h2>
+          <div class="chart-container">
+              <apx-chart
+              [series]="chartClientesPastel.series"
+              [chart]="chartClientesPastel.chart"
+              [labels]="chartClientesPastel.labels"
+              [colors]="chartClientesPastel.colors"
+              [plotOptions]="chartClientesPastel.plotOptions"
+              [tooltip]="chartClientesPastel.tooltip"
+              [title]="chartClientesPastel.title"
+            ></apx-chart></div>
+        </div>
+    </div>
+
+  
+
+      
+       
+    </div>
+  
+  </div>
+  
+  <ng-template #loading>
+    <div class="loading-container">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+    </div>
+  </ng-template>
+  
+</body>
+   <!-- Otros enlaces o configuraciones -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
