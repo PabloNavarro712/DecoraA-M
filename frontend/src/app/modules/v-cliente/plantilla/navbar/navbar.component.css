@@ -96,7 +96,16 @@
     position: relative;
     overflow: hidden; /* Para que el reflejo no sobresalga */
   }
+  .navbar-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    object-fit: contain;
+  }
   
+  .white-text {
+    color: white;
+  }
   .btn-servicios-pedidos::before {
     content: '';
     position: absolute;

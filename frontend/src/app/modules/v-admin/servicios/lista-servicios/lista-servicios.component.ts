@@ -175,7 +175,7 @@ this.showCancelModal = true;
 // Función para cerrar el modal
 closeCancelModal(): void {
   this.showCancelModal = false;
-
+  this.loadServicios();
 }
 
 eliminarOpcion(index: number) {

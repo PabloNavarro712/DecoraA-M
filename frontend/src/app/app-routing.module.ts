@@ -6,46 +6,30 @@ import { InicioClienteComponent } from './modules/v-cliente/inicio-cliente/inici
 import { VistaServiciosComponent } from './modules/v-cliente/vista-servicios/vista-servicios.component';
 import { NosotrosComponent } from './modules/v-cliente/nosotros/nosotros.component';
 import { DetallesEventosComponent } from './modules/v-cliente/detalles-eventos/detalles-eventos.component';
-import { PlantillaAdminComponent } from './modules/v-admin/plantilla-admin/plantilla-admin.component';
-import { ServiciosComponent } from './modules/v-admin/servicios/servicios.component';
-import { DashboardComponent } from './modules/v-admin/dashboard/dashboard.component';
-import { GaleriaComponent } from './modules/v-admin/galeria/galeria.component';
-import { EventosComponent } from './modules/v-admin/eventos/eventos.component';
-import { HomeComponent } from './modules/v-admin/home/home.component';
-import { UsuariosComponent } from './modules/v-admin/usuarios/usuarios.component';
+
 const routes: Routes = [
   {
-    path: 'cliente',
-    component: PlantillaComponent,
-    children: [
-      { path: '', component: InicioClienteComponent  },  // Vista de inicio
-      { path: 'nuestra-historia', component: NosotrosComponent }, // Vista de nuestra historia
-      { path: 'servicios', component: VistaServiciosComponent },
-      // { path: 'faq', component: FaqComponent }, // Vista de preguntas frecuentes
-      { path: 'mis-servicios', component: DetallesEventosComponent } // Vista de preguntas frecuente
-    ],
+    path: '',
+    redirectTo: '/cliente',
+    pathMatch: 'full',
   },
-  // Rutas del administrador
+  {
+    path: 'cliente',
+    loadChildren: () =>
+      import('./modules/v-cliente/v-cliente.module').then((m) => m.VClienteModule),
+  },
   {
     path: 'admin',
-    component: PlantillaAdminComponent, // Template para admin
-    children: [
-      // { path: '', component: HomeAdminComponent },
-       { path: 'home', component: HomeComponent }, // Vista home para admin
-      { path: 'gestion-galeria', component: GaleriaComponent }, // Vista de panel de edición
-       { path: 'gestion_servicios', component: ServiciosComponent}, // Vista para editar servicios
-      { path: 'gestion-eventos', component: EventosComponent }, // Vista de panel de edición
-      { path: 'graficas', component: DashboardComponent }, // Vista de panel de edición
-      { path: 'usuarios', component: UsuariosComponent }, // Vista de panel de edición
-    ]
+    loadChildren: () =>
+      import('./modules/v-admin/v-admin.module').then((m) => m.VAdminModule),
   },
-
-
-  // { path: 'login', component: LoginComponent },
-  // { path: 'student', component: StudentPortalComponent },
-  { path: '**', redirectTo: 'cliente', pathMatch: 'full' },
-  // { path: 'admin', component: HomeAdminComponent }
+  {
+    path: '**',
+    redirectTo: '/cliente', // Ruta por defecto si no se encuentra ninguna
+  },
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],

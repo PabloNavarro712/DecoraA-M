@@ -5,7 +5,7 @@ import { GaleriaComponent } from './galeria/galeria.component';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { HomeComponent } from './home/home.component';
 import { PlantillaAdminComponent } from './plantilla-admin/plantilla-admin.component';
-import { RouterModule } from '@angular/router';  // Importa RouterModule
+import { RouterModule } from '@angular/router'; // Importa RouterModule
 import { FormsModule } from '@angular/forms';
 import { CalendarioComponent } from './home/calendario/calendario.component';
 import { BotoneditarComponent } from './servicios/botoneditar/botoneditar.component';
@@ -14,8 +14,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ListaServiciosComponent } from './servicios/lista-servicios/lista-servicios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';  // Agrega FormsModule aquí
+import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component'; // Agrega FormsModule aquí
 import { NgApexchartsModule } from 'ng-apexcharts';
+// Rutas internas
+import { VAdminRoutingModule } from './v-admin-routing.module';
 
 @NgModule({
   declarations: [
@@ -30,14 +32,15 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     ListaServiciosComponent,
     DashboardComponent,
     UsuariosComponent,
-    ListaUsuariosComponent
+    ListaUsuariosComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
     FormsModule,
-    NgApexchartsModule
-  ]
+    NgApexchartsModule,
+    VAdminRoutingModule, 
+  ],
 })
-export class VAdminModule { }
+export class VAdminModule {}

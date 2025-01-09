@@ -4,7 +4,7 @@ import { IServicio } from 'src/models/iservicios.metadata';
 import { ReservaService } from 'src/services/global/reserva/reserva.service';
 declare var bootstrap: any; // Importamos Bootstrap para manejar el modal
 import { ModalService } from 'src/services/global/modal/modal.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-vista-servicios',
   templateUrl: './vista-servicios.component.html',
@@ -65,7 +65,11 @@ export class VistaServiciosComponent implements OnInit {
       const user = JSON.parse(sessionStorage.getItem('user')!);
       return !!user; // Retorna true si hay un usuario, false si no
     }
-  
+  // Verificar si el usuario está bloqueado
+isUserBlocked(): boolean {
+  const user = JSON.parse(sessionStorage.getItem('user')!);
+  return user?.bloqueado ?? false; // Retorna true si está bloqueado, false si no
+}
   abrirModalReserva(servicio: IServicio) {
     // Verificar si el usuario está autenticado
     const user = JSON.parse(sessionStorage.getItem('user')!);
@@ -75,7 +79,17 @@ export class VistaServiciosComponent implements OnInit {
       this.mensajeError = '¡Debes iniciar sesión para realizar una reserva!';
       return; // Salir de la función sin abrir el modal
     }
-
+ // Verificar si el usuario está bloqueado
+ if (user.bloqueado) {
+  Swal.fire({
+    icon: 'error',
+    title: 'Acceso Denegado',
+    text: 'Tu cuenta está bloqueada. Por favor, contacta al administrador.',
+  });
+  this.cerrarModal();
+  return; // Salir de la función sin abrir el modal
+ 
+}
     // Si el usuario está autenticado, proceder con la reserva
     this.mensajeError = ''; // Limpiar el mensaje de error
 

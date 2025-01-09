@@ -10,6 +10,9 @@ import { RouterModule } from '@angular/router';  // Importa RouterModule
 import { FormsModule } from '@angular/forms';  // Agrega FormsModule aquí
 import { LoginComponent } from './plantilla/login/login.component';
 import { AyudaComponent } from './ayuda/ayuda.component';
+// Rutas internas
+import { VClienteRoutingModule } from './v-cliente-routing.module';
+
 @NgModule({
   declarations: [
     DetallesEventosComponent,
@@ -24,7 +27,8 @@ import { AyudaComponent } from './ayuda/ayuda.component';
     
     InicioClienteModule,
     PlantillaModule,  RouterModule,
-    FormsModule 
+    FormsModule,
+    VClienteRoutingModule
   ]
 })
 export class VClienteModule { }
